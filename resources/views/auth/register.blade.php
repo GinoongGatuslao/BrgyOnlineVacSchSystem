@@ -28,7 +28,13 @@
             <div class="mt-4">
                 <x-label for="email" :value="__('Email')" />
 
-                <x-input id="email" class="block w-full mt-1" type="email" name="email" :value="old('email')"
+                <x-input id="email" class="block w-full mt-1" type="email" name="email" :value="old('email')" />
+            </div>
+
+            <div class="mt-4">
+                <x-label for="username" :value="__('Username')" />
+
+                <x-input id="username" class="block w-full mt-1" type="text" name="username" :value="old('username')"
                     required />
             </div>
 
