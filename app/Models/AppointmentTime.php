@@ -9,6 +9,11 @@ class AppointmentTime extends Model
 {
     use HasFactory;
 
+    protected $fillable=[
+        'appointment_date_id',
+        'time_slot',
+    ];
+
     public function appointment_dates()
     {
         return $this->belongsTo(AppointmentDate::class);

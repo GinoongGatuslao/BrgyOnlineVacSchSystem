@@ -16,6 +16,13 @@
     @livewireStyles
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <style>
+        [x-cloak] {
+            display: none !important;
+        }
+
+    </style>
+
 </head>
 
 <body class="h-full">
@@ -24,7 +31,7 @@
             @include('layouts.navigation')
 
             <!-- Page Heading -->
-            <header class="py-10">
+            <header class="py-5">
                 <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
                     <h1 class="text-3xl font-bold text-white">
                         {{ $header }}

@@ -9,6 +9,12 @@ class AppointmentDate extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'date',
+        'available_slots',
+        'max_slots',
+    ];
+
     public function appointment_times()
     {
         return $this->hasMany(AppointmentTime::class);
