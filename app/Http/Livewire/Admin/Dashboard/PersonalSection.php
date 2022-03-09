@@ -18,9 +18,15 @@ class PersonalSection extends Component
     public $startDay;
     public $blockSkip = 0;
     public $endDay;
+    public $daysWithAppointments=[];
+    public $appointmentdates;
+    public $availableSlots = "-";
+    public $occupiedSlots = "-";
+    public $totalSlots = "-";
+
     public function render()
     {
-
+       
         //if currentmonth is empty, set it to current month
         if (empty($this->currentMonth)) {
             $this->currentMonth = Carbon::now()->format('F');
@@ -37,7 +43,13 @@ class PersonalSection extends Component
         if ($this->startDay == "") {
             $this->startDay = Carbon::now()->startOfMonth()->format('l');
         }
-
+        $this->appointmentdates = AppointmentDate::where('date','like',$this->currentYear.'-'.$this->currentMonthNumeric.'%')->get();
+        $this->daysWithAppointments=[];
+        foreach ($this->appointmentdates as $key => $value) {
+            $this->daysWithAppointments[] = ['adid' => $value->id ,'date' => Carbon::parse($value->date)->format('d')];
+            // array_push($this->daysWithAppointments, Carbon::parse($value->date)->format('d'));
+        }
+        // dd($this->daysWithAppointments);
         //if startDay is Sunday, set blockSkip to 0, else if startDay is Monday, set blockSkip to 1, etc
         if ($this->startDay == "Sunday") {
             $this->blockSkip = 0;
@@ -71,12 +83,13 @@ class PersonalSection extends Component
 
     public function showsuccessModal()
     {
-        $this->showSuccessModal = true;
+        
     }
 
     public function makeAppointmentSchedule()
     {
-        $this->showConfirmModal = false;
+        
+        
         //store date with the day currentMonth and currentYear as Carbon date format with as yyyy-mm-dd
         $date = Carbon::create($this->currentYear, $this->currentMonthNumeric, $this->day_to_store)->format('Y-m-d');
         //store to database the date on appointmentdate table
@@ -120,6 +133,7 @@ class PersonalSection extends Component
             }
             
         }
-        $this->showsuccessModal();
+        $this->showConfirmModal = false;
+        $this->showSuccessModal = true;
     }
 }
