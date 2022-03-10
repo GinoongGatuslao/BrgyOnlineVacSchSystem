@@ -154,4 +154,7 @@ class PersonalSection extends Component
             $this->vaccineName = "-";
         }
     }
+    public function redir($adp_id){
+        redirect()->route('dashboard',['dateSelected'=> '1','adp_id'=>$adp_id]);
+    }
 }

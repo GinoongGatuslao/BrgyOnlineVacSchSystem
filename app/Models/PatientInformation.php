@@ -15,8 +15,10 @@ class PatientInformation extends Model
         'middle_name',
         'last_name',
         'suffix',
-        'nickname',
         'birthdate',
+        'sex',
+        'purok_id',
+        'contact_number'
     ];
 
     public function user()
@@ -26,6 +28,11 @@ class PatientInformation extends Model
 
     public function purok()
     {
-        return $this->hasOne(Purok::class);
+        return $this->hasOne(Purok::class, 'id', 'purok_id');
+    }
+
+    public function appointment()
+    {
+        return $this->hasMany(Appointment::class);
     }
 }

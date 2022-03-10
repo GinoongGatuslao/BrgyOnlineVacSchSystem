@@ -24,9 +24,9 @@ class Appointment extends Model
         return $this->hasOne(AppointmentTime::class);
     }
 
-    public function user()
+    public function patient()
     {
-        return $this->hasMany(User::class);
+        return $this->hasOne(PatientInformation::class, 'id', 'patient_id');
     }
 
     public function vaccine()

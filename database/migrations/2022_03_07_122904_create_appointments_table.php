@@ -19,7 +19,7 @@ class CreateAppointmentsTable extends Migration
             $table->foreignId('appointment_date_id');
             $table->foreignId('appointment_time_id');
             $table->foreignId('vaccine_id');
-            $table->foreignId('user_id')->constrained();
+            $table->foreignId('patient_id');
             $table->timestamps();
         });
     }

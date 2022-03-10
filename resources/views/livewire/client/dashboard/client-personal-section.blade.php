@@ -11,8 +11,9 @@
                 </div>
             </div>
             <div>
-                <h1 class="text-2xl font-bold text-gray-900"></h1>
-                <p class="text-sm font-medium text-gray-500">Emilio Aguinaldo Highway, Toll Bridge, Imus, Cavite</p>
+                <h1 class="text-2xl font-bold text-gray-900">{{ auth()->user()->name }}</h1>
+                <p class="text-sm font-medium text-gray-500">Prk. {{ $patient->purok->name }}, Baranggay New Carmen, Tacurong City, Sultan Kudarat</p>
+                <p class="text-sm font-medium text-gray-500">{{ Carbon\Carbon::parse($patient->birthdate)->age }} years old | {{ $patient->sex }}</p>
             </div>
         </div>
     </div>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\PatientInformation;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
@@ -32,20 +33,47 @@ class RegisteredUserController extends Controller
      * @throws \Illuminate\Validation\ValidationException
      */
     public function store(Request $request)
-    {
+    { 
+        
+       
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
+            'first_name' => ['required', 'string', 'max:255'],
+            'last_name' => ['required', 'string', 'max:255'],
+            'birthdate' => ['required', 'date', 'before:13 years ago'],
+            'contact_number' => ['required', 'regex:/^\+?[0-9]{10,13}$/', 'unique:patient_information'],
+            'sex'=>['required'],
+            'purok'=>['required'],
             'username' => ['required', 'string', 'max:255', 'unique:users', 'min:6', 'regex:/^[a-zA-Z0-9]+$/'],
             'email' => ['max:255', 'unique:users'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
+        $name= $request->first_name;
+        if($request->middle_name != ""){
+            $name.=' '.$request->middle_name;
+        }
+        $name.=' '.$request->last_name;
+        if($request->suffix != ""){
+            $name.=' '.$request->suffix;
+        }
 
         $user = User::create([
-            'name' => $request->name,
+            'name' => $name,
+            'user_type_id' => 2,
             'email' => $request->email,
             'username' => $request->username,
             'password' => Hash::make($request->password),
         ]);
+        $patient = PatientInformation::create([
+            'user_id' => $user->id,
+            'first_name' => $request->first_name,
+            'middle_name' => $request->middle_name,
+            'last_name' => $request->last_name,
+            'suffix' => $request->suffix,
+            'sex'=>$request->sex,
+            'contact_number'=>$request->contact_number,
+            'purok_id'=>$request->purok,
+            'birthdate' => $request->birthdate,
+            ]);
         event(new Registered($user));
 
         Auth::login($user);

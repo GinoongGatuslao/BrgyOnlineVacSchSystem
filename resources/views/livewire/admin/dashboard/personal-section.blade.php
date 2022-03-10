@@ -58,7 +58,7 @@
                         <span class="m-auto">{{ $fixx-$blockSkip }}</span>
                         </div>
                         @else
-                        <div wire:mouseover="getSlots({{ $daysWithAppointments[$key]['adid'] }})" wire:key='{{ $fixx-$blockSkip }}' 
+                        <div wire:mouseover="getSlots({{ $daysWithAppointments[$key]['adid'] }})" wire:key='{{ $fixx-$blockSkip }}' wire:click="redir({{ $daysWithAppointments[$key]['adid'] }})"
                         class="col-span-1 p-5 m-1 text-3xl font-bold tracking-wide text-center text-black rounded-lg bg-lime-300 hover:bg-blue-200 hover:text-indigo-600 hover:cursor-pointer sm:text-xs md:text-xl lg:text-2xl">
                         <span class="m-auto">{{ $fixx-$blockSkip }}</span>
                         </div>

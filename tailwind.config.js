@@ -13,7 +13,11 @@ module.exports = {
                 sans: ['Nunito', ...defaultTheme.fontFamily.sans],
             },
             spacing: {
-              'screen-80': '80vw',
+                'screen-80': '80vw',
+                'screen-60': '60vw',
+                'screen-50': '50vw',
+                'screen-40': '40vw',
+                'screen-30': '30vw',
             },
         },
     },
