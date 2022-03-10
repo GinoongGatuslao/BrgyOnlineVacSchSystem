@@ -26,26 +26,20 @@ class PersonalSection extends Component
     public $totalSlots = "-";
     public $vaccineName = "-";
     public $vaccineid=1;
+    public $monthadditive = 0;
 
     public function render()
     {
        
-        //if currentmonth is empty, set it to current month
-        if (empty($this->currentMonth)) {
-            $this->currentMonth = Carbon::now()->format('F');
-        }
-        //if currentmonthnumeric is empty, set it to current month
-        if (empty($this->currentMonthNumeric)) {
-            $this->currentMonthNumeric = Carbon::now()->format('m');
-        }
-        //if currentyear is empty, set it to current year
-        if ($this->currentYear == "") {
-            $this->currentYear = Carbon::now()->format('Y');
-        }
-        //if startday is empty, get the first day of the current month as monday etc
-        if ($this->startDay == "") {
-            $this->startDay = Carbon::now()->startOfMonth()->format('l');
-        }
+      
+            $this->currentMonth = Carbon::now()->addMonths($this->monthadditive)->format('F');
+        
+            $this->currentMonthNumeric = Carbon::now()->addMonths($this->monthadditive)->format('m');
+        
+            $this->currentYear = Carbon::now()->addMonths($this->monthadditive)->format('Y');
+        
+            $this->startDay = Carbon::now()->addMonths($this->monthadditive)->startOfMonth()->format('l');
+        
         $this->appointmentdates = AppointmentDate::where('date','like',$this->currentYear.'-'.$this->currentMonthNumeric.'%')->get();
         $this->daysWithAppointments=[];
         foreach ($this->appointmentdates as $key => $value) {
@@ -156,5 +150,16 @@ class PersonalSection extends Component
     }
     public function redir($adp_id){
         redirect()->route('dashboard',['dateSelected'=> '1','adp_id'=>$adp_id]);
+    }
+
+    //make a function to add to additivemonth if parameter is true and subrtract if false
+    public function addMonth($add)
+    {
+        if ($add == 1) {
+            $this->monthadditive = $this->monthadditive+1;
+        } else {
+            $this->monthadditive = $this->monthadditive-1;
+        }
+        $this->render();
     }
 }

@@ -4,18 +4,19 @@
         <section id="header" class="block space-y-5 text-center">
             <h1 class="text-4xl font-extrabold tracking-wider text-indigo-600 uppercase">Reports</h1>
             <div class="flex w-full px-3 mx-auto text-center">
-
-                <svg xmlns="http://www.w3.org/2000/svg"
-                    class="w-4 h-auto text-indigo-600 hover:text-gray-600 hover:cursor-pointer" fill="none"
-                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
-                </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" wire:click="addMonth(0)"
+                    class="w-4 h-auto text-indigo-600 rounded-full hover:bg-indigo-600 hover:text-white active:ring-2 active:ring-black hover:cursor-pointer"fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+                    </svg>
                 <span class="mx-auto text-3xl"> {{ $currentMonth }} {{ $currentYear }}</span>
-                <svg xmlns="http://www.w3.org/2000/svg"
-                    class="w-4 h-auto text-indigo-600 hover:text-gray-600 hover:cursor-pointer" fill="none"
-                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-                </svg>
+               
+                    <svg xmlns="http://www.w3.org/2000/svg" wire:click="addMonth(1)"
+                        class="w-4 h-auto text-indigo-600 rounded-full hover:bg-indigo-600 hover:text-white active:ring-2 active:ring-black hover:cursor-pointer" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                    </svg>
+                
             </div>
         </section>
         <div class="grid grid-cols-7 py-5 mx-10 bg-red-300 border-collapse rounded-lg shadow-md shadow-indigo-300">
