@@ -18,8 +18,8 @@
                 </svg>
             </div>
         </section>
-        <div class="grid grid-cols-7 p-5 mx-10 bg-gray-100 border-collapse rounded-lg shadow-md shadow-indigo-300">
-            <div class="col-span-1 text-xl font-bold tracking-wide text-center text-white bg-blue-300 rounded-tl-lg">
+        <div class="grid grid-cols-7 py-5 mx-10 bg-red-300 border-collapse rounded-lg shadow-md shadow-indigo-300">
+            <div class="col-span-1 text-xl font-bold tracking-wide text-center text-white bg-blue-300">
                 <span class="m-auto sm:truncate">Sunday</span>
             </div>
             <div class="col-span-1 text-xl font-bold tracking-wide text-center text-white bg-blue-300">
@@ -37,7 +37,7 @@
             <div class="col-span-1 text-xl font-bold tracking-wide text-center text-white bg-blue-300">
                 <span class="m-auto sm:truncate">Friday</span>
             </div>
-            <div class="col-span-1 text-xl font-bold tracking-wide text-center text-white bg-blue-300 rounded-tr-lg">
+            <div class="col-span-1 text-xl font-bold tracking-wide text-center text-white bg-blue-300">
                 <span class="m-auto sm:truncate">Saturday</span>
             </div>
             @for ($j = 1; $j <= $endDay+$blockSkip; $j++)
@@ -52,13 +52,21 @@
                     $fixx = $j;
                 @endphp
                     @if ($key !== false)
-                        <div wire:click="showconfirmModal({{ $daysWithAppointments[$key]['adid']}})" wire:key='{{ $fixx-$blockSkip }}' 
-                            class="col-span-1 p-5 text-3xl font-bold tracking-wide text-center text-black bg-lime-300 bg-opacity-60 hover:bg-blue-200 hover:text-indigo-600 hover:cursor-pointer sm:text-xs md:text-xl lg:text-2xl">
-                            <span class="m-auto">{{ $fixx-$blockSkip }}</span>
+                        @if ($daysWithAppointments[$key]['available_slots'] == '0')
+                        <div wire:mouseover="getSlots({{ $daysWithAppointments[$key]['adid'] }})" wire:key='{{ $fixx-$blockSkip }}' 
+                        class="col-span-1 p-5 m-1 text-3xl font-bold tracking-wide text-center text-black bg-orange-400 rounded-lg hover:bg-blue-200 hover:text-indigo-600 hover:cursor-pointer sm:text-xs md:text-xl lg:text-2xl">
+                        <span class="m-auto">{{ $fixx-$blockSkip }}</span>
                         </div>
+                        @else
+                        <div wire:mouseover="getSlots({{ $daysWithAppointments[$key]['adid'] }})" wire:key='{{ $fixx-$blockSkip }}' 
+                        class="col-span-1 p-5 m-1 text-3xl font-bold tracking-wide text-center text-black rounded-lg bg-lime-300 hover:bg-blue-200 hover:text-indigo-600 hover:cursor-pointer sm:text-xs md:text-xl lg:text-2xl">
+                        <span class="m-auto">{{ $fixx-$blockSkip }}</span>
+                        </div>
+                        @endif
+                        
                     @else
-                        <div wire:click="showconfirmModal({{ $fixx-$blockSkip }})" wire:key='{{ $fixx-$blockSkip }}'
-                        class="col-span-1 p-5 text-3xl font-bold tracking-wide text-center text-black bg-red-300 bg-opacity-60 hover:bg-blue-200 hover:text-indigo-600 hover:cursor-pointer sm:text-xs md:text-xl lg:text-2xl">
+                        <div wire:click="showconfirmModal({{ $fixx-$blockSkip }})" wire:key='{{ $fixx-$blockSkip }}' wire:mouseover="getSlots(0)"
+                        class="col-span-1 p-5 m-1 text-3xl font-bold tracking-wide text-center text-black bg-red-300 rounded-lg hover:bg-blue-200 hover:text-indigo-600 hover:cursor-pointer sm:text-xs md:text-xl lg:text-2xl">
                             <span class="m-auto">{{ $fixx-$blockSkip }}</span>
                         </div>
                     @endif
@@ -69,18 +77,20 @@
         <div class="grid grid-cols-10 grid-rows-4 gap-3 p-5 mx-10 border-collapse rounded-lg">
             <span class="col-span-1 row-start-1 text-lg font-extrabold tracking-wider">Legends:</span>
             <span class="col-span-1 row-start-2 pl-3">Available:</span><span
-                class="col-span-1 col-start-2 row-start-2 bg-lime-300"></span>
+                class="col-span-1 col-start-2 row-start-2 shadow-md shadow-lime-400 bg-lime-300"></span>
             <span class="col-span-1 row-start-3 pl-3">Full:</span><span
-                class="col-span-1 col-start-2 row-start-3 bg-orange-300"></span>
+                class="col-span-1 col-start-2 row-start-3 bg-orange-400 shadow-md shadow-orange-500"></span>
             <span class="col-span-1 row-start-4 pl-3">No Schedule:</span><span
-                class="col-span-1 col-start-2 row-start-4 bg-red-300"></span>
+                class="col-span-1 col-start-2 row-start-4 bg-red-300 shadow-md shadow-red-400"></span>
 
-            <span class="col-span-1 col-start-9 row-start-2 text-right">Available Slots:</span>
-            <span class="col-span-1 col-start-9 row-start-3 text-right">Occupied Slots:</span>
-            <span class="col-span-1 col-start-9 row-start-4 text-right">Total:</span>
-            <span class="col-span-1 col-start-10 row-start-2 text-right">{{ $availableSlots }}</span>
-            <span class="col-span-1 col-start-10 row-start-3 text-right">{{ $occupiedSlots }}</span>
-            <span class="col-span-1 col-start-10 row-start-4 text-right">{{ $totalSlots }}</span>
+            <span class="col-span-1 col-start-9 row-start-1 text-right">Available Slots:</span>
+            <span class="col-span-1 col-start-9 row-start-2 text-right">Occupied Slots:</span>
+            <span class="col-span-1 col-start-9 row-start-3 text-right">Total:</span>
+            <span class="col-span-1 col-start-9 row-start-4 text-right">Vaccine:</span>
+            <span class="col-span-1 col-start-10 row-start-1 text-right">{{ $availableSlots }}</span>
+            <span class="col-span-1 col-start-10 row-start-2 text-right">{{ $occupiedSlots }}</span>
+            <span class="col-span-1 col-start-10 row-start-3 text-right">{{ $totalSlots }}</span>
+            <span class="col-span-1 col-start-10 row-start-4 text-right">{{ $vaccineName }}</span>
 
         </div>
     </div>
@@ -118,11 +128,23 @@
                     <div class="mt-3 text-center sm:mt-5">
                         <h3 class="text-lg font-medium leading-6 text-gray-900" id="modal-title">Confirm Vaccination
                             Schedule</h3>
-                        <div class="mt-2">
-                            <p class="text-sm text-gray-500">Would you like to set up a vaccination schedule for
-                                {{ $day_to_store }} {{ $currentMonth }}, {{ $currentYear }}? Vaccination schedule will have
-                                default slots of 120(max)</p>
-                        </div>
+                            <div class="mt-2">
+                                <p class="text-sm text-gray-500">Would you like to set up a vaccination schedule for
+                                    {{ $day_to_store }} {{ $currentMonth }}, {{ $currentYear }}? Vaccination schedule will have
+                                    default slots of 400(max)</p>
+                            </div>
+                            <div class="items-center block mt-4">
+                                <p class="font-bold tracking-wider text-indigo-500 text-md">Select Vaccine:</p>
+                                <select name="vaccines" id="vaccines" class="w-full px-3 py-1 mx-2 my-1 rounded-lg text-md group hover:cursor-pointer" wire:model="vaccineid">
+                                    @foreach ($vaccines as $vaccine)
+                                    @if ($loop->index == 0)
+                                    <option class="p-1 m-1 text-sm hover:bg-blue-100 group-hover:cursor-pointer" value="{{ $vaccine->id }}" selected>{{ $vaccine->vaccine_name }}</option>   
+                                    @else
+                                    <option class="p-1 m-1 text-sm hover:bg-blue-100 group-hover:cursor-pointer" value="{{ $vaccine->id }}">{{ $vaccine->vaccine_name }}</option>   
+                                    @endif                                     
+                                    @endforeach
+                                </select>
+                            </div>
                     </div>
                 </div>
                 <div class="mt-5 sm:mt-6 sm:grid sm:grid-cols-2 sm:gap-3 sm:grid-flow-row-dense">
@@ -168,7 +190,7 @@
             </div>
             </div>
             <div class="mt-5 sm:mt-6">
-            <a  href="/dashboard" class="inline-flex justify-center w-full px-4 py-2 text-base font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:text-sm">Got it!</a>
+            <a  href="{{ route('dashboard',['adp_id' => 0,'dateSelected' => '0']) }}" class="inline-flex justify-center w-full px-4 py-2 text-base font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:text-sm">Got it!</a>
             </div>
         </div>
         </div>

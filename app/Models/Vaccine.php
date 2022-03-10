@@ -8,4 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Vaccine extends Model
 {
     use HasFactory;
+
+    public function appointmentDates()
+    {
+        return $this->belongsTo(AppointmentDate::class);
+    }
+
+    public function appointments()
+    {
+        return $this->belongsTo(Appointment::class);
+    }
 }

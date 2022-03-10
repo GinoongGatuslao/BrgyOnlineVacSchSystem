@@ -10,7 +10,7 @@
                         </a>
                     </div>
                     <nav aria-label="Global" class="hidden lg:ml-6 lg:flex lg:items-center lg:space-x-4">
-                        <a href="#" class="px-3 py-2 text-sm font-medium text-gray-900"> Dashboard </a>
+                        <a href="{{ route('dashboard',['adp_id' => 0,'dateSelected' => 'false']) }}" class="px-3 py-2 text-sm font-medium text-gray-900"> Dashboard </a>
 
                         <a href="#" class="px-3 py-2 text-sm font-medium text-gray-900"> Jobs </a>
 
@@ -101,7 +101,7 @@
                                     </div>
                                 </div>
                                 <div class="px-2 mt-3 space-y-1">
-                                    <a href="#"
+                                    <a href="{{ route('dashboard',['dateSelected' => 'false','adp_id' => 0]) }}"
                                         class="block px-3 py-2 text-base font-medium text-gray-900 rounded-md hover:bg-gray-100 hover:text-gray-800">Dashboard</a>
 
                                     <a href="#"

@@ -6,7 +6,7 @@
             <div class="flex items-center px-2 lg:px-0">
                 <!-- Logo -->
                 <div class="flex-shrink-0">
-                    <a href="{{ route('dashboard') }}">
+                    <a href="{{ route('dashboard',['adp_id' => 0,'dateSelected' => '0']) }}">
                         <x-application-logo class="block w-8 h-8 text-white fill-white" />
                     </a>
                 </div>
@@ -14,7 +14,7 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <div class="flex space-x-4">
-                        <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                        <x-nav-link :href="route('dashboard',['adp_id' => 0,'dateSelected' => '0'])" :active="request()->routeIs('dashboard') ">
                             {{ __('Dashboard') }}
                         </x-nav-link>
                         <x-nav-link>

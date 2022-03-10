@@ -13,6 +13,7 @@ class AppointmentDate extends Model
         'date',
         'available_slots',
         'max_slots',
+        'vaccine_id',
     ];
 
     public function appointment_times()
@@ -23,5 +24,10 @@ class AppointmentDate extends Model
     public function appointments()
     {
         return $this->hasMany(Appointment::class);
+    }
+
+    public function vaccine()
+    {
+        return $this->hasOne(Vaccine::class, 'id', 'vaccine_id');
     }
 }

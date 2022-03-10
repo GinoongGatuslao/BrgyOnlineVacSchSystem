@@ -7,6 +7,7 @@ use Livewire\Component;
 use App\Models\Appointment;
 use App\Models\AppointmentDate;
 use App\Models\AppointmentTime;
+use App\Models\Vaccine;
 
 class PersonalSection extends Component
 {
@@ -23,6 +24,8 @@ class PersonalSection extends Component
     public $availableSlots = "-";
     public $occupiedSlots = "-";
     public $totalSlots = "-";
+    public $vaccineName = "-";
+    public $vaccineid=1;
 
     public function render()
     {
@@ -46,7 +49,7 @@ class PersonalSection extends Component
         $this->appointmentdates = AppointmentDate::where('date','like',$this->currentYear.'-'.$this->currentMonthNumeric.'%')->get();
         $this->daysWithAppointments=[];
         foreach ($this->appointmentdates as $key => $value) {
-            $this->daysWithAppointments[] = ['adid' => $value->id ,'date' => Carbon::parse($value->date)->format('d')];
+            $this->daysWithAppointments[] = ['adid' => $value->id ,'date' => Carbon::parse($value->date)->format('d'),'available_slots' => $value->available_slots,'max_slots' => $value->max_slots];
             // array_push($this->daysWithAppointments, Carbon::parse($value->date)->format('d'));
         }
         // dd($this->daysWithAppointments);
@@ -72,7 +75,7 @@ class PersonalSection extends Component
         }
         //get the appointments for the current month
 
-        return view('livewire.admin.dashboard.personal-section');
+        return view('livewire.admin.dashboard.personal-section')->with('vaccines',Vaccine::all());
     }
     public $day_to_store=1;
     public function showconfirmModal($day)
@@ -83,7 +86,7 @@ class PersonalSection extends Component
 
     public function showsuccessModal()
     {
-        
+        $this->showSuccessModal = true;        
     }
 
     public function makeAppointmentSchedule()
@@ -94,7 +97,8 @@ class PersonalSection extends Component
         $date = Carbon::create($this->currentYear, $this->currentMonthNumeric, $this->day_to_store)->format('Y-m-d');
         //store to database the date on appointmentdate table
         $appDate = AppointmentDate::create([
-            'date' => $date
+            'date' => $date,
+            'vaccine_id' => $this->vaccineid
         ]);
         $appTime ="";
         $timeStart = 7;
@@ -131,9 +135,23 @@ class PersonalSection extends Component
                 $timeEnd = 1;
 
             }
-            
         }
         $this->showConfirmModal = false;
         $this->showSuccessModal = true;
+    }
+
+    public function getSlots($adp_id){
+        if ($adp_id != "0") {
+            $appointmentdate = AppointmentDate::find($adp_id);
+            $this->availableSlots= $appointmentdate->available_slots;
+            $this->occupiedSlots= $appointmentdate->max_slots - $appointmentdate->available_slots;
+            $this->totalSlots = $appointmentdate->max_slots;
+            $this->vaccineName = $appointmentdate->vaccine->vaccine_name;
+        }else{
+            $this->availableSlots = "-";
+            $this->occupiedSlots = "-";
+            $this->totalSlots = "-";    
+            $this->vaccineName = "-";
+        }
     }
 }
