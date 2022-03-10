@@ -17,6 +17,7 @@ class CreateVaccinesTable extends Migration
             $table->id();
             $table->string('vaccine_name');
             $table->integer('dose');
+            $table->integer('second_dose_sched');
             $table->timestamps();
         });
     }

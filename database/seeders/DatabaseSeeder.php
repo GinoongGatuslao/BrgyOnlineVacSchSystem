@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             PurokSeeder::class,
             UserTypeSeeder::class,
             UserSeeder::class,
+            VaccineSeeder::class,
         ]);
         // \App\Models\User::factory(10)->create();
     }
