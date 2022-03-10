@@ -28,4 +28,9 @@ class Appointment extends Model
     {
         return $this->hasMany(User::class);
     }
+
+    public function vaccine()
+    {
+        return $this->hasOne(Vaccine::class);
+    }
 }
