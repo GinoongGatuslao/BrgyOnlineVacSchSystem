@@ -17,8 +17,8 @@ class CreateAppointmentTimesTable extends Migration
             $table->id();
             $table->foreignId('appointment_date_id')->onDelete('cascade');
             $table->string('time_slot');
-            $table->integer('available_slots')->default(50);
-            $table->integer('max_slots')->default(50);
+            $table->integer('available_slots')->default(15);
+            $table->integer('max_slots')->default(15);
             $table->timestamps();
         });
     }

@@ -48,8 +48,9 @@
                 <!-- /End replace -->
             </div>
         </main>
-
+        
     </div>
+    <div class="absolute right-0 z-50 px-10 pt-2 pb-2 -mr-16 text-center transform -rotate-90 bg-blue-400 rounded-t-full bottom-24"><h3 class="tracking-widest text-white">Feedback</h3></div>
     @livewireScripts
 </body>
 

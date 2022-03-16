@@ -16,8 +16,8 @@ class CreateAppointmentDatesTable extends Migration
         Schema::create('appointment_dates', function (Blueprint $table) {
             $table->id();
             $table->date('date');
-            $table->integer('available_slots')->default(400);
-            $table->integer('max_slots')->default(400);            
+            $table->integer('available_slots')->default(120);
+            $table->integer('max_slots')->default(120);            
             $table->foreignId('vaccine_id');
             $table->string('appointmenttype')->default('first_dose');
             $table->timestamps();

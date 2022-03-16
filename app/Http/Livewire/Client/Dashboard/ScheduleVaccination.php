@@ -26,7 +26,7 @@ class ScheduleVaccination extends Component
         $user = auth()->user();
         $patient = PatientInformation::where('user_id',$user->id)->first();        
         $appointmentTimes = $selectedDate =[];
-
+        $appointments = Appointment::where('patient_id',$patient->id)->get()->count();
         if ($this->selectedId != 0) {
             $appointmentTimes = AppointmentTime::where('appointment_date_id',$this->selectedId)->get();
             if ($this->apTimeID == null) {
@@ -42,6 +42,7 @@ class ScheduleVaccination extends Component
             'appointmentTimes' => $appointmentTimes,
             'selectedDate' => $selectedDate,
             'patient' => $patient,
+            'appointments' => $appointments,
         ]);
     }
 
@@ -68,10 +69,44 @@ class ScheduleVaccination extends Component
     {
         $patient = PatientInformation::where('user_id',auth()->user()->id)->first();   
         $appointmentdate = AppointmentDate::where('id',$this->selectedId)->first();
-        $appointmentTimes = AppointmentTime::where('appointment_date_id',$this->selectedId)->where('id',$this->apTimeID)->first();
         $vaccineInfo = Vaccine::where('id',$appointmentdate->vaccine_id)->first();
-        if($vaccineInfo->doses > 1){
-           
+       
+        $appointmentTimes = AppointmentTime::where('appointment_date_id',$this->selectedId)->where('id',$this->apTimeID)->first();
+        if($vaccineInfo->dose > 1){
+            $appointmentdate2 = AppointmentDate::where('appointmenttype','second_dose')->where('date',Carbon::parse($appointmentdate->date)->addDays($vaccineInfo->second_dose_sched)->format('Y-m-d'))->first();
+            $appointmentTimes2 = AppointmentTime::where('appointment_date_id',$appointmentdate2->id)->where('time_slot',$appointmentTimes->time_slot)->first();
+            
+
+            $appointment = new Appointment();
+            $appointment->appointment_type_id = 1;
+            $appointment->appointment_date_id = $appointmentdate->id;
+            $appointment->appointment_time_id = $appointmentTimes->id;
+            $appointment->vaccine_id = $vaccineInfo->id;
+            $appointment->patient_id = $patient->id;     
+            $appointment->save();
+
+            $appointmentdate->available_slots -= 1;
+            $appointmentdate->save();
+
+            $appointmentTimes->available_slots -= 1;
+            $appointmentTimes->save();
+
+            $appointment2 = new Appointment();
+            $appointment2->appointment_type_id = 2;
+            $appointment2->appointment_date_id = $appointmentdate2->id;
+            $appointment2->appointment_time_id = $appointmentTimes2->id;
+            $appointment2->vaccine_id = $vaccineInfo->id;
+            $appointment2->patient_id = $patient->id;     
+            $appointment2->save();
+
+            $appointmentdate2->available_slots -= 1;
+            $appointmentdate2->save();
+
+            $appointmentTimes2->available_slots -= 1;
+            $appointmentTimes2->save();
+
+            $this->showConfirmModal = false;
+            $this->showSuccessModal();
         }else{
             $appointment = new Appointment();
             $appointment->appointment_type_id = 1;

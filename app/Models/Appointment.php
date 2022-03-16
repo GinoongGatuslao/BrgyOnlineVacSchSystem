@@ -16,12 +16,12 @@ class Appointment extends Model
 
     public function appointmentDate()
     {
-        return $this->hasOne(AppointmentDate::class);
+        return $this->hasOne(AppointmentDate::class, 'id', 'appointment_date_id');
     }
 
     public function appointmentTime()
     {
-        return $this->hasOne(AppointmentTime::class);
+        return $this->hasOne(AppointmentTime::class, 'id', 'appointment_time_id');
     }
 
     public function patient()
@@ -31,6 +31,6 @@ class Appointment extends Model
 
     public function vaccine()
     {
-        return $this->hasOne(Vaccine::class);
+        return $this->hasOne(Vaccine::class, 'id', 'vaccine_id');
     }
 }

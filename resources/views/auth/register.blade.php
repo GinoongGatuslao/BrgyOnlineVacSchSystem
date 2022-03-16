@@ -86,7 +86,7 @@
                     autofocus>
                         <x-slot name="content">
                             <option value="Male">Male</option>
-                            <option value="Femalepp">Female</option>
+                            <option value="Female">Female</option>
                         </x-slot>
                     </x-select>
                         

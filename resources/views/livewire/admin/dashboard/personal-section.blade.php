@@ -3,9 +3,7 @@
     <div class="items-center w-full h-full mb-5 space-y-3">
         <section id="header" class="block space-y-5 text-center">
             <h1 class="text-4xl font-extrabold tracking-wider text-indigo-600 uppercase">Reports</h1>
-            <button wire:click="sendsms()" class="px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700">
-                Send
-              </button>
+           
             <div class="flex w-full px-3 mx-auto text-center">
                     <svg xmlns="http://www.w3.org/2000/svg" wire:click="addMonth(0)"
                     class="w-4 h-auto text-indigo-600 rounded-full hover:bg-indigo-600 hover:text-white active:ring-2 active:ring-black hover:cursor-pointer"fill="none"
@@ -56,16 +54,25 @@
                     $fixx = $j;
                 @endphp
                     @if ($key !== false)
+                 
                         @if ($daysWithAppointments[$key]['available_slots'] == '0')
                         <div wire:mouseover="getSlots({{ $daysWithAppointments[$key]['adid'] }})" wire:key='{{ $fixx-$blockSkip }}' 
                         class="col-span-1 p-5 m-1 text-3xl font-bold tracking-wide text-center text-black bg-orange-400 rounded-lg hover:bg-blue-200 hover:text-indigo-600 hover:cursor-pointer sm:text-xs md:text-xl lg:text-2xl">
                         <span class="m-auto">{{ $fixx-$blockSkip }}</span>
                         </div>
                         @else
-                        <div wire:mouseover="getSlots({{ $daysWithAppointments[$key]['adid'] }})" wire:key='{{ $fixx-$blockSkip }}' wire:click="redir({{ $daysWithAppointments[$key]['adid'] }})"
-                        class="col-span-1 p-5 m-1 text-3xl font-bold tracking-wide text-center text-black rounded-lg bg-lime-300 hover:bg-blue-200 hover:text-indigo-600 hover:cursor-pointer sm:text-xs md:text-xl lg:text-2xl">
-                        <span class="m-auto">{{ $fixx-$blockSkip }}</span>
-                        </div>
+                        @if ($daysWithAppointments[$key]['type'] == 'first_dose')
+                            <div wire:mouseover="getSlots({{ $daysWithAppointments[$key]['adid'] }})" wire:key='{{ $fixx-$blockSkip }}' wire:click="redir({{ $daysWithAppointments[$key]['adid'] }})"
+                            class="col-span-1 p-5 m-1 text-3xl font-bold tracking-wide text-center text-black rounded-lg bg-lime-300 hover:bg-blue-200 hover:text-indigo-600 hover:cursor-pointer sm:text-xs md:text-xl lg:text-2xl">
+                            <span class="m-auto">{{ $fixx-$blockSkip }}</span>
+                            </div>
+                        @else
+                            <div wire:mouseover="getSlots({{ $daysWithAppointments[$key]['adid'] }})" wire:key='{{ $fixx-$blockSkip }}' wire:click="redir({{ $daysWithAppointments[$key]['adid'] }})"
+                            class="col-span-1 p-5 m-1 text-3xl font-bold tracking-wide text-center text-black rounded-lg bg-cyan-500 hover:bg-blue-200 hover:text-indigo-600 hover:cursor-pointer sm:text-xs md:text-xl lg:text-2xl">
+                            <span class="m-auto">{{ $fixx-$blockSkip }}</span>
+                            </div>
+                        @endif
+                       
                         @endif
                         
                     @else
@@ -80,8 +87,9 @@
         </div>
         <div class="grid grid-cols-10 grid-rows-4 gap-3 p-5 mx-10 border-collapse rounded-lg">
             <span class="col-span-1 row-start-1 text-lg font-extrabold tracking-wider">Legends:</span>
-            <span class="col-span-1 row-start-2 pl-3">Available:</span><span
-                class="col-span-1 col-start-2 row-start-2 shadow-md shadow-lime-400 bg-lime-300"></span>
+            <span class="col-span-2 row-start-2 pl-3">Available / <span class="text-cyan-500">Second Dose</span> :</span>
+            <span class="col-span-1 col-start-3 row-start-2 shadow-md shadow-lime-400 bg-lime-300"></span>
+            <span class="col-span-1 col-start-4 row-start-2 shadow-md shadow-cyan-400 bg-cyan-500"></span>
             <span class="col-span-1 row-start-3 pl-3">Full:</span><span
                 class="col-span-1 col-start-2 row-start-3 bg-orange-400 shadow-md shadow-orange-500"></span>
             <span class="col-span-1 row-start-4 pl-3">No Schedule:</span><span
@@ -135,7 +143,7 @@
                             <div class="mt-2">
                                 <p class="text-sm text-gray-500">Would you like to set up a vaccination schedule for
                                     {{ $day_to_store }} {{ $currentMonth }}, {{ $currentYear }}? Vaccination schedule will have
-                                    default slots of 400(max)</p>
+                                    default slots of 120(max)</p>
                             </div>
                             <div class="items-center block mt-4">
                                 <p class="font-bold tracking-wider text-indigo-500 text-md">Select Vaccine:</p>

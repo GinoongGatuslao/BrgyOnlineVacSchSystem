@@ -40,16 +40,22 @@
                                 <dd class="mt-1 text-sm text-gray-900">{{ $user->email }}</dd>
                             </div>
                             <div class="sm:col-span-1">
-                                <dt class="text-sm font-medium text-gray-500">Phone</dt>
-                                <dd class="mt-1 text-sm text-gray-900">(+63) {{ $patient->contact_number }}
-                                    <span class="text-xs italic tracking-widest text-gray-400">
-                                        @if ($patient->contact_number_verified == Hash::make($patient->user_id.'YES'))
-                                        Verified
+                                <dt class="text-sm font-medium text-gray-500">Mobile Phone</dt>
+                                <dd class="flex items-start mt-1 text-sm text-gray-900">
+                                   <span class="italic tracking-wider"> (+63){{ substr($patient->contact_number,-10) }}</span>
+                                    <span class="flex my-auto ml-1 text-xs italic tracking-widest text-gray-400">
+                                        @if ($patient->contact_number_verified == 'verified')
+                                        <div class="flex items-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-auto text-blue-500" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                          </svg>
+                                          <span class="my-auto italic font-bold text-blue-500">Verified</span>
+                                        </div>
                                         @else
                                         Unverified                                                                                
                                         @endif
                                     </span></dd>
-                                    @if ($patient->contact_number_verified != Hash::make($patient->user_id.'YES'))
+                                    @if ($patient->contact_number_verified == 'unverified')
                                         @livewire('client.components.verify', ['patient' => $patient])                                                                           
                                     @endif
                                 
@@ -57,8 +63,21 @@
                             <div class="sm:col-span-2">
                                 <dt class="text-sm font-medium text-gray-500">Vaccination Schedules</dt>
                                 <dd class="mt-1 text-sm text-gray-900">
-                                  @if (isset($appointments))
-                                    
+                                  @if ($appointments->count()>0)
+                                    <div class="flex items-start">
+                                        @foreach ($appointments as $appointment)
+                                            <div class="p-10 mx-4 my-2 font-semibold text-center text-indigo-600 bg-green-200 border border-green-100 rounded-lg shadow-md shadow-green-500">
+                                                <p class="text-3xl font-bold">{{ Carbon\Carbon::parse($appointment->appointmentDate->date)->format('F d, Y') }}</p>
+                                                <p class="text-2xl font-bold">Time Slot: {{ $appointment->appointmentTime->time_slot }}</p>
+                                                <p class="text-xl font-bold">Vaccine: {{ $appointment->vaccine->vaccine_name }}</p>
+                                                @if ($appointment->appointment_type_id == 1)
+                                                <p class="text-xl italic font-bold">First Dose</p>
+                                                @else
+                                                <p class="text-xl italic font-bold">Second Dose</p>
+                                                @endif
+                                            </div>
+                                        @endforeach
+                                    </div>
                                   @else
                                       <span class="pl-2 text-sm italic font-bold tracking-wide text-gray-700 uppercase">No Vaccination Schedule Found! <a href="{{ route('schedule-vaccination') }}" class="text-indigo-600 underline hover:cursor-pointer hover:text-lg">Schedule One</a> Now!</span>
                                   @endif

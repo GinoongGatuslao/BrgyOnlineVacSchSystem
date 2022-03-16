@@ -5,6 +5,9 @@
     <div class="py-10 bg-white rounded-lg shadow-lg min-w-fit shadow-slate-400/40">
         <h1 class="m-5 -mt-5 text-3xl font-bold text-blue-600">Upcoming Vaccination Schedules</h1>
         @if ($appointmentdates->count() > 0)
+            @if ($appointments != 0)
+            <h1 class="mx-5"><span class="text-lg italic font-bold tracking-wider text-gray-600">We believe you've already scheduled your vaccination. Check <a href="{{ route('dashboard-home') }}" class="italic text-blue-500 underline"> your dashboard</a>.</span></h1>
+            @else
             <div class="grid w-auto grid-cols-4 gap-5 py-5 mx-5 overflow-y-auto max-h-screen-30" wire:key='dates_table'>
                 @foreach ($appointmentdates as $appointment)
                 <div x-data="{open{{ $appointment->id }}:false}" class="col-span-1 group hover:cursor-pointer" wire:click="showConfirmModal({{ $appointment->id }})" wire:key='{{ $loop->index }}'>
@@ -30,8 +33,9 @@
                 </div>
                 @endforeach
             </div>
+            @endif
         @else
-            <h1 class="mx-5"><span class="text-lg italic font-bold tracking-wider text-gray-600">No upcoming vaccinations yet.</span></h1>
+          
         @endif
     </div>
     {{-- confirm modal --}}
@@ -56,7 +60,7 @@
                     x-show="showConfirmModal" @click.away="showConfirmModal=false"
                     class="relative inline-block px-4 pt-5 pb-4 overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6">
                     <div>
-                        @if ($patient->contact_number_verified!=Hash::make($patient->user_id.'YES'))
+                        @if ($patient->contact_number_verified=='verified')
                         <div class="flex items-center justify-center w-12 h-12 mx-auto bg-yellow-100 rounded-full">
                             <!-- Heroicon name: outline/check -->
 
@@ -104,7 +108,7 @@
                        
                     </div>
                     <div class="mt-5 sm:mt-6 sm:grid sm:grid-cols-2 sm:gap-3 sm:grid-flow-row-dense">
-                        @if ($patient->contact_number_verified!=Hash::make($patient->user_id.'YES'))
+                        @if ($patient->contact_number_verified=='verified')
                         <button type="button" wire:click='setAppointmentSchedule'
                             class="inline-flex justify-center w-full px-4 py-2 text-base font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:col-start-2 sm:text-sm">Set
                             Schedule</button>

@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', App\Http\Livewire\Dashboard::class)->middleware(['auth'])->name('dashboard');
+Route::get('/', App\Http\Livewire\Dashboard::class)->middleware(['auth'])->name('dashboard-home');
 
 Route::get('/dashboard/80a751fde{dateSelected}5770286{adp_id}40c419000e33eba6',App\Http\Livewire\Dashboard::class)->middleware(['auth'])->name('dashboard');
 

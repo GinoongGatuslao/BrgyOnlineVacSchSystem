@@ -43,7 +43,7 @@ class PersonalSection extends Component
         $this->appointmentdates = AppointmentDate::where('date','like',$this->currentYear.'-'.$this->currentMonthNumeric.'%')->get();
         $this->daysWithAppointments=[];
         foreach ($this->appointmentdates as $key => $value) {
-            $this->daysWithAppointments[] = ['adid' => $value->id ,'date' => Carbon::parse($value->date)->format('d'),'available_slots' => $value->available_slots,'max_slots' => $value->max_slots];
+            $this->daysWithAppointments[] = ['adid' => $value->id,'type' => $value->appointmenttype ,'date' => Carbon::parse($value->date)->format('d'),'available_slots' => $value->available_slots,'max_slots' => $value->max_slots];
             // array_push($this->daysWithAppointments, Carbon::parse($value->date)->format('d'));
         }
         // dd($this->daysWithAppointments);
@@ -188,15 +188,7 @@ class PersonalSection extends Component
         $this->showSuccessModal = true;
     }
 
-    public function sendsms(){
-        $nexmo = app('Nexmo\Client');
-
-        $nexmo->message()->send([
-            'to'   => '+639272612630',
-            'from' => '+639272612630',
-            'text' => 'Test sms notification from Gab Icawalo.'
-        ]);
-    }
+    
 
     public function getSlots($adp_id){
         if ($adp_id != "0") {
