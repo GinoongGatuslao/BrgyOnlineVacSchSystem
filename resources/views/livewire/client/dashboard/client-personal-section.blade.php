@@ -4,9 +4,11 @@
         <div class="flex items-center space-x-5">
             <div class="flex-shrink-0">
                 <div class="relative">
-                    <img class="w-16 h-16 rounded-full"
-                        src="{{ Avatar::create( auth()->user()->name)->toBase64() }}"
-                        alt="">
+                    @if ($patient->sex == 'Male')
+                    <x-male-avatar width="400" class="w-16 h-auto text-black fill-current " />
+                    @else
+                    <x-female-avatar width="400" class="w-16 h-auto text-black fill-current" />
+                    @endif
                     <span class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></span>
                 </div>
             </div>
