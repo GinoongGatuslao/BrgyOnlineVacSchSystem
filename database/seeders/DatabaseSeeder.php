@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             UserTypeSeeder::class,
             UserSeeder::class,
             VaccineSeeder::class,
+            AppointmentTypeSeeder::class,
         ]);
         // \App\Models\User::factory(10)->create();
     }
