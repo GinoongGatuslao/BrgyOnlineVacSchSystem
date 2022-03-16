@@ -5,7 +5,7 @@
             <div class="flex-shrink-0">
                 <div class="relative">
                     <img class="w-16 h-16 rounded-full"
-                        src="https://images.unsplash.com/photo-1463453091185-61582044d556?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80"
+                        src="{{ Avatar::create( auth()->user()->name)->toBase64() }}"
                         alt="">
                     <span class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></span>
                 </div>
