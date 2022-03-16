@@ -105,6 +105,9 @@
                 <x-label for="contact_number" :value="__('Contact Number')" />
 
                 <x-input id="contact_number" class="block w-full mt-1" type="text" name="contact_number" :value="old('contact_number')" autofocus autocomplete="on" />
+                
+                
+                
             </div>
 
             <div class="mt-4">

@@ -42,7 +42,7 @@
 
         <!-- Page Content -->
         <main class="-mt-32">
-            <div class="px-4 pb-12 mx-auto max-w-screen w-screen-80 sm:px-6 lg:px-8">
+            <div class="px-4 pb-12 mx-auto max-w-screen w-screen-80 ">
                 <!-- Replace with your content -->
                 {{$slot}}
                 <!-- /End replace -->

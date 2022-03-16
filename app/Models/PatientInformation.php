@@ -18,7 +18,8 @@ class PatientInformation extends Model
         'birthdate',
         'sex',
         'purok_id',
-        'contact_number'
+        'contact_number',
+        'contact_number_verified',
     ];
 
     public function user()

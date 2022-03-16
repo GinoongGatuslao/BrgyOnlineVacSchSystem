@@ -24,6 +24,7 @@ class CreatePatientInformationTable extends Migration
             $table->string('sex');
             $table->foreignId('purok_id');
             $table->string('contact_number')->unique();
+            $table->string('contact_number_verified');
             $table->timestamps();
         });
     }

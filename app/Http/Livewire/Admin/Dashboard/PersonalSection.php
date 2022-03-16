@@ -86,14 +86,29 @@ class PersonalSection extends Component
     public function makeAppointmentSchedule()
     {
         
-        
+        $vaccineInfo = Vaccine::where('id',$this->vaccineid)->first();
+        $date1 = $date2 = "";
         //store date with the day currentMonth and currentYear as Carbon date format with as yyyy-mm-dd
-        $date = Carbon::create($this->currentYear, $this->currentMonthNumeric, $this->day_to_store)->format('Y-m-d');
+        $date1 = Carbon::create($this->currentYear, $this->currentMonthNumeric, $this->day_to_store)->format('Y-m-d');
+        if($vaccineInfo->dose > 1){
+        $date2 = Carbon::create($this->currentYear, $this->currentMonthNumeric, $this->day_to_store)->addDays($vaccineInfo->second_dose_sched)->format('Y-m-d');
+        }
         //store to database the date on appointmentdate table
         $appDate = AppointmentDate::create([
-            'date' => $date,
-            'vaccine_id' => $this->vaccineid
+            'date' => $date1,
+            'vaccine_id' => $this->vaccineid,
+            'appointmenttype'=>'first_dose'
         ]);
+        $appDate2=null;
+        if($vaccineInfo->dose > 1){
+            $appDate2 = new AppointmentDate();
+            $appDate2->date = $date2;
+            $appDate2->vaccine_id = $this->vaccineid;
+            $appDate2->appointmenttype = 'second_dose';
+            $appDate2->save();
+
+           // dd($appDate2);
+        }
         $appTime ="";
         $timeStart = 7;
         $timeEnd = 8;
@@ -130,8 +145,57 @@ class PersonalSection extends Component
 
             }
         }
+        
+        if($vaccineInfo->dose > 1){
+            $timeStart = 7;
+            $timeEnd = 8;
+            for ($i = 0; $i <= 8; $i++) {
+                //store to database the time on appointmenttime table
+    
+                $timeStart++;
+                $timeEnd++;
+    
+                if($timeStart != 12){
+                    if($timeEnd == 12){
+                        
+                    $appTime = AppointmentTime::create([
+                        'appointment_date_id' => $appDate2->id,
+                        'time_slot' => $timeStart.':00 AM - '.$timeEnd.':00 PM',
+                    ]); 
+                    }else{
+                       if($timeStart < 8){
+                        $appTime = AppointmentTime::create([
+                            'appointment_date_id' => $appDate2->id,
+                            'time_slot' => $timeStart.':00 PM - '.$timeEnd.':00 PM',
+                        ]); 
+                       }else{
+                        $appTime = AppointmentTime::create([
+                            'appointment_date_id' => $appDate2->id,
+                            'time_slot' => $timeStart.':00 AM - '.$timeEnd.':00 AM',
+                        ]); 
+                       }
+                    }
+                }else{
+    
+                    $timeStart = 0;
+                    $timeEnd = 1;
+    
+                }
+            }
+        }
+
         $this->showConfirmModal = false;
         $this->showSuccessModal = true;
+    }
+
+    public function sendsms(){
+        $nexmo = app('Nexmo\Client');
+
+        $nexmo->message()->send([
+            'to'   => '+639272612630',
+            'from' => '+639272612630',
+            'text' => 'Test sms notification from Gab Icawalo.'
+        ]);
     }
 
     public function getSlots($adp_id){

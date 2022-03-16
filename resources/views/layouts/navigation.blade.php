@@ -17,9 +17,11 @@
                         <x-nav-link :href="route('dashboard',['adp_id' => 0,'dateSelected' => '0'])" :active="request()->routeIs('dashboard') ">
                             {{ __('Dashboard') }}
                         </x-nav-link>
-                        <x-nav-link>
+                        @if (auth()->user()->user_type_id == 2)
+                        <x-nav-link :href="route('schedule-vaccination')" :active="request()->routeIs('schedule-vaccination') ">
                             {{ __('Schedule Vaccination') }}
                         </x-nav-link>
+                        @endif
 
                     </div>
                 </div>

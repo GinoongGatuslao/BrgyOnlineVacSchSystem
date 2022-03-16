@@ -19,6 +19,7 @@ class CreateAppointmentDatesTable extends Migration
             $table->integer('available_slots')->default(400);
             $table->integer('max_slots')->default(400);            
             $table->foreignId('vaccine_id');
+            $table->string('appointmenttype')->default('first_dose');
             $table->timestamps();
         });
     }

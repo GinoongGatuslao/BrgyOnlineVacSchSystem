@@ -71,6 +71,7 @@ class RegisteredUserController extends Controller
             'suffix' => $request->suffix,
             'sex'=>$request->sex,
             'contact_number'=>$request->contact_number,
+            'contact_number_verified'=>Hash::make($user->id.'NO'),
             'purok_id'=>$request->purok,
             'birthdate' => $request->birthdate,
             ]);

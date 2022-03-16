@@ -1,8 +1,11 @@
-<div class="py-3 bg-white rounded-lg drop-shadow-xl"
+<div class="py-3 bg-white rounded-lg shadow-lg shadow-slate-400/40"
     x-data="{showConfirmModal : @entangle('showConfirmModal'), showSuccessModal : @entangle('showSuccessModal')}">
     <div class="items-center w-full h-full mb-5 space-y-3">
         <section id="header" class="block space-y-5 text-center">
             <h1 class="text-4xl font-extrabold tracking-wider text-indigo-600 uppercase">Reports</h1>
+            <button wire:click="sendsms()" class="px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700">
+                Send
+              </button>
             <div class="flex w-full px-3 mx-auto text-center">
                     <svg xmlns="http://www.w3.org/2000/svg" wire:click="addMonth(0)"
                     class="w-4 h-auto text-indigo-600 rounded-full hover:bg-indigo-600 hover:text-white active:ring-2 active:ring-black hover:cursor-pointer"fill="none"
@@ -139,7 +142,7 @@
                                 <select name="vaccines" id="vaccines" class="w-full px-3 py-1 mx-2 my-1 rounded-lg text-md group hover:cursor-pointer" wire:model="vaccineid">
                                     @foreach ($vaccines as $vaccine)
                                     @if ($loop->index == 0)
-                                    <option class="p-1 m-1 text-sm hover:bg-blue-100 group-hover:cursor-pointer" value="{{ $vaccine->id }}" selected>{{ $vaccine->vaccine_name }}</option>   
+                                    <option class="p-1 m-1 text-sm hover:bg-blue-100 group-hover:cursor-pointer" value="{{ $vaccine->id }}">{{ $vaccine->vaccine_name }}</option>   
                                     @else
                                     <option class="p-1 m-1 text-sm hover:bg-blue-100 group-hover:cursor-pointer" value="{{ $vaccine->id }}">{{ $vaccine->vaccine_name }}</option>   
                                     @endif                                     
