@@ -1,4 +1,4 @@
-<div class="container py-10 bg-white rounded-lg shadow-lg shadow-slate-400/40">
+<div class="container py-10 bg-white rounded-lg shadow-lg shadow-slate-400/40 ">
     <div
         class="max-w-3xl px-4 mx-auto sm:px-6 md:flex md:items-center md:justify-between md:space-x-5 lg:max-w-7xl lg:px-8">
         <div class="flex items-center space-x-5">
@@ -13,9 +13,9 @@
                 </div>
             </div>
             <div>
-                <h1 class="text-2xl font-bold text-gray-900">{{ auth()->user()->name }}</h1>
-                <p class="text-sm font-medium text-gray-500">Prk. {{ $patient->purok->name }}, Baranggay New Carmen, Tacurong City, Sultan Kudarat</p>
-                <p class="text-sm font-medium text-gray-500">{{ Carbon\Carbon::parse($patient->birthdate)->age }} years old | {{ $patient->sex }}</p>
+                <h1 class="text-xl font-extrabold text-gray-900 md:font-bold md:text-2xl">{{ auth()->user()->name }}</h1>
+                <p class="text-xs font-bold text-gray-600 md:font-medium md:text-sm">Prk. {{ $patient->purok->name }}, Baranggay New Carmen, Tacurong City, Sultan Kudarat</p>
+                <p class="text-xs font-bold text-gray-600 md:font-medium md:text-sm">{{ Carbon\Carbon::parse($patient->birthdate)->age }} years old | {{ $patient->sex }}</p>
             </div>
         </div>
     </div>
@@ -66,16 +66,16 @@
                                 <dt class="text-sm font-medium text-gray-500">Vaccination Schedules</dt>
                                 <dd class="mt-1 text-sm text-gray-900">
                                   @if ($appointments->count()>0)
-                                    <div class="flex items-start">
+                                    <div class="items-start columns-1 md:columns-2">
                                         @foreach ($appointments as $appointment)
-                                            <div class="p-10 mx-4 my-2 font-semibold text-center text-indigo-600 bg-green-200 border border-green-100 rounded-lg shadow-md shadow-green-500">
-                                                <p class="text-3xl font-bold">{{ Carbon\Carbon::parse($appointment->appointmentDate->date)->format('F d, Y') }}</p>
-                                                <p class="text-2xl font-bold">Time Slot: {{ $appointment->appointmentTime->time_slot }}</p>
-                                                <p class="text-xl font-bold">Vaccine: {{ $appointment->vaccine->vaccine_name }}</p>
+                                            <div class="p-3 mx-4 my-2 font-semibold text-center text-indigo-600 bg-green-200 border border-green-100 rounded-lg shadow-md md:p-10 shadow-green-500">
+                                                <p class="text-lg font-bold md:text-3xl">{{ Carbon\Carbon::parse($appointment->appointmentDate->date)->format('F d, Y') }}</p>
+                                                <p class="font-bold text-md md:text-2xl">Time Slot: {{ $appointment->appointmentTime->time_slot }}</p>
+                                                <p class="text-sm font-bold md:text-xl">Vaccine: {{ $appointment->vaccine->vaccine_name }}</p>
                                                 @if ($appointment->appointment_type_id == 1)
-                                                <p class="text-xl italic font-bold">First Dose</p>
+                                                <p class="text-sm font-bold md:text-xl">First Dose</p>
                                                 @else
-                                                <p class="text-xl italic font-bold">Second Dose</p>
+                                                <p class="text-sm font-bold md:text-xl">Second Dose</p>
                                                 @endif
                                             </div>
                                         @endforeach

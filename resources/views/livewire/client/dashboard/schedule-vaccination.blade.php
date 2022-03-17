@@ -3,12 +3,12 @@
         Schedule Vaccination
     </x-slot>
     <div class="py-10 bg-white rounded-lg shadow-lg min-w-fit shadow-slate-400/40">
-        <h1 class="m-5 -mt-5 text-3xl font-bold text-blue-600">Upcoming Vaccination Schedules</h1>
+        <h1 class="m-5 -mt-5 text-lg font-bold text-blue-600 md:text-3xl">Upcoming Vaccination Schedules</h1>
         @if ($appointmentdates->count() > 0)
             @if ($appointments != 0)
             <h1 class="mx-5"><span class="text-lg italic font-bold tracking-wider text-gray-600">We believe you've already scheduled your vaccination. Check <a href="{{ route('dashboard-home') }}" class="italic text-blue-500 underline"> your dashboard</a>.</span></h1>
             @else
-            <div class="grid w-auto grid-cols-4 gap-5 py-5 mx-5 overflow-y-auto max-h-screen-30" wire:key='dates_table'>
+            <div class="grid w-auto h-auto grid-cols-1 gap-5 py-5 mx-5 overflow-y-auto md:grid-cols-4 max-h-screen-90" wire:key='dates_table'>
                 @foreach ($appointmentdates as $appointment)
                 <div x-data="{open{{ $appointment->id }}:false}" class="col-span-1 group hover:cursor-pointer" wire:click="showConfirmModal({{ $appointment->id }})" wire:key='{{ $loop->index }}'>
                     <div class="flex items-start w-auto h-auto p-4 text-center bg-green-200 border-2 border-black rounded-lg shadow-lg shadow-slate-400/50" @mouseover="open{{ $appointment->id }} = true"  @mouseleave="open{{ $appointment->id }} = false">
@@ -46,7 +46,7 @@
                 <div x-transition-enter="ease-out duration-300" x-transition-enter-start="opacity-0"
                     x-transition-enter-end="opacity-100" x-transition-leave="ease-in duration-200"
                     x-transition-leave-start="opacity-100" x-transition-leave-end="opacity-0"
-                    class="fixed inset-0 bg-opacity-75 transition-opacit" aria-hidden="true" x-cloak x-show="showConfirmModal">
+                    class="fixed inset-0 transition-opacity bg-opacity-75" aria-hidden="true" x-cloak x-show="showConfirmModal">
                 </div>
 
                 <!-- This element is to trick the browser into centering the modal contents. -->
@@ -58,7 +58,7 @@
                     x-transition-leave-start="opacity-100 translate-y-0 sm:scale-100"
                     x-transition-leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" x-cloak
                     x-show="showConfirmModal" @click.away="showConfirmModal=false"
-                    class="relative inline-block px-4 pt-5 pb-4 overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6">
+                    class="absolute inline-block px-4 pt-5 pb-4 overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6 sm:relative">
                     <div>
                         @if ($patient->contact_number_verified=='verified')
                         <div class="flex items-center justify-center w-12 h-12 mx-auto bg-yellow-100 rounded-full">

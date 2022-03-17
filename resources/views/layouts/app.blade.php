@@ -42,7 +42,7 @@
 
         <!-- Page Content -->
         <main class="-mt-32">
-            <div class="px-4 pb-12 mx-auto max-w-screen w-screen-80 ">
+            <div class="px-4 pb-12 mx-auto max-w-screen w-screen-90 md:w-screen-80">
                 <!-- Replace with your content -->
                 {{$slot}}
                 <!-- /End replace -->
@@ -50,7 +50,7 @@
         </main>
         
     </div>
-    <div class="absolute right-0 z-50 px-10 pt-2 pb-2 -mr-16 text-center transform -rotate-90 bg-blue-400 rounded-t-full bottom-24"><h3 class="tracking-widest text-white">Feedback</h3></div>
+    <div class="absolute right-0 z-50 hidden px-10 pt-2 pb-2 -mr-16 text-center transform -rotate-90 bg-blue-400 rounded-t-full bottom-24 md:flex"><h3 class="tracking-widest text-white">Feedback</h3></div>
     @livewireScripts
 </body>
 

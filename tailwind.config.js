@@ -15,6 +15,7 @@ module.exports = {
                 sans: ['Nunito', ...defaultTheme.fontFamily.sans],
             },
             spacing: {
+                'screen-90': '90vw',
                 'screen-80': '80vw',
                 'screen-60': '60vw',
                 'screen-50': '50vw',

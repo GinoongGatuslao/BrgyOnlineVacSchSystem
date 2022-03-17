@@ -2,11 +2,11 @@
     <x-auth-card>
         <x-slot name="logo">
             <a href="/">
-                <x-register-logo width="400" class="h-auto text-gray-500 fill-current" />
+                <x-register-logo  class="h-auto text-white fill-current w-72 sm:w-52 md:w-96" />
             </a>
         </x-slot>
         <x-slot name="appName">
-            <h2 class="text-3xl font-extrabold leading-tight tracking-widest text-white uppercase drop-shadow-lg">
+            <h2 class="font-extrabold leading-tight tracking-widest text-white uppercase text-md drop-shadow-lg md:text-3xl">
                 {{ env('APP_NAME') }}
             </h2>
         </x-slot>
@@ -53,8 +53,8 @@
             </div>
             <div class="mt-4">
                 <div class="flex w-full">
-                    <x-label for="purok" :value="__('Select Purok')" class="w-1/6 font-bold text-left" />
-                    <x-label for="purok" :value="__('Baranggay New Carmen, Tacurong City, Sultan Kudarat')" class="w-5/6 text-right"/>
+                    <x-label for="purok" :value="__('Select Purok')" class="w-2/6 font-bold text-left md:w-1/6" />
+                    <x-label for="purok" :value="__('Baranggay New Carmen, Tacurong City, Sultan Kudarat')" class="w-4/6 text-right truncate md:w-5/6"/>
                  </div>
                  <x-select id="purok" class="w-full mt-1" name="purok" :value="old('purok')" required
                  autofocus>

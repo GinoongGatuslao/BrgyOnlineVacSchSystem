@@ -2,11 +2,11 @@
     <div>
         {{ $logo }}
     </div>
-    <div>
+    <div class="text-center">
         {{ $appName }}
     </div>
 
-    <div class="px-6 py-4 mt-6 overflow-hidden bg-white shadow-md w-screen-30 sm:rounded-lg">
+    <div class="px-5 py-4 mt-6 overflow-auto rounded-lg shadow-md w-screen-90 bg-slate-100 sm:w-screen-50 md:w-screen-30 md:overflow-hidden">
         {{ $slot }}
     </div>
 </div>

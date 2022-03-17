@@ -2,11 +2,11 @@
     <x-auth-card>
         <x-slot name="logo">
             <a href="/">
-                <x-login-logo width="400" class="h-auto text-white fill-current" />
+                <x-login-logo class="h-auto text-white fill-current w-52 sm:w-52 md:w-96" />
             </a>
         </x-slot>
         <x-slot name="appName">
-            <h2 class="text-3xl font-extrabold leading-tight tracking-widest text-white uppercase drop-shadow-lg">
+            <h2 class="font-extrabold leading-tight tracking-widest text-white uppercase text-md drop-shadow-lg sm:text-center sm:text-xl md:text-3xl">
                 {{ env('APP_NAME') }}
             </h2>
         </x-slot>
