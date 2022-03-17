@@ -1,4 +1,4 @@
-<div class="container py-10 bg-white rounded-lg shadow-lg shadow-slate-400/40 ">
+<div class="container py-10 rounded-lg shadow-lg bg-gradient-to-b from-white to-gray-100 shadow-slate-400/40 ">
     <div
         class="max-w-3xl px-4 mx-auto sm:px-6 md:flex md:items-center md:justify-between md:space-x-5 lg:max-w-7xl lg:px-8">
         <div class="flex items-center space-x-5">
@@ -25,7 +25,7 @@
         <div class="space-y-6 ">
             <!-- Description list-->
             <section aria-labelledby="applicant-information-title">
-                <div class="bg-white shadow-sm shadow-gray-500 sm:rounded-lg">
+                <div class="bg-gray-100 sm:rounded-lg">
                     <div class="px-4 py-5 bg-gray-100 sm:px-6">
                         <h2 id="applicant-information-title" class="text-lg font-medium leading-6 text-gray-900">
                             Personal Information</h2>

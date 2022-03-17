@@ -46,12 +46,12 @@ class User extends Authenticatable
 
     public function personnel_information()
     {
-        return $this->belongsTo(PersonnelInformation::class);
+        return $this->hasOne(PersonnelInformation::class, 'user_id');
     }
 
     public function patient_information()
     {
-        return $this->belongsTo(PatientInformation::class);
+        return $this->hasOne(PatientInformation::class, 'user_id');
     }
 
     public function appointments()
