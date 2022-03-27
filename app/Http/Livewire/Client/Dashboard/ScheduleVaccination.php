@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire\Client\Dashboard;
 
+use App\Events\sendnotifications;
+use App\Models\AdminNotification;
 use App\Models\Appointment;
 use App\Models\AppointmentDate;
 use App\Models\AppointmentTime;
@@ -121,7 +123,22 @@ class ScheduleVaccination extends Component
 
             $appointmentTimes->available_slots -= 1;
             $appointmentTimes->save();
-
+            
+            // if $appDate->available_slots is 0, send event sendnotifications and make new admin notification        
+            if ($appointmentTimes->available_slots == 0) {
+                $an = new AdminNotification;
+                $an->message = "Appointment Slot on ".$appointmentdate->date->format('F d, Y')." @ ".$appointmentTimes->time_slot." have all been taken. Please check the schedule for more information.";
+                $an->user_id = 1;
+                $an->save();
+                event(new sendnotifications($appointmentTimes->id));
+            }
+            if ($appointmentdate->available_slots == 0) {
+                $an = new AdminNotification;
+                $an->message = "Appointment Slot on ".$appointmentdate->date->format('F d, Y').", have all been taken. Please check the schedule for more information.";
+                $an->user_id = 1;
+                $an->save();
+                event(new sendnotifications($appointmentTimes->id));
+            }
             $this->showConfirmModal = false;
             $this->showSuccessModal();
         }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Admin\Dashboard;
 
+use App\Events\sendnotifications;
 use Carbon\Carbon;
 use Livewire\Component;
 use App\Models\Appointment;
@@ -85,6 +86,7 @@ class PersonalSection extends Component
 
     public function makeAppointmentSchedule()
     {
+        
         
         $vaccineInfo = Vaccine::where('id',$this->vaccineid)->first();
         $date1 = $date2 = "";
@@ -183,12 +185,14 @@ class PersonalSection extends Component
                 }
             }
         }
-
+        
         $this->showConfirmModal = false;
         $this->showSuccessModal = true;
     }
 
-    
+    public function test(){
+        event(new sendnotifications(""));
+    }    
 
     public function getSlots($adp_id){
         if ($adp_id != "0") {

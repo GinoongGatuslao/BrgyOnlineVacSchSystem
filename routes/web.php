@@ -12,6 +12,10 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('notif-sender',function(){
+   $message = request('message');
+   event(new App\Events\sendnotifications($message));
+});
 
 Route::get('/', App\Http\Livewire\Dashboard::class)->middleware(['auth'])->name('dashboard-home');
 

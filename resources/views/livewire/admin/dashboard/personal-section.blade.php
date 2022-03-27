@@ -20,6 +20,7 @@
                 
             </div>
         </section>
+        <button type="button" class="text-2xl italic text-white uppercase bg-red-500" wire:click="test">triggeeeeeeeeer</button>
         <div class="grid grid-cols-7 py-5 mx-10 bg-red-300 border-collapse rounded-lg shadow-md shadow-indigo-300">
             <div class="col-span-1 text-xl font-bold tracking-wide text-center text-white bg-blue-300">
                 <span class="m-auto sm:truncate">Sunday</span>

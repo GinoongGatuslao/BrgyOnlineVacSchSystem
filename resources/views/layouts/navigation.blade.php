@@ -39,26 +39,20 @@
                                 class="flex-shrink-0 p-1 text-indigo-200 bg-indigo-600 rounded-full hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-indigo-600 focus:ring-white">
                                 <span class="sr-only">View notifications</span>
                                 <!-- Heroicon name: outline/bell -->
-                                <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor" aria-hidden="true">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-                                </svg>
+                                <div class="flex">
+                                    <svg class="w-6 h-auto md:w-8" xmlns="http://www.w3.org/2000/svg" fill="none" visewBox="0 0 24 24"
+                                        stroke="currentColor" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                                    </svg>
+                                    <div class="relative z-50 flex p-1.5 m-auto text-xs bg-red-500 rounded-full -top-2 right-3.5" x-cloak x-show="showBadge" id="badge"></div>
+                                </div>
                             </button>
                         </x-slot>
-                        <x-slot name="content">
-                            <x-dropdown-link>
-                               <p class="truncate "> {{ __('Log Out char') }}</p>
-                            </x-dropdown-link>
-                            <x-dropdown-link>
-                               <p class="truncate "> {{ __('Lorem Ipsum laba nga text') }}</p>
-                            </x-dropdown-link>
-                            <x-dropdown-link>
-                               <p class="truncate "> {{ __('More Laba text') }}</p>
-                            </x-dropdown-link>
-                            <x-dropdown-link class="">
-                               <p class="truncate "> {{ __('ascasdcksjdhfgksadfkjasgdhfkjashgdfs') }}</p>
-                            </x-dropdown-link>
+                        <x-slot name="content" class="screen-80">
+                            <div class="px-3 py-2">
+                                @livewire('components.notifications-dropdown')
+                            </div>
                         </x-slot>
                     </x-dropdown>
                     <x-dropdown align="right" width="48">
