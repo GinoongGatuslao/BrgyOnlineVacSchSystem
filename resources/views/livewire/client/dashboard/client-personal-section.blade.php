@@ -66,9 +66,13 @@
                                 <dt class="text-sm font-medium text-gray-500">Vaccination Schedules</dt>
                                 <dd class="mt-1 text-sm text-gray-900">
                                   @if ($appointments->count()>0)
-                                    <div class="items-start block md:flex">
+                                    @if($appointments->count() > 1)
+                                    <div class="items-start md:columns-2">
+                                    @else
+                                    <div class="items-start">
+                                    @endif
                                         @foreach ($appointments as $appointment)
-                                            <div class="p-3 mx-4 my-2 font-semibold text-center text-indigo-600 bg-green-200 border border-green-100 rounded-lg shadow-md md:p-10 shadow-green-500">
+                                            <div class="p-3 mx-4 my-2 font-semibold text-center text-blue-600 bg-green-200 border border-green-100 rounded-lg shadow-md md:p-10 shadow-green-500">
                                                 <p class="text-lg font-bold md:text-3xl">{{ Carbon\Carbon::parse($appointment->appointmentDate->date)->format('F d, Y') }}</p>
                                                 <p class="font-bold text-md md:text-2xl">Time Slot: {{ $appointment->appointmentTime->time_slot }}</p>
                                                 <p class="text-sm font-bold md:text-xl">Vaccine: {{ $appointment->vaccine->vaccine_name }}</p>
@@ -81,7 +85,7 @@
                                         @endforeach
                                     </div>
                                   @else
-                                      <span class="pl-2 text-sm italic font-bold tracking-wide text-gray-700 uppercase">No Vaccination Schedule Found! <a href="{{ route('schedule-vaccination') }}" class="text-indigo-600 underline hover:cursor-pointer hover:text-lg">Schedule One</a> Now!</span>
+                                      <span class="pl-2 text-sm italic font-bold tracking-wide text-gray-700 uppercase">No Vaccination Schedule Found! <a href="{{ route('schedule-vaccination') }}" class="text-blue-600 underline hover:cursor-pointer hover:text-lg">Schedule One</a> Now!</span>
                                   @endif
                                 </dd>
                             </div>

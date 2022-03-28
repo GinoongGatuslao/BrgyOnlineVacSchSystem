@@ -10,12 +10,12 @@
     
     <!-- Fonts -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
-    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+   
     <!-- Styles -->
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     @livewireStyles
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
     <style>
         [x-cloak] {
             display: none !important;
@@ -27,7 +27,7 @@
 
 <body class="h-full">
     <div class="min-h-full">
-        <div class="pb-32 bg-indigo-600">
+        <div class="pb-32 bg-blue-600">
             @include('layouts.navigation')
 
             <!-- Page Heading -->
@@ -50,8 +50,19 @@
         </main>
         
     </div>
-    <div class="absolute right-0 z-50 hidden px-10 pt-2 pb-2 -mr-16 text-center transform -rotate-90 bg-blue-400 rounded-t-full bottom-24 md:flex"><h3 class="tracking-widest text-white">Feedback</h3></div>
+    
+    @livewire('components.feedback')
     @livewireScripts
+    
+    <script src="{{ asset('js/app.js') }}"></script>
+    <script>
+        Echo.channel('notification')
+            .listen('sendnotifications', (e) => {
+                window.Livewire.emit('lols')
+                var audio = new Audio('../ringtones/notif-pop.wav');
+                audio.play();
+            });
+    </script>
 </body>
 
 </html>

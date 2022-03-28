@@ -1,8 +1,8 @@
-<nav x-data="{ open: false }" class="bg-indigo-600 border-b border-indigo-300 border-opacity-25 lg:border-none">
+<nav x-data="{ open: false }" class="bg-blue-600 border-b border-blue-300 border-opacity-25 lg:border-none">
     <!-- Primary Navigation Menu -->
     <div class="px-2 mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div
-            class="relative flex items-center justify-between h-16 lg:border-b lg:border-indigo-400 lg:border-opacity-25">
+            class="relative flex items-center justify-between h-16 lg:border-b lg:border-blue-400 lg:border-opacity-25">
             <div class="flex items-center px-2 lg:px-0">
                 <!-- Logo -->
                 <div class="flex-shrink-0">
@@ -33,32 +33,28 @@
             <!-- Settings Dropdown -->
             <div class="block lg:block lg:ml-4">
                 <div class="flex items-center space-x-3">
-                    <x-dropdown align="right" width="flex" class="mr-3">
+                    <x-dropdown align="right" width="screen-80" class="mr-3">
                         <x-slot name="trigger">
                             <button type="button"
-                                class="flex-shrink-0 p-1 text-indigo-200 bg-indigo-600 rounded-full hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-indigo-600 focus:ring-white">
+                                class="flex p-1 text-center text-blue-200 bg-blue-600 rounded-full hover:text-white focus:text-cyan-400">
                                 <span class="sr-only">View notifications</span>
                                 <!-- Heroicon name: outline/bell -->
-                                <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor" aria-hidden="true">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-                                </svg>
+                                <div class="flex mx-auto">
+                                    <svg class="w-6 h-6 md:w-8" xmlns="http://www.w3.org/2000/svg" fill="none" visewBox="0 0 24 24"
+                                        stroke="currentColor" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                                    </svg>
+                                    <div class="relative top-0 z-50 flex right-5">
+                                    @livewire('admin.components.notification-badge')
+                                    </div>
+                                </div>
                             </button>
                         </x-slot>
-                        <x-slot name="content">
-                            <x-dropdown-link>
-                               <p class="truncate "> {{ __('Log Out char') }}</p>
-                            </x-dropdown-link>
-                            <x-dropdown-link>
-                               <p class="truncate "> {{ __('Lorem Ipsum laba nga text') }}</p>
-                            </x-dropdown-link>
-                            <x-dropdown-link>
-                               <p class="truncate "> {{ __('More Laba text') }}</p>
-                            </x-dropdown-link>
-                            <x-dropdown-link class="">
-                               <p class="truncate "> {{ __('ascasdcksjdhfgksadfkjasgdhfkjashgdfs') }}</p>
-                            </x-dropdown-link>
+                        <x-slot name="content" class="">
+                            <div class="px-3 py-2 bg-white">
+                                @livewire('components.notifications-dropdown')
+                            </div>
                         </x-slot>
                     </x-dropdown>
                     <x-dropdown align="right" width="48">
