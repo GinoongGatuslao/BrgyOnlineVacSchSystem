@@ -2,26 +2,26 @@
     x-data="{showConfirmModal : @entangle('showConfirmModal'), showSuccessModal : @entangle('showSuccessModal')}">
     <div class="items-center w-full h-full mb-5 space-y-3">
         <section id="header" class="block space-y-5 text-center">
-            <h1 class="text-4xl font-extrabold tracking-wider text-indigo-600 uppercase">Reports</h1>
+            <h1 class="text-4xl font-extrabold tracking-wider text-blue-600 uppercase">Reports</h1>
            
             <div class="flex w-full px-3 mx-auto text-center">
                     <svg xmlns="http://www.w3.org/2000/svg" wire:click="addMonth(0)"
-                    class="w-4 h-auto text-indigo-600 rounded-full hover:bg-indigo-600 hover:text-white active:ring-2 active:ring-black hover:cursor-pointer"fill="none"
+                    class="w-4 h-auto text-blue-600 rounded-full hover:bg-blue-600 hover:text-white active:ring-2 active:ring-black hover:cursor-pointer"fill="none"
                         viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
                     </svg>
                 <span class="mx-auto text-3xl"> {{ $currentMonth }} {{ $currentYear }}</span>
                
                     <svg xmlns="http://www.w3.org/2000/svg" wire:click="addMonth(1)"
-                        class="w-4 h-auto text-indigo-600 rounded-full hover:bg-indigo-600 hover:text-white active:ring-2 active:ring-black hover:cursor-pointer" fill="none"
+                        class="w-4 h-auto text-blue-600 rounded-full hover:bg-blue-600 hover:text-white active:ring-2 active:ring-black hover:cursor-pointer" fill="none"
                         viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
                     </svg>
                 
             </div>
         </section>
-        <button type="button" class="text-2xl italic text-white uppercase bg-red-500" wire:click="test">triggeeeeeeeeer</button>
-        <div class="grid grid-cols-7 py-5 mx-10 bg-red-300 border-collapse rounded-lg shadow-md shadow-indigo-300">
+     
+        <div class="grid grid-cols-7 py-5 mx-10 bg-red-300 border-collapse rounded-lg shadow-md shadow-blue-300">
             <div class="col-span-1 text-xl font-bold tracking-wide text-center text-white bg-blue-300">
                 <span class="m-auto sm:truncate">Sunday</span>
             </div>
@@ -58,18 +58,18 @@
                  
                         @if ($daysWithAppointments[$key]['available_slots'] == '0')
                         <div wire:mouseover="getSlots({{ $daysWithAppointments[$key]['adid'] }})" wire:key='{{ $fixx-$blockSkip }}' 
-                        class="col-span-1 p-5 m-1 text-3xl font-bold tracking-wide text-center text-black bg-orange-400 rounded-lg hover:bg-blue-200 hover:text-indigo-600 hover:cursor-pointer sm:text-xs md:text-xl lg:text-2xl">
+                        class="col-span-1 p-5 m-1 text-3xl font-bold tracking-wide text-center text-black bg-orange-400 rounded-lg hover:bg-blue-200 hover:text-blue-600 hover:cursor-pointer sm:text-xs md:text-xl lg:text-2xl">
                         <span class="m-auto">{{ $fixx-$blockSkip }}</span>
                         </div>
                         @else
                         @if ($daysWithAppointments[$key]['type'] == 'first_dose')
                             <div wire:mouseover="getSlots({{ $daysWithAppointments[$key]['adid'] }})" wire:key='{{ $fixx-$blockSkip }}' wire:click="redir({{ $daysWithAppointments[$key]['adid'] }})"
-                            class="col-span-1 p-5 m-1 text-3xl font-bold tracking-wide text-center text-black rounded-lg bg-lime-300 hover:bg-blue-200 hover:text-indigo-600 hover:cursor-pointer sm:text-xs md:text-xl lg:text-2xl">
+                            class="col-span-1 p-5 m-1 text-3xl font-bold tracking-wide text-center text-black rounded-lg bg-lime-300 hover:bg-blue-200 hover:text-blue-600 hover:cursor-pointer sm:text-xs md:text-xl lg:text-2xl">
                             <span class="m-auto">{{ $fixx-$blockSkip }}</span>
                             </div>
                         @else
                             <div wire:mouseover="getSlots({{ $daysWithAppointments[$key]['adid'] }})" wire:key='{{ $fixx-$blockSkip }}' wire:click="redir({{ $daysWithAppointments[$key]['adid'] }})"
-                            class="col-span-1 p-5 m-1 text-3xl font-bold tracking-wide text-center text-black rounded-lg bg-cyan-500 hover:bg-blue-200 hover:text-indigo-600 hover:cursor-pointer sm:text-xs md:text-xl lg:text-2xl">
+                            class="col-span-1 p-5 m-1 text-3xl font-bold tracking-wide text-center text-black rounded-lg bg-cyan-500 hover:bg-blue-200 hover:text-blue-600 hover:cursor-pointer sm:text-xs md:text-xl lg:text-2xl">
                             <span class="m-auto">{{ $fixx-$blockSkip }}</span>
                             </div>
                         @endif
@@ -78,7 +78,7 @@
                         
                     @else
                         <div wire:click="showconfirmModal({{ $fixx-$blockSkip }})" wire:key='{{ $fixx-$blockSkip }}' wire:mouseover="getSlots(0)"
-                        class="col-span-1 p-5 m-1 text-3xl font-bold tracking-wide text-center text-black bg-red-300 rounded-lg hover:bg-blue-200 hover:text-indigo-600 hover:cursor-pointer sm:text-xs md:text-xl lg:text-2xl">
+                        class="col-span-1 p-5 m-1 text-3xl font-bold tracking-wide text-center text-black bg-red-300 rounded-lg hover:bg-blue-200 hover:text-blue-600 hover:cursor-pointer sm:text-xs md:text-xl lg:text-2xl">
                             <span class="m-auto">{{ $fixx-$blockSkip }}</span>
                         </div>
                     @endif
@@ -147,7 +147,7 @@
                                     default slots of 120(max)</p>
                             </div>
                             <div class="items-center block mt-4">
-                                <p class="font-bold tracking-wider text-indigo-500 text-md">Select Vaccine:</p>
+                                <p class="font-bold tracking-wider text-blue-500 text-md">Select Vaccine:</p>
                                 <select name="vaccines" id="vaccines" class="w-full px-3 py-1 mx-2 my-1 rounded-lg text-md group hover:cursor-pointer" wire:model="vaccineid">
                                     @foreach ($vaccines as $vaccine)
                                     @if ($loop->index == 0)
@@ -162,10 +162,10 @@
                 </div>
                 <div class="mt-5 sm:mt-6 sm:grid sm:grid-cols-2 sm:gap-3 sm:grid-flow-row-dense">
                     <button type="button" wire:click='makeAppointmentSchedule'
-                        class="inline-flex justify-center w-full px-4 py-2 text-base font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:col-start-2 sm:text-sm">Set
+                        class="inline-flex justify-center w-full px-4 py-2 text-base font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:col-start-2 sm:text-sm">Set
                         Schedule</button>
                     <button type="button" x-on:click="showConfirmModal=false"
-                        class="inline-flex justify-center w-full px-4 py-2 mt-3 text-base font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:col-start-1 sm:text-sm">Cancel</button>
+                        class="inline-flex justify-center w-full px-4 py-2 mt-3 text-base font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:col-start-1 sm:text-sm">Cancel</button>
                 </div>
             </div>
         </div>
@@ -203,7 +203,7 @@
             </div>
             </div>
             <div class="mt-5 sm:mt-6">
-            <a  href="{{ route('dashboard',['adp_id' => 0,'dateSelected' => '0']) }}" class="inline-flex justify-center w-full px-4 py-2 text-base font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:text-sm">Got it!</a>
+            <a  href="{{ route('dashboard',['adp_id' => 0,'dateSelected' => '0']) }}" class="inline-flex justify-center w-full px-4 py-2 text-base font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:text-sm">Got it!</a>
             </div>
         </div>
         </div>

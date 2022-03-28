@@ -27,7 +27,7 @@
 </head>
 
 <body class="">
-    <div class="font-sans antialiased text-gray-900 bg-indigo-600">
+    <div class="font-sans antialiased text-gray-900 bg-blue-600">
         {{ $slot }}
     </div>
     @livewireScripts

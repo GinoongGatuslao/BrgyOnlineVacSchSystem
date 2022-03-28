@@ -107,6 +107,39 @@ class ScheduleVaccination extends Component
             $appointmentTimes2->available_slots -= 1;
             $appointmentTimes2->save();
 
+            if ($appointmentTimes->available_slots == 0) {
+                $an = new AdminNotification;
+                $an->message = "Appointment Slot on ".$appointmentdate->date->format('F d, Y')." @ ".$appointmentTimes->time_slot." have all been taken. Please check the schedule for more information.";
+                $an->user_id = 1;
+                $an->appointment_date_id = $appointmentdate->id;
+                $an->save();
+                event(new sendnotifications($appointmentTimes->id));
+            }
+            if ($appointmentdate->available_slots == 0) {
+                $an = new AdminNotification;
+                $an->message = "Appointment Slot on ".$appointmentdate->date->format('F d, Y').", have all been taken. Please check the schedule for more information.";
+                $an->user_id = 1;
+                $an->appointment_date_id = $appointmentdate->id;
+                $an->save();
+                event(new sendnotifications($appointmentTimes->id));
+            }
+            if ($appointmentTimes2->available_slots == 0) {
+                $an = new AdminNotification;
+                $an->message = "Appointment Slot on ".$appointmentdate2->date->format('F d, Y')." @ ".$appointmentTimes2->time_slot." have all been taken. Please check the schedule for more information.";
+                $an->user_id = 1;
+                $an->appointment_date_id = $appointmentdate2->id;
+                $an->save();
+                event(new sendnotifications($appointmentTimes2->id));
+            }
+            if ($appointmentdate2->available_slots == 0) {
+                $an = new AdminNotification;
+                $an->message = "Appointment Slot on ".$appointmentdate2->date->format('F d, Y').", have all been taken. Please check the schedule for more information.";
+                $an->user_id = 1;
+                $an->appointment_date_id = $appointmentdate2->id;
+                $an->save();
+                event(new sendnotifications($appointmentTimes2->id));
+            }
+
             $this->showConfirmModal = false;
             $this->showSuccessModal();
         }else{
@@ -127,15 +160,17 @@ class ScheduleVaccination extends Component
             // if $appDate->available_slots is 0, send event sendnotifications and make new admin notification        
             if ($appointmentTimes->available_slots == 0) {
                 $an = new AdminNotification;
-                $an->message = "Appointment Slot on ".$appointmentdate->date->format('F d, Y')." @ ".$appointmentTimes->time_slot." have all been taken. Please check the schedule for more information.";
+                $an->message = "Appointment Slot on ".Carbon::parse($appointmentdate->date)->format('F d, Y')." @ ".$appointmentTimes->time_slot." have all been taken. Please check the schedule for more information.";
                 $an->user_id = 1;
+                $an->appointment_date_id = $appointmentdate->id;
                 $an->save();
                 event(new sendnotifications($appointmentTimes->id));
             }
             if ($appointmentdate->available_slots == 0) {
                 $an = new AdminNotification;
-                $an->message = "Appointment Slot on ".$appointmentdate->date->format('F d, Y').", have all been taken. Please check the schedule for more information.";
+                $an->message = "Appointment Slot on ".Carbon::parse($appointmentdate->date)->format('F d, Y').", have all been taken. Please check the schedule for more information.";
                 $an->user_id = 1;
+                $an->appointment_date_id = $appointmentdate->id;
                 $an->save();
                 event(new sendnotifications($appointmentTimes->id));
             }

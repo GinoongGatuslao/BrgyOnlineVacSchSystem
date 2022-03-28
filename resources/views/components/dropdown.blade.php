@@ -27,10 +27,13 @@ break;
 case 'screen-50':
 $width = 'w-screen-50';
 break;
+case 'screen-30':
+$width = 'w-screen-30';
+break;
 }
 @endphp
 
-<div class="relative" x-data="{ open: false }" @click.outside="open = false" @close.stop="open = false">
+<div class="relative bg-transparent" x-data="{ open: false }" @click.outside="open = false" @close.stop="open = false">
     <div @click="open = ! open">
         {{ $trigger }}
     </div>
@@ -39,9 +42,9 @@ break;
         x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100"
         x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100"
         x-transition:leave-end="transform opacity-0 scale-95"
-        class="absolute z-50 mt-2 w-52 sm:{{ $width }} rounded-md flex-wrap shadow-lg overflow-y-auto max-h-screen-80 max-w-52 sm:max-w-screen-lg {{ $alignmentClasses }}"
+        class="absolute z-50 mt-2 w-96 md:{{ $width }} rounded-md flex-wrap overflow-y-auto max-h-screen max-w-52 sm:max-w-screen-lg {{ $alignmentClasses }}"
         style="display: none;" @click="open = false">
-        <div class="rounded-md ring-1 ring-black ring-opacity-5 w-full {{ $contentClasses }}">
+        <div class="rounded-lg bg-white ring-1 ring-black ring-opacity-5 w-full {{ $contentClasses }}">
             {{ $content }}
         </div>
     </div>

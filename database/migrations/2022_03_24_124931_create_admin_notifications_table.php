@@ -17,6 +17,7 @@ class CreateAdminNotificationsTable extends Migration
             $table->id();
             $table->string('message');
             $table->foreignId('user_id');
+            $table->foreignId('appointment_date_id');
             $table->boolean('seen')->default(false);            
             $table->timestamps();
         });

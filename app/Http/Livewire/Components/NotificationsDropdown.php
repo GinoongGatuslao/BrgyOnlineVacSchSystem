@@ -15,11 +15,11 @@ class NotificationsDropdown extends Component
 
     public function render()
     {
-        
+        $this->populateNotifications();
         return view('livewire.components.notifications-dropdown');
     }
     public $message="";
-    protected $listeners = ['echo:notification,sendnotifications' => 'holy','lols'=>'populateNotifications'];
+    protected $listeners = ['echo:notification,sendnotifications' => 'populateNotifications','lols'=>'populateNotifications'];
     // public function getListeners()
     // {
     //     return [
@@ -29,14 +29,15 @@ class NotificationsDropdown extends Component
 
     public function populateNotifications()
     {
-        $this->notifications = AdminNotification::where('user_id', auth()->user()->id)->orderBy('id','desc')->get();            
+        $this->notifications = AdminNotification::where('user_id', auth()->user()->id)->orderBy('id','desc')->get();          
     }
 
-    public function markSeen($notifID)
+    public function markSeen($notifID,$adp_id)
     {
         $notif = AdminNotification::find($notifID);
         $notif->seen = 1;
-        $notif->save();        
+        $notif->save();
+        redirect()->route('view-schedule',['adp_id'=>$adp_id,'dateSelected'=>1]);        
     }
 
     public function markAllSeen()
@@ -47,4 +48,5 @@ class NotificationsDropdown extends Component
             $value->save();
         }
     }
+    
 }
