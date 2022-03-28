@@ -63,4 +63,13 @@ class User extends Authenticatable
     {
         return $this->belongsTo(UserType::class);
     }
+    public function admin_notifications()
+    {
+        return $this->hasMany(AdminNotification::class, 'user_id');
+    }
+
+    public function feedback()
+    {
+        return $this->hasMany(Feedback::class, 'user_id');
+    }
 }

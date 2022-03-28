@@ -35,7 +35,7 @@
             </div>
             @endif
         @else
-          
+          dasd
         @endif
     </div>
     {{-- confirm modal --}}
@@ -77,7 +77,7 @@
                                     <p class="text-sm text-gray-500">Would you like to set up a vaccination schedule for <strong class="italic">{{ isset($selectedDate->date ) ? Carbon\Carbon::parse($selectedDate->date)->format('F d, Y'):'' }}?</strong></p>
                                 </div>
                                 <div class="items-center block mt-4">
-                                    <p class="font-bold tracking-wider text-indigo-500 text-md">Select Time Slot:</p>
+                                    <p class="font-bold tracking-wider text-blue-500 text-md">Select Time Slot:</p>
                                     <select name="vaccines" id="vaccines" class="w-full px-3 py-1 mx-2 my-1 rounded-lg text-md group hover:cursor-pointer" wire:model="apTimeID">
                                         @foreach ($appointmentTimes as $appointmentTime)
                                         @if ($appointmentTime->available_slots > 0)
@@ -110,15 +110,15 @@
                     <div class="mt-5 sm:mt-6 sm:grid sm:grid-cols-2 sm:gap-3 sm:grid-flow-row-dense">
                         @if ($patient->contact_number_verified=='verified')
                         <button type="button" wire:click='setAppointmentSchedule'
-                            class="inline-flex justify-center w-full px-4 py-2 text-base font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:col-start-2 sm:text-sm">Set
+                            class="inline-flex justify-center w-full px-4 py-2 text-base font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:col-start-2 sm:text-sm">Set
                             Schedule</button>
                         @else
                         <a href="/"
-                        class="inline-flex justify-center w-full px-4 py-2 text-base font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:col-start-2 sm:text-sm">Verify Contact Number</a>
+                        class="inline-flex justify-center w-full px-4 py-2 text-base font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:col-start-2 sm:text-sm">Verify Contact Number</a>
                         @endif
 
                         <button type="button" x-on:click="showConfirmModal=false"
-                            class="inline-flex justify-center w-full px-4 py-2 mt-3 text-base font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:col-start-1 sm:text-sm">Cancel</button>
+                            class="inline-flex justify-center w-full px-4 py-2 mt-3 text-base font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:col-start-1 sm:text-sm">Cancel</button>
                     </div>
                 </div>
             </div>
@@ -156,7 +156,7 @@
                 </div>
                 </div>
                 <div class="mt-5 sm:mt-6">
-                <a  href="" class="inline-flex justify-center w-full px-4 py-2 text-base font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:text-sm">Got it!</a>
+                <a  href="" class="inline-flex justify-center w-full px-4 py-2 text-base font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:text-sm">Got it!</a>
                 </div>
             </div>
             </div>

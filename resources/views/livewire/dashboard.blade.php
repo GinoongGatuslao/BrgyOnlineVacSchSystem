@@ -36,6 +36,5 @@
         </main>
         </div>
     </div>
-  
     @endif
 </div>
