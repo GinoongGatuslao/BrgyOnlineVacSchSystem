@@ -60,7 +60,7 @@
                  autofocus>
                      <x-slot name="content">
                          @php
-                                $puroks = \App\Models\Purok::all();
+                                $puroks = \App\Models\Purok::orderBy('name','asc')->get();
                          @endphp
                          @foreach ($puroks as $purok)
                              <option {{ old('purok') == $purok->id ? "selected" : "" }} value="{{ $purok->id }}">{{ $purok->name }}</option>

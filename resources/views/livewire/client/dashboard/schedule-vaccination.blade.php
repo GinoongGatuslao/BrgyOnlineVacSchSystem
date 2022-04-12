@@ -35,7 +35,7 @@
             </div>
             @endif
         @else
-          dasd
+        <h1 class="mx-5"><span class="text-lg italic font-bold tracking-wider text-gray-600">There are no available schedules for vaccination at the time. Check back next time :)</span></h1>
         @endif
     </div>
     {{-- confirm modal --}}
