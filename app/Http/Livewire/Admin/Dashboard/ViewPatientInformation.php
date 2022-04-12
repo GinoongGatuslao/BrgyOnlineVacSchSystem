@@ -23,7 +23,7 @@ class ViewPatientInformation extends Component
         // dd($patient);
         $user = $patient->user;
         //get all appointments
-    $appointments = Appointment::where('patient_id', '=', $patient->id)->orderBy('id')->get();
+    $appointments = Appointment::where('patient_id', '=', $patient->id)->where('status',"!=" ,"cancelled")->orderBy('id')->get();
         return view('livewire.admin.dashboard.view-patient-information',['patient'=>$patient,'appointments'=>$appointments,'user'=>$user])->layout('layouts.app');
     }
 }

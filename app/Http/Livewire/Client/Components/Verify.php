@@ -54,35 +54,47 @@ class Verify extends Component
     }
 
     public function sendCode(){
-        $this->code_sent = rand(100000,999999);
+        $this->code_sent = $this->generate_string($this->permitted_chars, 6);
         $contactNumber = substr($this->patient->contact_number, -10);
-        // $nexmo = app('Nexmo\Client');
+        $nexmo = app('Nexmo\Client');
     
-        //     $nexmo->message()->send([
-        //         'to'   => '+63'.$contactNumber,
-        //         'from' => 'BOVVS',
-        //         'text' => 'Your verification code is '.$this->code_sent.' for BOVVS. DO NOT SHARE THIS CODE WITH ANYONE.'
-        //     ]);
+            $nexmo->message()->send([
+                'to'   => '+63'.$contactNumber,
+                'from' => 'BOVVS',
+                'text' => 'Your verification code for BOVVS is : '.$this->code_sent.' . DO NOT SHARE YOUR CODE WITH ANYONE.'
+            ]);
         $this->showVerificationBlock = true;
         $this->showSendCode = false;
             $this->shouldCountdown = 1;
             $this->resendable = false;
     }
+    protected $permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyz';
+ 
+    protected function generate_string($input, $strength = 6) {
+        $input_length = strlen($input);
+        $random_string = '';
+        for($i = 0; $i < $strength; $i++) {
+            $random_character = $input[mt_rand(0, $input_length - 1)];
+            $random_string .= $random_character;
+        }
+ 
+    return $random_string;
+    }
     public function resendCode(){
         $contactNumber = substr($this->patient->contact_number, -10);
-        // $nexmo = app('Nexmo\Client');
+        $nexmo = app('Nexmo\Client');
     
-        //     $nexmo->message()->send([
-        //         'to'   => '+63'.$contactNumber,
-        //         'from' => 'BOVVS',
-        //         'text' => 'Your verification code is '.$this->code_sent.' for BOVVS. DO NOT SHARE THIS CODE WITH ANYONE.'
-        //     ]);
+            $nexmo->message()->send([
+                'to'   => '+63'.$contactNumber,
+                'from' => 'BOVVS',
+                'text' => 'Your verification code is '.$this->code_sent.' for BOVVS. DO NOT SHARE THIS CODE WITH ANYONE.'
+            ]);
             $this->shouldCountdown = 1;
             $this->resendable = false;
     }
 
     public function verifyCode(){
-        if($this->code == $this->code_sent){
+        if(strtoupper($this->code) == strtoupper($this->code_sent)){
             $updatedPatient = PatientInformation::find($this->patient->id);
             $updatedPatient->contact_number_verified = 'verified';
             $updatedPatient->save();

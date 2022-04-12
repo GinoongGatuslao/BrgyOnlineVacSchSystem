@@ -28,7 +28,7 @@ class ScheduleVaccination extends Component
         $user = auth()->user();
         $patient = PatientInformation::where('user_id',$user->id)->first();        
         $appointmentTimes = $selectedDate =[];
-        $appointments = Appointment::where('patient_id',$patient->id)->get()->count();
+        $appointments = Appointment::where('patient_id',$patient->id)->where('status',"!=" ,"cancelled")->get()->count();
         if ($this->selectedId != 0) {
             $appointmentTimes = AppointmentTime::where('appointment_date_id',$this->selectedId)->get();
             if ($this->apTimeID == null) {
@@ -84,7 +84,8 @@ class ScheduleVaccination extends Component
             $appointment->appointment_date_id = $appointmentdate->id;
             $appointment->appointment_time_id = $appointmentTimes->id;
             $appointment->vaccine_id = $vaccineInfo->id;
-            $appointment->patient_id = $patient->id;     
+            $appointment->patient_id = $patient->id;
+            $appointment->status ="unpassed";
             $appointment->save();
 
             $appointmentdate->available_slots -= 1;
@@ -99,6 +100,7 @@ class ScheduleVaccination extends Component
             $appointment2->appointment_time_id = $appointmentTimes2->id;
             $appointment2->vaccine_id = $vaccineInfo->id;
             $appointment2->patient_id = $patient->id;     
+            $appointment2->status ="unpassed";
             $appointment2->save();
 
             $appointmentdate2->available_slots -= 1;
@@ -149,6 +151,7 @@ class ScheduleVaccination extends Component
             $appointment->appointment_time_id = $appointmentTimes->id;
             $appointment->vaccine_id = $vaccineInfo->id;
             $appointment->patient_id = $patient->id;     
+            $appointment->status ="unpassed";
             $appointment->save();
 
             $appointmentdate->available_slots -= 1;

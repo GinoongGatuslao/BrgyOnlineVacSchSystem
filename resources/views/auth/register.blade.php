@@ -60,10 +60,10 @@
                  autofocus>
                      <x-slot name="content">
                          @php
-                                $puroks = \App\Models\Purok::all();
+                                $puroks = \App\Models\Purok::orderBy('name','asc')->get();
                          @endphp
                          @foreach ($puroks as $purok)
-                             <option value="{{ $purok->id }}">{{ $purok->name }}</option>
+                             <option {{ old('purok') == $purok->id ? "selected" : "" }} value="{{ $purok->id }}">{{ $purok->name }}</option>
                          @endforeach
                      </x-slot>
                  </x-select>
@@ -85,8 +85,8 @@
                     <x-select id="sex" class="w-full mt-1" name="sex" :value="old('sex')" required
                     autofocus>
                         <x-slot name="content">
-                            <option value="Male">Male</option>
-                            <option value="Female">Female</option>
+                            <option {{ old('sex') == "Male" ? "selected" : "" }} value="Male">Male</option>
+                            <option {{ old('sex') == "Female" ? "selected" : "" }} value="Female">Female</option>
                         </x-slot>
                     </x-select>
                         
