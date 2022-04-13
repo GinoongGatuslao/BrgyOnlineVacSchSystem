@@ -10,7 +10,6 @@
         "beyondcode/laravel-websockets": "^1.13",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^6.0|^7.0",
-        "kickstartph/semaphore-client": "^0.5.0",
         "laravel/framework": "^8.75",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
