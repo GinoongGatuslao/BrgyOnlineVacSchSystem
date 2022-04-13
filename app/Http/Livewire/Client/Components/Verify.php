@@ -60,8 +60,8 @@ class Verify extends Component
     
             $nexmo->message()->send([
                 'to'   => '+63'.$contactNumber,
-                'from' => 'BOVVS',
-                'text' => 'Your verification code for BOVVS is : '.$this->code_sent.' . DO NOT SHARE YOUR CODE WITH ANYONE.'
+                'from' => 'BOVSS',
+                'text' => 'Your verification code for BOVSS is : '.$this->code_sent.' . DO NOT SHARE YOUR CODE WITH ANYONE.'
             ]);
         $this->showVerificationBlock = true;
         $this->showSendCode = false;
