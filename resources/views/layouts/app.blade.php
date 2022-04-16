@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     @livewireStyles
     <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+   
     <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
     <style>
         [x-cloak] {
