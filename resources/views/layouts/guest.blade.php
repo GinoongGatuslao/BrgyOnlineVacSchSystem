@@ -30,6 +30,7 @@
     <div class="font-sans antialiased text-gray-900 bg-blue-600">
         {{ $slot }}
     </div>
+    @livewire('pages.schedule-checker')
     @livewireScripts
 </body>
 

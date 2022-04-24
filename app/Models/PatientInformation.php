@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 
 class PatientInformation extends Model
 {
     use HasFactory;
+    use Notifiable;
 
     protected $fillable = [
         'user_id',
@@ -35,5 +37,16 @@ class PatientInformation extends Model
     public function appointment()
     {
         return $this->hasMany(Appointment::class);
+    }
+
+       /**
+     * Route notifications for the Vonage channel.
+     *
+     * @param  \Illuminate\Notifications\Notification  $notification
+     * @return string
+     */
+    public function routeNotificationForVonage($notification)
+    {
+        return $this->contact_number;
     }
 }

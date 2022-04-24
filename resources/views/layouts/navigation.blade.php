@@ -94,7 +94,7 @@
 
                         <x-slot name="content">
                             {{-- <x-dropdown-link href="{{ route('profile.show', Auth::user()) }}"> --}}
-                            <x-dropdown-link href="/dashboard">
+                            <x-dropdown-link href="{{ route('edit-profile') }}">
                                 {{ __('Your Profile') }}
                             </x-dropdown-link>
                             <form method="POST" action="{{ route('logout') }}">

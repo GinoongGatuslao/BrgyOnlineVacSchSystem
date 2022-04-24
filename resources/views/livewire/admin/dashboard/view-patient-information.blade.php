@@ -39,7 +39,7 @@
                                         <div class="px-4 py-5 bg-gray-100 sm:px-6">
                                             <h2 id="applicant-information-title" class="text-lg font-medium leading-6 text-gray-900">
                                                 Personal Information</h2>
-                                            <p class="max-w-2xl mt-1 text-sm text-gray-500">Personal details and current .</p>
+                                            <p class="max-w-2xl mt-1 text-sm text-gray-500">Personal details and current vaccination status.</p>
                                         </div>
                                         <div class="px-4 py-5 border-t border-gray-200 sm:px-6">
                                             <dl class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">

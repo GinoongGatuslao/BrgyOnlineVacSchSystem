@@ -54,7 +54,7 @@
     
     @livewire('components.feedback')
     @livewireScripts
-    @livewireChartsScripts
+ 
     <script src="{{ asset('js/app.js') }}"></script>
     <script>
         Echo.channel('notification')
@@ -64,6 +64,7 @@
                 audio.play();
             });
     </script>
+       @livewireChartsScripts
 </body>
 
 </html>

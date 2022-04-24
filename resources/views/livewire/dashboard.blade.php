@@ -1,4 +1,5 @@
 <div x-data="{showScheduleReminder : @entangle('showScheduleReminder')}">
+    @livewire('pages.schedule-checker')
     <x-slot name="header">
         {{ __('Dashboard') }}
     </x-slot>

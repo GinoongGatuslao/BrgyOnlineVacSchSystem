@@ -69,11 +69,13 @@ class ScheduleVaccination extends Component
 
     public function setAppointmentSchedule()
     {
+        $this->showConfirmModal = false;
         $patient = PatientInformation::where('user_id',auth()->user()->id)->first();   
         $appointmentdate = AppointmentDate::where('id',$this->selectedId)->first();
         $vaccineInfo = Vaccine::where('id',$appointmentdate->vaccine_id)->first();
        
         $appointmentTimes = AppointmentTime::where('appointment_date_id',$this->selectedId)->where('id',$this->apTimeID)->first();
+        // dd(Carbon::parse($appointmentdate->date)->format('F d, Y'));
         if($vaccineInfo->dose > 1){
             $appointmentdate2 = AppointmentDate::where('appointmenttype','second_dose')->where('date',Carbon::parse($appointmentdate->date)->addDays($vaccineInfo->second_dose_sched)->format('Y-m-d'))->first();
             $appointmentTimes2 = AppointmentTime::where('appointment_date_id',$appointmentdate2->id)->where('time_slot',$appointmentTimes->time_slot)->first();
@@ -87,7 +89,7 @@ class ScheduleVaccination extends Component
             $appointment->patient_id = $patient->id;
             $appointment->status ="unpassed";
             $appointment->save();
-
+           
             $appointmentdate->available_slots -= 1;
             $appointmentdate->save();
 
@@ -111,38 +113,45 @@ class ScheduleVaccination extends Component
 
             if ($appointmentTimes->available_slots == 0) {
                 $an = new AdminNotification;
-                $an->message = "Appointment Slot on ".$appointmentdate->date->format('F d, Y')." @ ".$appointmentTimes->time_slot." have all been taken. Please check the schedule for more information.";
+                $an->message = "Appointment Slot on ".Carbon::parse($appointmentdate->date)->format('F d, Y')." @ ".$appointmentTimes->time_slot." have all been taken. Please check the schedule for more information.";
                 $an->user_id = 1;
                 $an->appointment_date_id = $appointmentdate->id;
                 $an->save();
-                event(new sendnotifications($appointmentTimes->id));
             }
             if ($appointmentdate->available_slots == 0) {
                 $an = new AdminNotification;
-                $an->message = "Appointment Slot on ".$appointmentdate->date->format('F d, Y').", have all been taken. Please check the schedule for more information.";
+                $an->message = "Appointment Slot on ".Carbon::parse($appointmentdate->date)->format('F d, Y').", have all been taken. Please check the schedule for more information.";
                 $an->user_id = 1;
                 $an->appointment_date_id = $appointmentdate->id;
                 $an->save();
-                event(new sendnotifications($appointmentTimes->id));
             }
             if ($appointmentTimes2->available_slots == 0) {
                 $an = new AdminNotification;
-                $an->message = "Appointment Slot on ".$appointmentdate2->date->format('F d, Y')." @ ".$appointmentTimes2->time_slot." have all been taken. Please check the schedule for more information.";
+                $an->message = "Appointment Slot on ".Carbon::parse($appointmentdate2->date)->format('F d, Y')." @ ".$appointmentTimes2->time_slot." have all been taken. Please check the schedule for more information.";
                 $an->user_id = 1;
                 $an->appointment_date_id = $appointmentdate2->id;
                 $an->save();
-                event(new sendnotifications($appointmentTimes2->id));
             }
             if ($appointmentdate2->available_slots == 0) {
                 $an = new AdminNotification;
-                $an->message = "Appointment Slot on ".$appointmentdate2->date->format('F d, Y').", have all been taken. Please check the schedule for more information.";
+                $an->message = "Appointment Slot on ".Carbon::parse($appointmentdate2->date)->format('F d, Y').", have all been taken. Please check the schedule for more information.";
                 $an->user_id = 1;
                 $an->appointment_date_id = $appointmentdate2->id;
                 $an->save();
-                event(new sendnotifications($appointmentTimes2->id));
             }
+            $an = new AdminNotification;
+            $an->message = auth()->user()->name."has scheduled for a vaccination on ".Carbon::parse($appointmentdate->date)->format('F d, Y')." @ ".$appointmentTimes->time_slot.".";
+            $an->user_id = 1;
+            $an->appointment_date_id = $appointmentdate->id;
+            $an->save();
+            $an = new AdminNotification;
+            $an->message = auth()->user()->name."has scheduled for a vaccination on ".Carbon::parse($appointmentdate2->date)->format('F d, Y')." @ ".$appointmentTimes2->time_slot.".";
+            $an->user_id = 1;
+            $an->appointment_date_id = $appointmentdate2->id;
+            $an->save();            
 
-            $this->showConfirmModal = false;
+
+            event(new sendnotifications($appointmentTimes->id));           
             $this->showSuccessModal();
         }else{
             $appointment = new Appointment();
@@ -177,8 +186,9 @@ class ScheduleVaccination extends Component
                 $an->save();
                 event(new sendnotifications($appointmentTimes->id));
             }
-            $this->showConfirmModal = false;
+            
             $this->showSuccessModal();
+           
         }
        
     }

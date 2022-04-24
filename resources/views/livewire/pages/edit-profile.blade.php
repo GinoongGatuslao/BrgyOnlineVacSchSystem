@@ -1,20 +1,35 @@
 <div class="container py-10 rounded-lg shadow-lg bg-gradient-to-b from-white to-gray-100 shadow-slate-400/40 ">
+    <x-slot name="header">
+        {{ __('Manage Profile') }}
+    </x-slot>
     <div
         class="max-w-3xl px-4 mx-auto sm:px-6 md:flex md:items-center md:justify-between md:space-x-5 lg:max-w-7xl lg:px-8">
         <div class="flex items-center space-x-5">
             <div class="flex-shrink-0">
-                <div class="relative">
+                <div class="relative rounded-full group">
                     @if ($patient->sex == 'Male')
-                    <x-male-avatar width="400" class="w-16 h-auto text-black fill-current " />
+                    <x-male-avatar width="400" class="w-16 h-auto text-black fill-current" />
                     @else
                     <x-female-avatar width="400" class="w-16 h-auto text-black fill-current" />
                     @endif
-                    <span class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></span>
-                </div>
+                    <div class="absolute inset-0 text-center rounded-full shadow-inner" aria-hidden="true">
+                       
+                    </div>
+                    <div class="relative z-50 hidden text-center bg-red-500 group-hover:block">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-center text-blue-500 opacity-0 group-hover:opacity-100" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                        </svg>
+                    </div>
+                </div>       
+               
             </div>
             <div>
                 <h1 class="text-xl font-extrabold text-gray-900 md:font-bold md:text-2xl">{{ auth()->user()->name }}</h1>
-                <p class="text-xs font-bold text-gray-600 md:font-medium md:text-sm">Prk. {{ $patient->purok->name }}, Baranggay New Carmen, Tacurong City, Sultan Kudarat</p>
+                <p class="text-xs font-bold text-gray-600 md:font-medium md:text-sm">@if($user->user_type_id ==1)
+                    {{ $patient->address }}
+                @else
+                Prk. {{ $patient->purok->name }} , Baranggay New Carmen, Tacurong City, Sultan Kudarat
+                @endif</p>
                 <p class="text-xs font-bold text-gray-600 md:font-medium md:text-sm">{{ Carbon\Carbon::parse($patient->birthdate)->age }} years old | {{ $patient->sex }}</p>
             </div>
         </div>
@@ -61,33 +76,6 @@
                                         @livewire('client.components.verify', ['patient' => $patient])                                                                           
                                     @endif
                                 
-                            </div>
-                            <div class="sm:col-span-2">
-                                <dt class="text-sm font-medium text-gray-500">Vaccination Schedules</dt>
-                                <dd class="mt-1 text-sm text-gray-900">
-                                  @if ($appointments->count()>0)
-                                    @if($appointments->count() > 1)
-                                    <div class="items-start md:columns-2">
-                                    @else
-                                    <div class="items-start">
-                                    @endif
-                                        @foreach ($appointments as $appointment)
-                                            <div class="p-3 mx-4 my-2 font-semibold text-center text-blue-600 bg-green-200 border border-green-100 rounded-lg shadow-md md:p-10 shadow-green-500">
-                                                <p class="text-lg font-bold md:text-3xl">{{ Carbon\Carbon::parse($appointment->appointmentDate->date)->format('F d, Y') }}</p>
-                                                <p class="font-bold text-md md:text-2xl">Time Slot: {{ $appointment->appointmentTime->time_slot }}</p>
-                                                <p class="text-sm font-bold md:text-xl">Vaccine: {{ $appointment->vaccine->vaccine_name }}</p>
-                                                @if ($appointment->appointment_type_id == 1)
-                                                <p class="text-sm font-bold md:text-xl">First Dose</p>
-                                                @else
-                                                <p class="text-sm font-bold md:text-xl">Second Dose</p>
-                                                @endif
-                                            </div>
-                                        @endforeach
-                                    </div>
-                                  @else
-                                      <span class="pl-2 text-sm italic font-bold tracking-wide text-gray-700 uppercase">No Vaccination Schedule Found! <a href="{{ route('schedule-vaccination') }}" class="text-blue-600 underline hover:cursor-pointer hover:text-lg">Schedule One</a> Now!</span>
-                                  @endif
-                                </dd>
                             </div>
                         </dl>
                     </div>

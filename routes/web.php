@@ -25,4 +25,6 @@ Route::get('/dash/schedule/patient/5770286{patient_id}40c41900',App\Http\Livewir
 Route::get('/ratings',App\Http\Livewire\Admin\Pages\Ratings::class)->middleware(['auth'])->name('ratings');
 Route::get('/schedule/vaccination', App\Http\Livewire\Client\Dashboard\ScheduleVaccination::class)->middleware(['auth'])->name('schedule-vaccination');
 
+Route::get('/manage-profile', App\Http\Livewire\Pages\EditProfile::class)->middleware(['auth'])->name('edit-profile');
+
 require __DIR__ . '/auth.php';
