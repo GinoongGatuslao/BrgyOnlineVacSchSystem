@@ -6,6 +6,8 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Illuminate\Notifications\Facades\Vonage;
+use Illuminate\Notifications\Messages\VonageMessage;
 
 class SendSMSReminder extends Notification implements ShouldQueue
 {
@@ -33,7 +35,7 @@ class SendSMSReminder extends Notification implements ShouldQueue
     }
 
     /**
-     * Get the mail representation of the notification.
+     * Get the Vonage / SMS representation of the notification.
      *
      * @param  mixed  $notifiable
      * @return \Illuminate\Notifications\Messages\VonageMessage
@@ -41,10 +43,8 @@ class SendSMSReminder extends Notification implements ShouldQueue
     public function toVonage($notifiable)
     {
         return (new VonageMessage)
-                    ->content('Your SMS message content')
-                    ->from('15554443333');
+                    ->content('Your SMS message content');
     }
-
     /**
      * Get the array representation of the notification.
      *
