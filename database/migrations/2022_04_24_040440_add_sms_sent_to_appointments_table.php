@@ -14,7 +14,7 @@ class AddSmsSentToAppointmentsTable extends Migration
     public function up()
     {
         Schema::table('appointments', function (Blueprint $table) {
-            $table->text('sms_sent')->nullable()->default('no');
+            $table->string('sms_sent')->nullable()->default('no');
         });
     }
 
