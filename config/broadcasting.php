@@ -40,7 +40,7 @@ return [
             'options' => [
                 'cluster' => env('PUSHER_APP_CLUSTER'),
                 'host'=> '188.166.206.227',
-                'port'=> 443,
+                'port'=> 6001,
                 'scheme'=> 'http',
             ],
         ],
