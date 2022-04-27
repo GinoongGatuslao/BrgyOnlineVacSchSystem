@@ -30,7 +30,7 @@ class Dashboard extends Component
         if(auth()->user()->user_type_id == 2){
             $passedDates = AppointmentDate::where('date', '<', date('Y-m-d'))->get('id');
        
-             $changeAppointments = Appointment::where('patient_id',auth()->user()->patient_information->id)->whereIn('appointment_date_id',$passedDates)->update(['status' => 'passed']);
+            $changeAppointments = Appointment::where('patient_id',auth()->user()->patient_information->id)->where('status','=','unpassed')->whereIn('appointment_date_id',$passedDates)->update(['status' => 'passed']);
 
             $appointment = Appointment::where('patient_id',auth()->user()->patient_information->id)->where('status','passed')->first();
          
@@ -55,9 +55,8 @@ class Dashboard extends Component
       
     }
 
-    public function attendedSchedule(Appointment $appointment){
-        $appointment->status = 'attended';
-        $appointment->save();
+    public function attendedSchedule($appointment){
+        $appointment= Appointment::where('id','=',$appointment)->update(['status' => 'attended']);
         $this->showScheduleReminder = false;
     }
     public function didNotAttendSchedule(){

@@ -186,6 +186,11 @@ class ScheduleVaccination extends Component
                 $an->save();
                 event(new sendnotifications($appointmentTimes->id));
             }
+            $an = new AdminNotification;
+            $an->message = auth()->user()->name."has scheduled for a vaccination on ".Carbon::parse($appointmentdate->date)->format('F d, Y')." @ ".$appointmentTimes->time_slot.".";
+            $an->user_id = 1;
+            $an->appointment_date_id = $appointmentdate->id;
+            $an->save();
             
             $this->showSuccessModal();
            

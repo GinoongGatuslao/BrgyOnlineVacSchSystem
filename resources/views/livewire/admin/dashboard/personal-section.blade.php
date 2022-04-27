@@ -1,5 +1,5 @@
 <div class="py-3 bg-white rounded-lg shadow-lg shadow-slate-400/40"
-    x-data="{showConfirmModal : @entangle('showConfirmModal'), showSuccessModal : @entangle('showSuccessModal')}">
+    x-data="{showConfirmModal : @entangle('showConfirmModal'), showSuccessModal : @entangle('showSuccessModal'),showOpenCancelModal : @entangle('showOpenCancelModal'),showCancelModal : @entangle('showCancelModal')}">
     <div class="items-center w-full h-full mb-5 space-y-3">
         <section id="header" class="block space-y-5 text-center">
             <h1 class="text-4xl font-extrabold tracking-wider text-blue-600 uppercase">Reports</h1>
@@ -21,9 +21,9 @@
             </div>
         </section>
      
-        <div class="grid grid-cols-7 py-5 mx-10 bg-red-300 border-collapse rounded-lg shadow-md shadow-blue-300">
+        <div class="grid grid-cols-7 py-5 mx-10 bg-red-100 border-collapse rounded-lg shadow-md shadow-red-100">
             <div class="col-span-1 text-xl font-bold tracking-wide text-center text-white bg-blue-300">
-                <span class="m-auto sm:truncate">Sunday</span>
+                <span class="m-auto sm:truncate">Sunday </span>
             </div>
             <div class="col-span-1 text-xl font-bold tracking-wide text-center text-white bg-blue-300">
                 <span class="m-auto sm:truncate">Monday</span>
@@ -43,7 +43,8 @@
             <div class="col-span-1 text-xl font-bold tracking-wide text-center text-white bg-blue-300">
                 <span class="m-auto sm:truncate">Saturday</span>
             </div>
-            @for ($j = 1; $j <= $endDay+$blockSkip; $j++)
+            <div class="mx-3 grid grid-cols-7 col-span-7 mt-2">
+                @for ($j = 1; $j <= $endDay+$blockSkip; $j++)
                 @if ($j <=$blockSkip)
                     <div
                         class="col-span-1 p-5 text-2xl font-bold tracking-wide text-center">
@@ -57,19 +58,19 @@
                     @if ($key !== false)
                  
                         @if ($daysWithAppointments[$key]['available_slots'] == '0')
-                        <div wire:mouseover="getSlots({{ $daysWithAppointments[$key]['adid'] }})" wire:key='{{ $fixx-$blockSkip }}' 
-                        class="col-span-1 p-5 m-1 text-3xl font-bold tracking-wide text-center text-black bg-orange-400 rounded-lg hover:bg-blue-200 hover:text-blue-600 hover:cursor-pointer sm:text-xs md:text-xl lg:text-2xl">
+                        <div wire:mouseover="getSlots({{ $daysWithAppointments[$key]['adid'] }})" wire:key='{{ $fixx-$blockSkip }}' wire:click="redir({{ $daysWithAppointments[$key]['adid'] }})"
+                        class="col-span-1 p-5 m-1 text-3xl font-bold tracking-wide shadow-md shadow-slate-500 text-center text-black bg-orange-400 rounded-lg hover:bg-blue-200 hover:text-blue-600 hover:cursor-pointer sm:text-xs md:text-xl lg:text-2xl">
                         <span class="m-auto">{{ $fixx-$blockSkip }}</span>
                         </div>
                         @else
                         @if ($daysWithAppointments[$key]['type'] == 'first_dose')
-                            <div wire:mouseover="getSlots({{ $daysWithAppointments[$key]['adid'] }})" wire:key='{{ $fixx-$blockSkip }}' wire:click="redir({{ $daysWithAppointments[$key]['adid'] }})"
-                            class="col-span-1 p-5 m-1 text-3xl font-bold tracking-wide text-center text-black rounded-lg bg-lime-300 hover:bg-blue-200 hover:text-blue-600 hover:cursor-pointer sm:text-xs md:text-xl lg:text-2xl">
+                            <div wire:mouseover="getSlots({{ $daysWithAppointments[$key]['adid'] }})" wire:key='{{ $fixx-$blockSkip }}' wire:click="showopencancelModal({{ $daysWithAppointments[$key]['adid'] }})"
+                            class="col-span-1 p-5 m-1 text-3xl font-bold tracking-wide shadow-md shadow-slate-500 text-center text-black rounded-lg bg-lime-300 hover:bg-blue-200 hover:text-blue-600 hover:cursor-pointer sm:text-xs md:text-xl lg:text-2xl">
                             <span class="m-auto">{{ $fixx-$blockSkip }}</span>
                             </div>
                         @else
-                            <div wire:mouseover="getSlots({{ $daysWithAppointments[$key]['adid'] }})" wire:key='{{ $fixx-$blockSkip }}' wire:click="redir({{ $daysWithAppointments[$key]['adid'] }})"
-                            class="col-span-1 p-5 m-1 text-3xl font-bold tracking-wide text-center text-black rounded-lg bg-cyan-500 hover:bg-blue-200 hover:text-blue-600 hover:cursor-pointer sm:text-xs md:text-xl lg:text-2xl">
+                            <div wire:mouseover="getSlots({{ $daysWithAppointments[$key]['adid'] }})" wire:key='{{ $fixx-$blockSkip }}' wire:click="showopencancelModal({{ $daysWithAppointments[$key]['adid'] }})"
+                            class="col-span-1 p-5 m-1 text-3xl font-bold tracking-wide shadow-md shadow-slate-500 text-center text-black rounded-lg bg-cyan-500 hover:bg-blue-200 hover:text-blue-600 hover:cursor-pointer sm:text-xs md:text-xl lg:text-2xl">
                             <span class="m-auto">{{ $fixx-$blockSkip }}</span>
                             </div>
                         @endif
@@ -85,6 +86,8 @@
                 
                 @endif
             @endfor
+            </div>
+            
         </div>
         <div class="grid grid-cols-10 grid-rows-4 gap-3 p-5 mx-10 border-collapse rounded-lg">
             <span class="col-span-1 row-start-1 text-lg font-extrabold tracking-wider">Legends:</span>
@@ -208,6 +211,83 @@
         </div>
         </div>
     </div>
-  
+{{-- open cancel --}}
+<div class="fixed inset-0 z-10 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true" x-cloak x-show="showOpenCancelModal">
+    <div class="flex items-end justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+    <div x-transition-enter = "ease-out duration-300"
+    x-transition-enter-start =  "opacity-0"
+    x-transition-enter-end =  "opacity-100"
+    x-transition-leave =  "ease-in duration-200"
+    x-transition-leave-start =  "opacity-100"
+    x-transition-leave-end ="opacity-0"   class="fixed inset-0 transition-opacity bg-opacity-75" aria-hidden="true" x-cloak x-show="showOpenCancelModal"></div>
+
+    <!-- This element is to trick the browser into centering the modal contents. -->
+    <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+    <div x-transition-enter = "ease-out duration-300"
+    x-transition-enter-start =  "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+    x-transition-enter-end =  "opacity-100 translate-y-0 sm:scale-100"
+    x-transition-leave =  "ease-in duration-200"
+    x-transition-leave-start =  "opacity-100 translate-y-0 sm:scale-100"
+    x-transition-leave-end = "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" @click.away="showOpenCancelModal=false" x-cloak x-show="showOpenCancelModal" class="relative inline-block px-4 pt-5 pb-4 overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:align-middle sm:max-w-sm sm:w-full sm:p-6">
+        <div>
+        <div class="flex items-center justify-center w-12 h-12 mx-auto bg-green-100 rounded-full">
+        
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 text-green-700" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
+              </svg>
+        </div>
+        <div class="mt-3 text-center sm:mt-5">
+            <h3 class="text-lg font-medium leading-6 text-gray-900" id="modal-title">What would you like to do?</h3>
+            <div class="mt-2">
+            <p class="text-sm text-gray-700">Would you like to <strong> open the schedule</strong>? or <strong>cancel the schedule?</strong></p>
+            </div>
+        </div>
+        </div>
+        <div class="mt-5 sm:mt-6 w-full grid grid-cols-2 gap-2">
+            <button type="button" wire:click='redirectFromOpen' class="inline-flex justify-center w-full px-4 py-2 text-base font-medium text-white bg-blue-400 border border-transparent rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:text-sm">Open Schedule</button>
+            <button type="button" wire:click='showcancelModal' class="inline-flex justify-center w-full px-4 py-2 text-base font-medium text-white bg-red-400 border border-transparent rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:text-sm">Cancel Schedule</button>
+        </div>
+    </div>
+    </div>
+</div>
+{{-- cancel modal--}}
+<div class="fixed inset-0 z-10 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true" x-cloak x-show="showCancelModal">
+    <div class="flex items-end justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+    <div x-transition-enter = "ease-out duration-300"
+    x-transition-enter-start =  "opacity-0"
+    x-transition-enter-end =  "opacity-100"
+    x-transition-leave =  "ease-in duration-200"
+    x-transition-leave-start =  "opacity-100"
+    x-transition-leave-end ="opacity-0"   class="fixed inset-0 transition-opacity bg-opacity-75" aria-hidden="true" x-cloak x-show="showCancelModal"></div>
+
+    <!-- This element is to trick the browser into centering the modal contents. -->
+    <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+    <div x-transition-enter = "ease-out duration-300"
+    x-transition-enter-start =  "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+    x-transition-enter-end =  "opacity-100 translate-y-0 sm:scale-100"
+    x-transition-leave =  "ease-in duration-200"
+    x-transition-leave-start =  "opacity-100 translate-y-0 sm:scale-100"
+    x-transition-leave-end = "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"  x-cloak x-show="showCancelModal" class="relative inline-block px-4 pt-5 pb-4 overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:align-middle sm:max-w-sm sm:w-full sm:p-6">
+        <div>
+        <div class="flex items-center justify-center w-12 h-12 mx-auto bg-red-100 rounded-full">
+            <!-- Heroicon name: outline/check -->
+          
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+              </svg>
+        </div>
+        <div class="mt-3 text-center sm:mt-5">
+            <h3 class="text-lg font-medium leading-6 text-gray-900" id="modal-title">Do you really want to cancel schedule?</h3>
+            <div class="mt-2">
+            <p class="text-md text-red-500">This action cannot be undone!</p>
+            </div>
+        </div>
+        </div>
+        <div class="mt-5 sm:mt-6">
+            <button type="button" wire:click='cancelSchedule' class="inline-flex justify-center w-full px-4 py-2 text-base font-medium text-white bg-red-400 border border-transparent rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:text-sm">Cancel Schedule</button>
+        </div>
+    </div>
+    </div>
+</div>
 
 </div>

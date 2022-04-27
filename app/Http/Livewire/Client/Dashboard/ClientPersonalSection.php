@@ -15,8 +15,9 @@ class ClientPersonalSection extends Component
         $patient = PatientInformation::where('user_id', '=',auth()->user()->id)->first();
         $user = auth()->user();
         //get all appointments
+        $photo_url = $user->photo_url ?? 'none';
     $appointments = Appointment::where('patient_id', '=', $patient->id)->where('status','!=','cancelled')->orderBy('id')->get();
         // dd($patient);
-        return view('livewire.client.dashboard.client-personal-section', ['patient' => $patient, 'user' => $user, 'appointments' => $appointments]);
+        return view('livewire.client.dashboard.client-personal-section', ['patient' => $patient, 'user' => $user, 'appointments' => $appointments, 'photo_url' => $photo_url])->layout('layouts.app');
     }
 }

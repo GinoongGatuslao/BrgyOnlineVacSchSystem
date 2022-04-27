@@ -56,6 +56,7 @@ class RegisteredUserController extends Controller
             $name.=' '.$request->suffix;
         }
 
+
         $user = User::create([
             'name' => $name,
             'user_type_id' => 2,
@@ -70,10 +71,10 @@ class RegisteredUserController extends Controller
             'last_name' => $request->last_name,
             'suffix' => $request->suffix,
             'sex'=>$request->sex,
-            'contact_number'=>$request->contact_number,
+            'contact_number'=>'63'.substr($request->contact_number,'-10'),
             'contact_number_verified'=>'unverified',
             'purok_id'=>$request->purok,
-            'birthdate' => $request->birthdate,
+            'birthdate' => $request->birthdate, 
             ]);
         event(new Registered($user));
 

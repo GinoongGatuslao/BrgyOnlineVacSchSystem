@@ -14,6 +14,8 @@ class PersonalSection extends Component
 {
     public $showConfirmModal = false;
     public $showSuccessModal = false;
+    public $showOpenCancelModal = false;
+    public $showCancelModal = false;
     public $currentMonth;
     public $currentMonthNumeric;
     public $currentYear;
@@ -28,7 +30,7 @@ class PersonalSection extends Component
     public $vaccineName = "-";
     public $vaccineid=1;
     public $monthadditive = 0;
-
+    public $selectedadp;
     public function render()
     {
        
@@ -82,6 +84,18 @@ class PersonalSection extends Component
     public function showsuccessModal()
     {
         $this->showSuccessModal = true;        
+    }
+
+    public function showopencancelModal($adp_id)
+    {
+        $this->selectedadp=$adp_id;
+        $this->showOpenCancelModal = true;        
+    }
+     
+    public function showcancelModal()
+    {
+        $this->showOpenCancelModal = false;
+        $this->showCancelModal = true;        
     }
 
     public function makeAppointmentSchedule()
@@ -209,7 +223,11 @@ class PersonalSection extends Component
         }
     }
     public function redir($adp_id){
+        
         redirect()->route('dashboard',['dateSelected'=> '1','adp_id'=>$adp_id]);
+    }
+    public function redirectFromOpen(){
+        redirect()->route('dashboard',['dateSelected'=> '1',$this->selectedadp]);
     }
 
     //make a function to add to additivemonth if parameter is true and subrtract if false
@@ -221,5 +239,22 @@ class PersonalSection extends Component
             $this->monthadditive = $this->monthadditive-1;
         }
         $this->render();
+    }
+
+    public function cancelSchedule(){
+        $appointmentdate = AppointmentDate::where('id',$this->selectedadp)->first();
+        if($appointmentdate->vaccine->dose == 1){
+            $appointmentdate->delete();
+        }else{
+            $seconddosesched = Carbon::parse($appointmentdate->date)->addDays($appointmentdate->vaccine->second_dose_sched)->format('Y-m-d');
+            
+            $appointmentdate2 = AppointmentDate::where('date','=',$seconddosesched)->first();
+            $appointmentdate->delete();
+            $appointmentdate2->delete();
+        }
+        $this->showOpenCancelModal = false;
+        $this->showCancelModal = false;
+        sleep(2);
+        redirect()->route('dashboard-home');
     }
 }

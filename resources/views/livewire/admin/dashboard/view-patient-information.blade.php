@@ -14,10 +14,14 @@
                             <div class="flex items-center space-x-5">
                                 <div class="flex-shrink-0">
                                     <div class="relative">
-                                        @if ($patient->sex == 'Male')
-                                        <x-male-avatar width="400" class="w-16 h-auto text-black fill-current " />
+                                        @if ($photo_url != 'none')
+                                        <img src="{{asset('storage/'.$photo_url) }}" alt="as" class="h-16 w-16 rounded-full">
                                         @else
-                                        <x-female-avatar width="400" class="w-16 h-auto text-black fill-current" />
+                                            @if ($patient->sex == 'Male')
+                                            <x-male-avatar width="400" class="w-16 h-auto text-black fill-current " />
+                                            @else
+                                            <x-female-avatar width="400" class="w-16 h-auto text-black fill-current" />
+                                            @endif
                                         @endif
                                         <span class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></span>
                                     </div>

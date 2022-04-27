@@ -11,6 +11,8 @@
     
     <!-- Fonts -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
+    <script defer src="https://unpkg.com/@alpinejs/mask@3.x.x/dist/cdn.min.js"></script>
+    
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <!-- Styles -->
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
@@ -30,7 +32,7 @@
     <div class="font-sans antialiased text-gray-900 bg-blue-600">
         {{ $slot }}
     </div>
-    @livewire('pages.schedule-checker')
+    
     @livewireScripts
 </body>
 

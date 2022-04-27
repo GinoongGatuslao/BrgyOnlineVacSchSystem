@@ -13,13 +13,13 @@
         @else
         @foreach ($notifications as $notification)
             @if ($notification->seen == 0)
-            <li wire:click="markSeen({{ $notification->id }},{{ $notification->appointment_date_id }})" class="p-2 text-right bg-blue-500 hover:cursor-pointer md:py-1 rounded-xl md:bg-gradient-to-l md:from-blue-100 md:to-blue-300 md:via-blue-300">
+            <li wire:click="markSeen({{ $notification->id }},{{ $notification->appointment_date_id }})" class="p-2 text-right bg-blue-500 hover:cursor-pointer md:py-1 rounded-xl md:bg-gradient-to-l">
                     <span class="pr-5 italic font-extrabold text-white whitespace-pre-wrap text-md">
                         {{ $notification->message }}
                     </span>
             </li>
             @else
-            <li wire:click="markSeen({{ $notification->id }},{{ $notification->appointment_date_id }})" class="p-2 text-right bg-white hover:cursor-pointer md:py-1 rounded-xl md:rounded-tl-sm md:rounded-bl-full md:bg-gradient-to-r md:from-transparent md:to-slate-100 md:via-slate-100">
+            <li wire:click="markSeen({{ $notification->id }},{{ $notification->appointment_date_id }})" class="p-2 text-right bg-white hover:cursor-pointer md:py-1 rounded-xl md:rounded-tl-sm md:rounded-bl-full md:bg-gradient-to-r md:from-transparent md:to-slate-200 md:via-slate-100">
                 <span class="pr-5 font-medium text-blue-500 whitespace-pre-wrap rounded-lg text-md">
                     {{ $notification->message }}
                 </span>

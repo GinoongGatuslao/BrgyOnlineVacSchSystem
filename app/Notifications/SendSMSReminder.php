@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\Models\Appointment;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -42,8 +43,10 @@ class SendSMSReminder extends Notification implements ShouldQueue
      */
     public function toVonage($notifiable)
     {
+        $appointment = Appointment::where('status','=','today')->where('patient_id','=',$notifiable->id)->first();
+        $message =  'Good Day, '.$notifiable->first_name.'! Your vaccination is scheduled for tomorrow, '.date('F d, Y', strtotime('+1 day')).', at '.$appointment->appointmentTime->time_slot.'. Please be on time. Thank you!';
         return (new VonageMessage)
-                    ->content('Your SMS message content');
+                    ->content($message);
     }
     /**
      * Get the array representation of the notification.

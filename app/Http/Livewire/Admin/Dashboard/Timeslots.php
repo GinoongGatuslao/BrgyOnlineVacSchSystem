@@ -25,7 +25,8 @@ class Timeslots extends Component
         
         //convert $aDid to integer
         $this->aDid = intval($this->aDid);
-        $temp = AppointmentDate::findOrFail($this->aDid)->get('date');
+        $temp = AppointmentDate::where('id',$this->aDid)->get('date');
+        
         $this->dateToday=Carbon::parse($temp[0]->date)->format('F d, Y');
         //if tsID is not set, then set it to the first id from AppointmentTime table where appointment_id = aDid
         if(!isset($this->tsID)){

@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Pages;
 
+use App\Models\AdminNotification;
 use App\Models\Appointment;
 use App\Models\AppointmentDate;
 use App\Models\PatientInformation;
@@ -25,19 +26,47 @@ class ScheduleChecker extends Component
     }
     public function getPatientIDS(){
         $patients= [];
-        $appSched = AppointmentDate::where('date','=',date('Y-m-d'))->first();
-        $appointments = Appointment::where('appointment_date_id','=',$appSched->id)->where('sms_sent','=','no')->get('patient_id');
-        if(count($appointments) > 0){
-            $patients = PatientInformation::whereIn('id',$appointments)->get('id');
-        }        
-        return $patients;
+         //get date for tomorrow
+         $tomorrow = date('Y-m-d', strtotime('+1 day'));
+        $appSched = AppointmentDate::where('date','=',$tomorrow)->first();
+       
+        if(isset($appSched)){
+            $appointments = Appointment::where('appointment_date_id','=',$appSched->id)->where('sms_sent','=','no')->get('patient_id');
+            $appointmentsUpdate = Appointment::where('appointment_date_id','=',$appSched->id)->where('sms_sent','=','no')->update(['sms_sent' => 'sent']);
+            if(isset($appointments)){
+                $patients = PatientInformation::whereIn('id',$appointments)->get('id');
+            }        
+        }
+        //if patients isset
+        if(!empty($patients)){
+           
+            foreach($patients as $patient){
+                $tomorrow = date('F d, Y', strtotime('+1 day'));
+               $appointment = Appointment::where('appointment_date_id','=',$appSched->id)->where('patient_id','=',$patient->id)->first();
+               $notif = new AdminNotification;
+               $notif->message = 'Your vaccination is scheduled for tomorrow, '.$tomorrow.', at '.$appointment->appointmentTime->time_slot.'. Please be on time. Thank you!';
+               $notif->user_id= PatientInformation::where('id',$patient->id)->first()->user_id;
+               $notif->appointment_date_id = $appointment->appointment_date_id;
+               $notif->save();
+             
+            }
+            return $patients;
+        }
+        else{
+            return [];
+        }
     }
+
     public function setstatustoday(){
-        $appSched = AppointmentDate::where('date','=',date('Y-m-d'))->first();
+        //get date for tomorrow
+        $tomorrow = date('Y-m-d', strtotime('+1 day'));
+        $appSched = AppointmentDate::where('date','=',$tomorrow)->first();
         
         // dd($appSched);
         // $appointments = Appointment::where('appointment_date_id',$appSched->id)->where('status','!=','unpassed')->update(['status' => 'today']);
+       if(isset($appSched)){
         $appointments = Appointment::where('appointment_date_id','=',$appSched->id)->update(['status' => 'today']);
+       }
         
     }
 }

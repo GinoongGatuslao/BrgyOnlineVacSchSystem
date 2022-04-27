@@ -104,7 +104,7 @@
             <div class="mt-4">
                 <x-label for="contact_number" :value="__('Contact Number')" />
 
-                <x-input id="contact_number" class="block w-full mt-1" type="text" name="contact_number" :value="old('contact_number')" autofocus autocomplete="on" />
+                <input  x-mask="+99-999-9999-999" placeholder="+63-905-1234-123"  id="contact_number" class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" type="text" name="contact_number" :value="old('contact_number')" autofocus autocomplete="on" />
                 
                 
                 
