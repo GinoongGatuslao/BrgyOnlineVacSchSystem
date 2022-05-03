@@ -19,10 +19,11 @@ class EditProfile extends Component
     public $email;
     public $password;
     public $password_confirmation;
+    public $old_email;
 
     protected $rules = [
         'contact_number' => 'min:6|regex:/^\+?[0-9]{10,13}$/|unique:patient_information',
-        'email' => 'email|unique:users',
+        'email' => 'email',
         'password' => 'confirmed|min:8',
     ];
 
@@ -56,9 +57,22 @@ class EditProfile extends Component
             $this->validate([
                 'password' => 'confirmed|min:8',
             ]);
-            $user = User::where('id',auth()->user()->id)->update(['password'=> Hash::make($this->password),'email'=>$this->email]);
+            if($this->old_email != $this->email){
+                $this->validate([
+                    'email' => 'email|unique:users',
+                ]);
+                $user = User::where('id',auth()->user()->id)->update(['password'=> Hash::make($this->password),'email'=>$this->email]);
+            }else{
+                $user = User::where('id',auth()->user()->id)->update(['password'=> Hash::make($this->password)]);
+            }
+            
         }else if(!empty($this->email)){
-            $user = User::where('id',auth()->user()->id)->update(['email'=>$this->email]);
+            if($this->old_email != $this->email){
+                $this->validate([
+                    'email' => 'email|unique:users',
+                ]);
+                $user = User::where('id',auth()->user()->id)->update(['email'=>$this->email]);
+            }
         }
       
         
@@ -87,16 +101,16 @@ class EditProfile extends Component
             if($this->contact_number ==""){
                 $this->contact_number = $patient->contact_number;
             }
-            if($this->email ==""){
-                $this->email = $patient->email_address;
+            if($this->old_email ==""){
+                $this->old_email = $this->email = $user->email;
             }
         }else{
             $patient = PatientInformation::where('user_id', '=',auth()->user()->id)->first();
             if($this->contact_number ==""){
                 $this->contact_number = $patient->contact_number;
             }
-            if($this->email ==""){
-                $this->email = $patient->email_address;
+            if($this->old_email ==""){
+                $this->old_email = $this->email = $user->email;
             }
         }
         return view('livewire.pages.edit-profile',['patient' => $patient, 'user' => $user, 'photo_url' => $photo_url]);

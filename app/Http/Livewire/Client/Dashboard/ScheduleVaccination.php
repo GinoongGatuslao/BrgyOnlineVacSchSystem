@@ -145,7 +145,7 @@ class ScheduleVaccination extends Component
             $an->appointment_date_id = $appointmentdate->id;
             $an->save();
             $an = new AdminNotification;
-            $an->message = auth()->user()->name."has scheduled for a vaccination on ".Carbon::parse($appointmentdate2->date)->format('F d, Y')." @ ".$appointmentTimes2->time_slot.".";
+            $an->message = auth()->user()->name."has scheduled for SECOND DOSE of vaccination on ".Carbon::parse($appointmentdate2->date)->format('F d, Y')." @ ".$appointmentTimes2->time_slot.".";
             $an->user_id = 1;
             $an->appointment_date_id = $appointmentdate2->id;
             $an->save();            
