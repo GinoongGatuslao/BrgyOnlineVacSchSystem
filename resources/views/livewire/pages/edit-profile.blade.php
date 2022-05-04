@@ -53,7 +53,7 @@
             <div class="relative flex-shrink-0 group">
                 <div class="relative rounded-full group">
                    @if ($photo_url != 'none')
-                       <img src="{{asset('storage/'.$photo_url) }}" alt="as" class="h-16 w-16 rounded-full">
+                       <img src="{{asset('storage/'.$photo_url) }}" alt="as" class="w-16 h-16 rounded-full">
                    @else
                     @if ($patient->sex == 'Male')
                     <x-male-avatar width="400" class="w-16 h-auto text-black fill-current group-hover:opacity-5" />
@@ -105,8 +105,8 @@
                                 <div class="sm:col-span-1">
                                     <dt class="text-sm font-medium text-gray-500">Email address</dt>
                                     <dd class="mt-1 text-sm text-gray-900"> 
-                                        <input type="email" class="w-sm h-10 text-sm text-blue-600 text-left rounded-full" wire:model="email">
-                                        @error('email') <span class="error text-red-500 block ml-2 mt-1">{{ $message }}</span> @enderror
+                                        <input type="email" class="h-10 text-sm text-left text-blue-600 rounded-full w-sm" wire:model="email">
+                                        @error('email') <span class="block mt-1 ml-2 text-red-500 error">{{ $message }}</span> @enderror
                                     </dd>
                                 </div>
                                 <div class="sm:col-span-1">
@@ -125,9 +125,9 @@
                                             </div>
                                             @else
                                             <div class="block">
-                                            <input type="text" class="w-sm h-10 text-sm text-blue-600 text-left rounded-full " wire:model="contact_number" placeholder="639657258615" x-mask="639999999999">
-                                            <span class="my-auto pl-3">Unverified</span>
-                                            @error('contact_number') <br> <p class="error text-red-500 ml-2 mt-1">{{ $message }}</p> @enderror    
+                                            <input type="text" class="h-10 text-sm text-left text-blue-600 rounded-full w-sm " wire:model="contact_number" placeholder="639657258615" x-mask="639999999999">
+                                            <span class="pl-3 my-auto">Unverified</span>
+                                            @error('contact_number') <br> <p class="mt-1 ml-2 text-red-500 error">{{ $message }}</p> @enderror    
                                             </div>                                                                              
                                             @endif
                                         </span>
@@ -136,34 +136,34 @@
                                     
                                 </div>
                                 <div class="sm:col-span-1" x-data="{showPass: true}">
-                                    <dt class="text-sm font-medium text-gray-500 flex">
+                                    <dt class="flex text-sm font-medium text-gray-500">
                                         <span class="my-auto">Change Password</span>
-                                        <svg xmlns="http://www.w3.org/2000/svg" x-on:click="showPass = !showPass" class="h-4 w-4 text-gray-600 hover:text-blue-500 ml-1 my-auto"  x-show="showPass == false" viewBox="0 0 20 20" fill="currentColor">
+                                        <svg xmlns="http://www.w3.org/2000/svg" x-on:click="showPass = !showPass" class="w-4 h-4 my-auto ml-1 text-gray-600 hover:text-blue-500"  x-show="showPass == false" viewBox="0 0 20 20" fill="currentColor">
                                             <path fill-rule="evenodd" d="M3.707 2.293a1 1 0 00-1.414 1.414l14 14a1 1 0 001.414-1.414l-1.473-1.473A10.014 10.014 0 0019.542 10C18.268 5.943 14.478 3 10 3a9.958 9.958 0 00-4.512 1.074l-1.78-1.781zm4.261 4.26l1.514 1.515a2.003 2.003 0 012.45 2.45l1.514 1.514a4 4 0 00-5.478-5.478z" clip-rule="evenodd" />
                                             <path d="M12.454 16.697L9.75 13.992a4 4 0 01-3.742-3.741L2.335 6.578A9.98 9.98 0 00.458 10c1.274 4.057 5.065 7 9.542 7 .847 0 1.669-.105 2.454-.303z" />
                                         </svg>
-                                        <svg xmlns="http://www.w3.org/2000/svg" x-on:click="showPass = !showPass" class="h-4 w-4 text-gray-600 hover:text-blue-500 ml-1 my-auto" x-show="showPass == true" viewBox="0 0 20 20" fill="currentColor">
+                                        <svg xmlns="http://www.w3.org/2000/svg" x-on:click="showPass = !showPass" class="w-4 h-4 my-auto ml-1 text-gray-600 hover:text-blue-500" x-show="showPass == true" viewBox="0 0 20 20" fill="currentColor">
                                             <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
                                             <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" />
                                           </svg>
                                     </dt>
                                     <dd class="mt-1 text-sm text-gray-900"> 
                                         <span class="block">New Password</span>
-                                        <input :type="showPass ? 'password' : 'text'"  class="w-screen-30 h-10 text-sm text-blue-600 text-left rounded-full" wire:model="password">
-                                        @error('password') <span class="error text-red-500 block ml-2 mt-1">{{ $message }}</span> @enderror
+                                        <input :type="showPass ? 'password' : 'text'"  class="h-10 text-sm text-left text-blue-600 rounded-full w-screen-30" wire:model="password">
+                                        @error('password') <span class="block mt-1 ml-2 text-red-500 error">{{ $message }}</span> @enderror
                                     </dd>
                                     <dd class="mt-1 text-sm text-gray-900">
                                         <span class="block">Confirm New Password</span>
-                                        <input :type="showPass ? 'password' : 'text'"  class="w-screen-30 h-10 text-sm text-blue-600 text-left rounded-full" wire:model="password_confirmation">
-                                        @error('password_confirmation') <span class="error text-red-500 block ml-2 mt-1">{{ $message }}</span> @enderror
+                                        <input :type="showPass ? 'password' : 'text'"  class="h-10 text-sm text-left text-blue-600 rounded-full w-screen-30" wire:model="password_confirmation">
+                                        @error('password_confirmation') <span class="block mt-1 ml-2 text-red-500 error">{{ $message }}</span> @enderror
                                     </dd>
                                 </div>
                                 
                             </dl>
                         </div>
-                        <div class="grid grid-cols-2 sm:grid-cols-6 w-sm mx-3 -mb-5">
+                        <div class="grid grid-cols-2 mx-3 -mb-5 sm:grid-cols-6 w-sm">
                                     
-                            <button type="submit" class="rounded-full bg-blue-500 text-white text-md col-span-1 col-start-2 lg:col-span-2 lg:col-start-5 m-1 p-2">Save Changes</button>
+                            <button type="submit" class="col-span-1 col-start-2 p-2 m-1 text-white bg-blue-500 rounded-full text-md lg:col-span-2 lg:col-start-5">Save Changes</button>
                         
                         </div>
                     </form>

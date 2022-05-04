@@ -26,5 +26,7 @@ Route::get('/ratings',App\Http\Livewire\Admin\Pages\Ratings::class)->middleware(
 Route::get('/schedule/vaccination', App\Http\Livewire\Client\Dashboard\ScheduleVaccination::class)->middleware(['auth'])->name('schedule-vaccination');
 
 Route::get('/manage-profile', App\Http\Livewire\Pages\EditProfile::class)->middleware(['auth'])->name('edit-profile');
+Route::get('/manage-vaccines', App\Http\Livewire\Admin\Pages\ManageVaccines::class)->middleware(['auth'])->name('manage-vaccines');
+Route::get('/vaccine-reports', App\Http\Livewire\Admin\Pages\VaccineReports::class)->middleware(['auth'])->name('vaccine-reports');
 
 require __DIR__ . '/auth.php';
