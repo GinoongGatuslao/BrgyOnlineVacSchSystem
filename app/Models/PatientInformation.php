@@ -36,8 +36,9 @@ class PatientInformation extends Model
 
     public function appointment()
     {
-        return $this->hasMany(Appointment::class);
+        return $this->hasMany(Appointment::class, 'patient_id', 'id');
     }
+   
 
        /**
      * Route notifications for the Vonage channel.
