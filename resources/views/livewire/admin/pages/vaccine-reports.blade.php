@@ -3,17 +3,44 @@
         {{ __('Reports') }}
     </x-slot>
 
-    <div class="container p-10 bg-white drop-shadow-xl rounded-xl">
+    <div class="container px-3 pt-3 pb-5 bg-white px-100 drop-shadow-xl rounded-xl">
         <div class="w-auto text-indigo-700 max-h-screen-80 md:h-screen-30">
             <div class="rows-2">
                 {{-- filter list --}}
-                <div class="items-start block p-10 bg-red-500">
-
+                <div class="items-start block px-2 mt-5 text-xs bg-white text-slate-900">
+                    <div class="grid w-full grid-cols-5 gap-2">
+                        <div class="col-span-1 p-2 border border-gray-700 border-dashed rounded-md bg-gray-200/80">
+                            <h1 class="text-sm">Vaccines</h1>
+                            <div class="grid grid-cols-3 gap-2">
+                            
+                                @foreach ($vaccines as $vaccine)
+                                    <p class="truncate">
+                                        <input class="rounded-md focus:ring-0" type="checkbox" name="{{ $vaccine->id }}" id="1" value="{{ $vaccine->id }}" wire:model="vaccine_ids.{{ $vaccine->id }}" wire:key='{{ $vaccine->id }}'>
+                                        {{ $vaccine->vaccine_name }}
+                                    </p>
+                                @endforeach
+                                
+                            </div>
+                        </div>
+                        <div class="col-span-2 p-2 border border-gray-700 border-dashed rounded-md bg-gray-200/80">
+                            <h1 class="text-sm">Puroks</h1>
+                            <div class="grid grid-cols-4 gap-2">
+                            
+                                @foreach ($puroks as $purok)
+                                    <p class="truncate">
+                                        <input class="rounded-md focus:ring-0" type="checkbox" name="{{ $purok->id }}" id="1" value="{{ $purok->id }}" wire:model="purok_ids.{{ $purok->id }}" wire:key='{{ $purok->id }}'>
+                                        {{ $purok->name }}
+                                    </p>
+                                @endforeach
+                                
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 {{-- end filter list --}}
 
                 {{-- table--}}
-                <div class="block h-full bg-gray-50">
+                <div class="block h-full rounded bg-bg-gray-50 drop-shadow-lg">
 
                     <div class="px-4 sm:px-6 lg:px-8">
 
@@ -34,6 +61,24 @@
                                         <table class="min-w-full border-separate " style="border-spacing: 0">
                                             <thead class="bg-gray-50">
                                                 <tr>
+                                                    <th scope="col"
+                                                        class="sticky top-0 z-10 border-b border-gray-300 bg-gray-50 bg-opacity-75 py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter sm:pl-6 lg:pl-8">
+                                                        <a href="#" class="inline-flex group">
+                                                            #
+                                                            <!-- Active: "bg-gray-200 text-gray-900 group-hover:bg-gray-300", Not Active: "invisible text-gray-400 group-hover:visible group-focus:visible" -->
+                                                            <span
+                                                                class="flex-none ml-2 text-gray-900 bg-gray-200 rounded group-hover:bg-gray-300">
+                                                                <!-- Heroicon name: solid/chevron-down -->
+                                                                <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg"
+                                                                    viewBox="0 0 20 20" fill="currentColor"
+                                                                    aria-hidden="true">
+                                                                    <path fill-rule="evenodd"
+                                                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                                                        clip-rule="evenodd" />
+                                                                </svg>
+                                                            </span>
+                                                        </a>
+                                                    </th>
                                                     <th scope="col"
                                                         class="sticky top-0 z-10 border-b border-gray-300 bg-gray-50 bg-opacity-75 py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter sm:pl-6 lg:pl-8">
                                                         <a href="#" class="inline-flex group">
@@ -151,26 +196,99 @@
                                                 </tr>
                                             </thead>
                                             <tbody class="bg-white ">
-                                                <tr>
-                                                    <td
-                                                        class="py-4 pl-4 pr-3 text-sm font-medium text-gray-900 border-b border-gray-200 whitespace-nowrap sm:pl-6 lg:pl-8">
-                                                        Lindsay Walton</td>
-                                                    <td
-                                                        class="hidden px-3 py-4 text-sm text-gray-500 border-b border-gray-200 whitespace-nowrap sm:table-cell">
-                                                        Front-end Developer</td>
-                                                    <td
-                                                        class="hidden px-3 py-4 text-sm text-gray-500 border-b border-gray-200 whitespace-nowrap lg:table-cell">
-                                                        lindsay.walton@example.com</td>
-                                                    <td
-                                                        class="px-3 py-4 text-sm text-gray-500 border-b border-gray-200 whitespace-nowrap">
-                                                        Member</td>
-                                                    <td
-                                                        class="relative py-4 pl-3 pr-4 text-sm font-medium text-right border-b border-gray-200 whitespace-nowrap sm:pr-6 lg:pr-8">
-                                                        <a href="#"
-                                                            class="text-indigo-600 hover:text-indigo-900">Edit<span
-                                                                class="sr-only">, Lindsay Walton</span></a>
-                                                    </td>
-                                                </tr>
+                                                @if ($appointment_lists->count() > 0)
+                                                        @foreach ($appointment_lists as $appointment)
+                                                            @if ($loop->index % 2 == 0)
+                                                                <tr>
+                                                                    <td
+                                                                    class="py-4 pl-4 pr-3 text-sm font-medium text-gray-900 border-b border-gray-200 whitespace-nowrap sm:pl-6 lg:pl-8">
+                                                                    {{ $loop->index+1 }}
+                                                                    </td>
+                                                                    
+                                                                    <td
+                                                                        class="py-4 pl-4 pr-3 text-sm font-medium text-gray-900 border-b border-gray-200 whitespace-nowrap sm:pl-6 lg:pl-8">
+                                                                        {{ $appointment->patient->first_name }} {{ $appointment->patient->last_name }} {{ $appointment->patient->suffix }}</td>
+                                                                    <td
+                                                                        class="hidden px-3 py-4 text-sm text-gray-500 border-b border-gray-200 whitespace-nowrap sm:table-cell">
+                                                                        {{ $appointment->patient->sex }}</td>
+                                                                    <td
+                                                                        class="hidden px-3 py-4 text-sm text-gray-500 border-b border-gray-200 whitespace-nowrap lg:table-cell">
+                                                                        {{ $appointment->patient->purok->name }}</td>
+                                                                    <td
+                                                                        class="px-3 py-4 text-sm text-gray-500 border-b border-gray-200 whitespace-nowrap">
+                                                                        {{ $appointment->appointmentDate->date }}
+                                                                    </td>
+                                                                    <td
+                                                                        class="px-3 py-4 text-sm text-gray-500 border-b border-gray-200 whitespace-nowrap">
+                                                                        {{ $appointment->appointmentTime->time_slot }}
+                                                                    </td>
+                                                                    <td
+                                                                        class="px-3 py-4 text-sm text-gray-500 border-b border-gray-200 whitespace-nowrap">
+                                                                        {{ $appointment->vaccine->vaccine_name }}
+                                                                    </td>
+                                                                    <td
+                                                                        class="px-3 py-4 text-sm text-gray-500 border-b border-gray-200 whitespace-nowrap">
+                                                                        {{ $appointment->appointmentType->name =='first_dose' ? '1st dose' : '2nd dose' }}
+                                                                    </td>
+                                                                    <td
+                                                                        class="relative py-4 pl-3 pr-4 text-sm font-medium text-right border-b border-gray-200 whitespace-nowrap sm:pr-6 lg:pr-8">
+                                                                        <a href="{{ route('view-patient-information',['patient_id'=>$appointment->patient_id]) }}"
+                                                                            class="text-indigo-600 hover:text-indigo-900">View<span
+                                                                                class="sr-only">,  {{ $appointment->patient->first_name }} {{ $appointment->patient->last_name }}</span></a>
+                                                                    </td>
+                                                                    
+                                                                </tr>
+                                                                
+                                                            @else
+                                                            <tr class="bg-gray-100">
+                                                                <td
+                                                                class="py-4 pl-4 pr-3 text-sm font-medium text-gray-900 border-b border-gray-200 whitespace-nowrap sm:pl-6 lg:pl-8">
+                                                                {{ $loop->index+1 }}
+                                                                </td>
+                                                                
+                                                                <td
+                                                                    class="py-4 pl-4 pr-3 text-sm font-medium text-gray-900 border-b border-gray-200 whitespace-nowrap sm:pl-6 lg:pl-8">
+                                                                    {{ $appointment->patient->first_name }} {{ $appointment->patient->last_name }} {{ $appointment->patient->suffix }}</td>
+                                                                <td
+                                                                    class="hidden px-3 py-4 text-sm text-gray-500 border-b border-gray-200 whitespace-nowrap sm:table-cell">
+                                                                    {{ $appointment->patient->sex }}</td>
+                                                                <td
+                                                                    class="hidden px-3 py-4 text-sm text-gray-500 border-b border-gray-200 whitespace-nowrap lg:table-cell">
+                                                                    {{ $appointment->patient->purok->name }}</td>
+                                                                <td
+                                                                    class="px-3 py-4 text-sm text-gray-500 border-b border-gray-200 whitespace-nowrap">
+                                                                    {{ $appointment->appointmentDate->date }}
+                                                                </td>
+                                                                <td
+                                                                    class="px-3 py-4 text-sm text-gray-500 border-b border-gray-200 whitespace-nowrap">
+                                                                    {{ $appointment->appointmentTime->time_slot }}
+                                                                </td>
+                                                                <td
+                                                                    class="px-3 py-4 text-sm text-gray-500 border-b border-gray-200 whitespace-nowrap">
+                                                                    {{ $appointment->vaccine->vaccine_name }}
+                                                                </td>
+                                                                <td
+                                                                    class="px-3 py-4 text-sm text-gray-500 border-b border-gray-200 whitespace-nowrap">
+                                                                    {{ $appointment->appointmentType->name =='first_dose' ? '1st dose' : '2nd dose' }}
+                                                                </td>
+                                                                <td
+                                                                    class="relative py-4 pl-3 pr-4 text-sm font-medium text-right border-b border-gray-200 whitespace-nowrap sm:pr-6 lg:pr-8">
+                                                                    <a href="{{ route('view-patient-information',['patient_id'=>$appointment->patient_id]) }}"
+                                                                        class="text-indigo-600 hover:text-indigo-900">View<span
+                                                                            class="sr-only">,  {{ $appointment->patient->first_name }} {{ $appointment->patient->last_name }}</span></a>
+                                                                </td>
+                                                            </tr>
+                                                            @endif
+                                                        @endforeach
+                                                @else
+                                                    <tr>
+                                                        <td colspan="9"
+                                                        class="py-4 pl-4 pr-3 font-bold text-center text-gray-900 border-b border-gray-200 text-md whitespace-nowrap sm:pl-6 lg:pl-8">
+                                                        No Entries Found or To Display
+                                                        </td>
+                                                    </tr>
+                                                @endif
+                                               
 
                                                 <!-- More people... -->
                                             </tbody>

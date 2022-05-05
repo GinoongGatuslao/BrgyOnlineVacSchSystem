@@ -11,7 +11,7 @@ class Appointment extends Model
 
     public function appointmentType()
     {
-        return $this->hasOne(AppointmentType::class);
+        return $this->hasOne(AppointmentType::class, 'id', 'appointment_type_id');
     }
 
     public function appointmentDate()
