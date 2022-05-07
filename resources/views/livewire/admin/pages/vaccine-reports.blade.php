@@ -1,10 +1,10 @@
-<div>
+<div x-data="{sortSex : @entangle('sortSex'),sortPurok:@entangle('sortPurok'),sortAppointmentTime : @entangle('sortAppointmentTime'),sortAppointmentType : @entangle('sortAppointmentType'), sortAppointmentDate : @entangle('sortAppointmentDate'),sortVaccine:@entangle('sortVaccine'),sortName:@entangle('sortName')}">
     <x-slot name="header">
         {{ __('Reports') }}
     </x-slot>
 
     <div class="container px-3 pt-3 pb-5 bg-white px-100 drop-shadow-xl rounded-xl">
-        <div class="w-auto text-indigo-700 max-h-screen-80 md:h-screen-30">
+        <div class="w-auto max-h-full text-indigo-700 md:h-full">
             <div class="rows-2">
                 {{-- filter list --}}
                 <div class="items-start block px-2 mt-5 text-xs bg-white text-slate-900">
@@ -22,7 +22,7 @@
                                 
                             </div>
                         </div>
-                        <div class="col-span-2 p-2 border border-gray-700 border-dashed rounded-md bg-gray-200/80">
+                        <div class="col-span-3 p-2 border border-gray-700 border-dashed rounded-md bg-gray-200/80">
                             <h1 class="text-sm">Puroks</h1>
                             <div class="grid grid-cols-4 gap-2">
                             
@@ -33,6 +33,24 @@
                                     </p>
                                 @endforeach
                                 
+                            </div>
+                        </div>
+                        <div class="col-span-1 p-2 border border-gray-700 border-dashed rounded-md bg-gray-200/80">
+                            <h1 class="text-sm">Date</h1>
+                            <div class="grid grid-rows-2" x-data='{showSelect : true}'>
+                                <div class="flex justify-between row-span-1">
+                                    <div class="flex items-center ">
+                                        <input x-on:click="showSelect = !showSelect" :enabled="showSelect == false ? 'true' : 'false'" class="rounded-md focus:ring-0" type="checkbox" name="date_all" id="1"  wire:model="date_all" wire:key='date_all'>
+                                        <span class="pl-1">All</span>
+                                    </div>
+                                    <div class="items-center my-auto">
+                                        <span wire:click="clearDates" class="text-xs italic hover:cursor-pointer hover:not-italic hover:underline hover:text-blue-500 hover:text-md hover:font-bold">Reset Dates</span>
+                                    </div>
+                                </div>
+                                <div class="row-span-1" x-show="showSelect">
+                                    Date
+                                    <input class="text-xs rounded-md focus:ring-0" type="date" name="date_all" id="1"  wire:model="selected_date" wire:key='date_all'>                                  
+                                </div>                        
                             </div>
                         </div>
                     </div>
@@ -63,28 +81,15 @@
                                                 <tr>
                                                     <th scope="col"
                                                         class="sticky top-0 z-10 border-b border-gray-300 bg-gray-50 bg-opacity-75 py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter sm:pl-6 lg:pl-8">
-                                                        <a href="#" class="inline-flex group">
+                                                        <span class="inline-flex group">
                                                             #
-                                                            <!-- Active: "bg-gray-200 text-gray-900 group-hover:bg-gray-300", Not Active: "invisible text-gray-400 group-hover:visible group-focus:visible" -->
-                                                            <span
-                                                                class="flex-none ml-2 text-gray-900 bg-gray-200 rounded group-hover:bg-gray-300">
-                                                                <!-- Heroicon name: solid/chevron-down -->
-                                                                <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg"
-                                                                    viewBox="0 0 20 20" fill="currentColor"
-                                                                    aria-hidden="true">
-                                                                    <path fill-rule="evenodd"
-                                                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                                                        clip-rule="evenodd" />
-                                                                </svg>
-                                                            </span>
-                                                        </a>
+                                                        </span>
                                                     </th>
                                                     <th scope="col"
                                                         class="sticky top-0 z-10 border-b border-gray-300 bg-gray-50 bg-opacity-75 py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter sm:pl-6 lg:pl-8">
-                                                        <a href="#" class="inline-flex group">
+                                                        <span x-on:click="sortName = !sortName" class="inline-flex group hover:cursor-pointer">
                                                             Name
-                                                            <!-- Active: "bg-gray-200 text-gray-900 group-hover:bg-gray-300", Not Active: "invisible text-gray-400 group-hover:visible group-focus:visible" -->
-                                                            <span
+                                                            <span :class="sortName == true ? 'bg-gray-200 text-gray-900 group-hover:bg-gray-300': 'invisible text-gray-400 group-hover:visible group-focus:visible'"
                                                                 class="flex-none ml-2 text-gray-900 bg-gray-200 rounded group-hover:bg-gray-300">
                                                                 <!-- Heroicon name: solid/chevron-down -->
                                                                 <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg"
@@ -95,18 +100,30 @@
                                                                         clip-rule="evenodd" />
                                                                 </svg>
                                                             </span>
-                                                        </a>
+                                                        </span>
                                                     </th>
                                                     <th scope="col"
                                                         class="sticky top-0 z-10 hidden border-b border-gray-300 bg-gray-50 bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter sm:table-cell">
-                                                        Sex
+                                                        <span x-on:click="sortSex = !sortSex" class="inline-flex group hover:cursor-pointer">
+                                                           Sex
+                                                           {{-- <span :class="sortSex == true ? 'bg-gray-200 text-gray-900 group-hover:bg-gray-300': 'invisible text-gray-400 group-hover:visible group-focus:visible'"
+                                                                class="flex-none ml-2 text-gray-900 bg-gray-200 rounded group-hover:bg-gray-300">
+                                                                <!-- Heroicon name: solid/chevron-down -->
+                                                                <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg"
+                                                                    viewBox="0 0 20 20" fill="currentColor"
+                                                                    aria-hidden="true">
+                                                                    <path fill-rule="evenodd"
+                                                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                                                        clip-rule="evenodd" />
+                                                                </svg>
+                                                            </span> --}}
+                                                        </span>
                                                     </th>
                                                     <th scope="col"
                                                         class="sticky top-0 z-10 hidden border-b border-gray-300 bg-gray-50 bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter sm:table-cell">
-                                                        <a href="#" class="inline-flex group">
+                                                        <span x-on:click="sortPurok = !sortPurok" class="inline-flex group hover:cursor-pointer">
                                                             Purok
-                                                            <!-- Active: "bg-gray-200 text-gray-900 group-hover:bg-gray-300", Not Active: "invisible text-gray-400 group-hover:visible group-focus:visible" -->
-                                                            <span
+                                                             {{-- <span :class="sortPurok == true ? 'bg-gray-200 text-gray-900 group-hover:bg-gray-300': 'invisible text-gray-400 group-hover:visible group-focus:visible'"
                                                                 class="flex-none ml-2 text-gray-900 bg-gray-200 rounded group-hover:bg-gray-300">
                                                                 <!-- Heroicon name: solid/chevron-down -->
                                                                 <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg"
@@ -116,15 +133,14 @@
                                                                         d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
                                                                         clip-rule="evenodd" />
                                                                 </svg>
-                                                            </span>
-                                                        </a>
+                                                            </span> --}}
+                                                        </span>
                                                     </th>
                                                     <th scope="col"
                                                         class="sticky top-0 z-10 hidden border-b border-gray-300 bg-gray-50 bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter lg:table-cell">
-                                                        <a href="#" class="inline-flex group">
+                                                        <span x-on:click="sortAppointmentDate = !sortAppointmentDate"class="inline-flex group">
                                                             Date
-                                                            <!-- Active: "bg-gray-200 text-gray-900 group-hover:bg-gray-300", Not Active: "invisible text-gray-400 group-hover:visible group-focus:visible" -->
-                                                            <span
+                                                             {{-- <span :class="sortAppointmentDate == true ? 'bg-gray-200 text-gray-900 group-hover:bg-gray-300': 'invisible text-gray-400 group-hover:visible group-focus:visible'"
                                                                 class="flex-none ml-2 text-gray-900 bg-gray-200 rounded group-hover:bg-gray-300">
                                                                 <!-- Heroicon name: solid/chevron-down -->
                                                                 <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg"
@@ -134,15 +150,14 @@
                                                                         d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
                                                                         clip-rule="evenodd" />
                                                                 </svg>
-                                                            </span>
+                                                            </span> --}}
                                                         </a>
                                                     </th>
                                                     <th scope="col"
                                                         class="sticky top-0 z-10 border-b border-gray-300 bg-gray-50 bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter">
-                                                        <a href="#" class="inline-flex group">
+                                                        <span x-on:click="sortAppointmentTime = !sortAppointmentTime" class="inline-flex group hover:cursor-pointer">
                                                             Time Slot
-                                                            <!-- Active: "bg-gray-200 text-gray-900 group-hover:bg-gray-300", Not Active: "invisible text-gray-400 group-hover:visible group-focus:visible" -->
-                                                            <span
+                                                             {{-- <span :class="sortAppointmentTime == true ? 'bg-gray-200 text-gray-900 group-hover:bg-gray-300': 'invisible text-gray-400 group-hover:visible group-focus:visible'"
                                                                 class="flex-none ml-2 text-gray-900 bg-gray-200 rounded group-hover:bg-gray-300">
                                                                 <!-- Heroicon name: solid/chevron-down -->
                                                                 <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg"
@@ -152,14 +167,13 @@
                                                                         d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
                                                                         clip-rule="evenodd" />
                                                                 </svg>
-                                                            </span>
-                                                        </a></th>
+                                                            </span> --}}
+                                                        </span></th>
                                                     <th scope="col"
                                                         class="sticky top-0 z-10 border-b border-gray-300 bg-gray-50 bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter">
-                                                        <a href="#" class="inline-flex group">
+                                                        <span x-on:click="sortVaccine = !sortVaccine" class="inline-flex group hover:cursor-pointer">
                                                             Vaccine
-                                                            <!-- Active: "bg-gray-200 text-gray-900 group-hover:bg-gray-300", Not Active: "invisible text-gray-400 group-hover:visible group-focus:visible" -->
-                                                            <span
+                                                             {{-- <span :class="sortVaccine == true ? 'bg-gray-200 text-gray-900 group-hover:bg-gray-300': 'invisible text-gray-400 group-hover:visible group-focus:visible'"
                                                                 class="flex-none ml-2 text-gray-900 bg-gray-200 rounded group-hover:bg-gray-300">
                                                                 <!-- Heroicon name: solid/chevron-down -->
                                                                 <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg"
@@ -169,14 +183,13 @@
                                                                         d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
                                                                         clip-rule="evenodd" />
                                                                 </svg>
-                                                            </span>
-                                                        </a></th>
+                                                            </span> --}}
+                                                        </span></th>
                                                     <th scope="col"
                                                         class="sticky top-0 z-10 border-b border-gray-300 bg-gray-50 bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter">
-                                                        <a href="#" class="inline-flex group">
+                                                        <span x-on:click="sortAppointmentType = !sortAppointmentType" class="inline-flex group hover:cursor-pointer">
                                                             Type
-                                                            <!-- Active: "bg-gray-200 text-gray-900 group-hover:bg-gray-300", Not Active: "invisible text-gray-400 group-hover:visible group-focus:visible" -->
-                                                            <span
+                                                             {{-- <span :class="sortAppointmentType == true ? 'bg-gray-200 text-gray-900 group-hover:bg-gray-300': 'invisible text-gray-400 group-hover:visible group-focus:visible'"
                                                                 class="flex-none ml-2 text-gray-900 bg-gray-200 rounded group-hover:bg-gray-300">
                                                                 <!-- Heroicon name: solid/chevron-down -->
                                                                 <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg"
@@ -186,8 +199,8 @@
                                                                         d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
                                                                         clip-rule="evenodd" />
                                                                 </svg>
-                                                            </span>
-                                                        </a></th>
+                                                            </span> --}}
+                                                        </span></th>
 
                                                     <th scope="col"
                                                         class="sticky top-0 z-10 border-b border-gray-300 bg-gray-50 bg-opacity-75 py-3.5 pr-4 pl-3 backdrop-blur backdrop-filter sm:pr-6 lg:pr-8">
@@ -302,6 +315,19 @@
 
                 </div>
                 {{-- end table--}}
+                
+                <div class="block h-full p-4 mt-2 bg-gray-100 rounded drop-shadow-lg">
+                    <div class="flex justify-start text-gray-800 border-collapse text-md">
+                        <div class="flex p-2 text-left ">
+                            <h3 class="font-bold">Total Vaccinees : {{ $count }}</h3>
+                        </div>
+                        @foreach ($vaccine_counts as $key => $vaccine_count)
+                            <div class="flex p-2 text-left border-l-2 border-gray-500">
+                                <h3 class="font-bold">{{ $vaccine_count[0] }} : {{ $vaccine_count[1] }}</h3>
+                            </div>
+                        @endforeach
+                    </div>                    
+                </div>
             </div>
         </div>
     </div>

@@ -26,7 +26,7 @@ class Appointment extends Model
 
     public function patient()
     {
-        return $this->hasOne(PatientInformation::class, 'id', 'patient_id');
+        return $this->hasOne(PatientInformation::class, 'id', 'patient_id')->orderBy('first_name');;
     }
 
     public function vaccine()
