@@ -20,8 +20,10 @@ class SendSMSReminder extends Notification implements ShouldQueue
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($msgType)
     {
+        $this->messageType = $msgType;
+       
     }
 
     /**
@@ -44,10 +46,18 @@ class SendSMSReminder extends Notification implements ShouldQueue
     public function toVonage($notifiable)
     {
         $message="";
-        $appointment = Appointment::where('status','=','today')->where('patient_id','=',$notifiable->id)->first();
-        $message =  'Good Day, '.$notifiable->first_name.'! Your vaccination is scheduled for tomorrow, '.date('F d, Y', strtotime('+1 day')).', at '.$appointment->appointmentTime->time_slot.'. Please be on time. Thank you!';
-         return (new VonageMessage)
-            ->content($message);
+        if($this->messageType == 'advance'){
+            $appointment = Appointment::where('status','=','today')->where('patient_id','=',$notifiable->id)->first();
+            $message =  'Good Day, '.$notifiable->first_name.'! Your vaccination is scheduled for tomorrow, '.date('F d, Y', strtotime('+1 day')).', at '.$appointment->appointmentTime->time_slot.'. Please be on time. Thank you!';
+            return (new VonageMessage)
+                        ->content($message);
+        }else{
+            $appointment = Appointment::where('status','=','today')->where('patient_id','=',$notifiable->id)->first();
+            $message =  'Good Day, '.$notifiable->first_name.'! Your vaccination is scheduled for TODAY, '.date('F d, Y', strtotime('+1 day')).', at '.$appointment->appointmentTime->time_slot.'. Please be on time. Thank you!';
+           
+        }
+        return (new VonageMessage)
+        ->content($message);
         
     }
     /**
