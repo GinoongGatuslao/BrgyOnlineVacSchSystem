@@ -27,8 +27,6 @@ class ScheduleChecker extends Component
                 Notification::send($patient, new SendSMSReminder('today'));
             }
         }
-        // dd("pota");
-        redirect()->route('home');
         return view('livewire.pages.schedule-checker');
     }
     public function getPatientIDS(){
