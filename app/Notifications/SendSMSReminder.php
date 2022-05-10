@@ -53,7 +53,7 @@ class SendSMSReminder extends Notification implements ShouldQueue
                         ->content($message);
         }else{
             $appointment = Appointment::where('status','=','today')->where('patient_id','=',$notifiable->id)->first();
-            $message =  'Good Day, '.$notifiable->first_name.'! Your vaccination is scheduled for TODAY, '.date('F d, Y', strtotime('+1 day')).', at '.$appointment->appointmentTime->time_slot.'. Please be on time. Thank you!';
+            $message =  'Good Day, '.$notifiable->first_name.'! Your vaccination is scheduled for TODAY, '.date('F d, Y').', at '.$appointment->appointmentTime->time_slot.'. Please be on time. Thank you!';
            
         }
         return (new VonageMessage)
