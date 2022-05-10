@@ -18,13 +18,13 @@ class ScheduleChecker extends Component
         $patients = $this->getPatientIDS();
         if(!empty($patients)){
             foreach($patients as $patient){
-                Notification::send($patient, new SendSMSReminder("advance"));
+                Notification::send($patient, new SendSMSReminder());
             }
         }
         $patientsToday = $this->getPatientIDSToday();
         if(!empty($patientsToday)){
             foreach($patientsToday as $patient){
-                Notification::send($patient, new SendSMSReminder('today'));
+                Notification::send($patient, new SendSMSReminder());
             }
         }
        
