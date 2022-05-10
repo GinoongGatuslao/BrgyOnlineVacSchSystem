@@ -11,7 +11,7 @@
                 {{-- for client --}}
                 
                 @endif  
-                @livewire('pages.schedule-checker')
+                {{-- @livewire('pages.schedule-checker') --}}
         @else
             @if (auth()->user()->user_type_id == 1)
                 @livewire('admin.dashboard.personal-section')
