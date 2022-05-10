@@ -67,7 +67,7 @@ class ScheduleChecker extends Component
          //get date for tomorrow
         $tomorrow = date('Y-m-d');
         $appSched = AppointmentDate::where('date','=',$tomorrow)->first();
-        dd($appSched);
+        // dd($appSched);
         if(isset($appSched)){
             $appointments = Appointment::where('appointment_date_id','=',$appSched->id)->where('sms_sent_today','=','no')->get('patient_id');
             $appointmentsUpdate = Appointment::where('appointment_date_id','=',$appSched->id)->where('sms_sent_today','=','no')->update(['sms_sent_today' => 'sent']);
