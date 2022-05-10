@@ -82,7 +82,7 @@ class ScheduleChecker extends Component
                $tomorrow = date('F d, Y', strtotime('+1 day'));
                $appointment = Appointment::where('appointment_date_id','=',$appSched->id)->where('patient_id','=',$patient->id)->first();
                $notif = new AdminNotification;
-               $notif->message = 'Your vaccination is scheduled for tomorrow, '.$tomorrow.', at '.$appointment->appointmentTime->time_slot.'. Please be on time. Thank you!';
+               $notif->message = 'Your vaccination is scheduled for today, '.$tomorrow.', at '.$appointment->appointmentTime->time_slot.'. Please be on time. Thank you!';
                $notif->user_id= PatientInformation::where('id',$patient->id)->first()->user_id;
                $notif->appointment_date_id = $appointment->appointment_date_id;
                $notif->save();
