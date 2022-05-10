@@ -1,5 +1,5 @@
 <div x-data="{showScheduleReminder : @entangle('showScheduleReminder')}">
-    @livewire('pages.schedule-checker')
+    
     <x-slot name="header">
         {{ __('Dashboard') }}
     </x-slot>
@@ -11,6 +11,7 @@
                 {{-- for client --}}
                 
                 @endif  
+                @livewire('pages.schedule-checker')
         @else
             @if (auth()->user()->user_type_id == 1)
                 @livewire('admin.dashboard.personal-section')
