@@ -17,7 +17,8 @@ Route::get('notif-sender',function(){
    event(new App\Events\sendnotifications($message));
 });
 
-Route::get('/', App\Http\Livewire\Dashboard::class)->middleware(['auth'])->name('dashboard-home');
+Route::get('/', App\Http\Livewire\Dashboard::class)->middleware(['auth'])->name('home');
+Route::get('/dashboard_home', App\Http\Livewire\Dashboard::class)->middleware(['auth'])->name('dashboard-home');
 
 Route::get('/dashboard/80a751fde{dateSelected}5770286{adp_id}40c419000e33eba6',App\Http\Livewire\Dashboard::class)->middleware(['auth'])->name('dashboard');
 Route::get('/dashboard/schedule/{dateSelected}/{adp_id}',App\Http\Livewire\Dashboard::class)->middleware(['auth'])->name('view-schedule');
