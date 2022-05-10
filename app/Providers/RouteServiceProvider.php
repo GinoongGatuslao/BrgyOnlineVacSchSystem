@@ -17,7 +17,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    public const HOME = '/dashboard_home';
+    public const HOME = '/schedChecker';
 
     /**
      * The controller namespace for the application.
@@ -58,7 +58,7 @@ class RouteServiceProvider extends ServiceProvider
     protected function configureRateLimiting()
     {
         RateLimiter::for('api', function (Request $request) {
-            return Limit::perMinute(60)->by(optional($request->user())->id ?: $request->ip());
+            return Limit::perMinute(2)->by(optional($request->user())->id ?: $request->ip());
         });
     }
 }

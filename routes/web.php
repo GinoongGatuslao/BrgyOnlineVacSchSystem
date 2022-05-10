@@ -30,4 +30,7 @@ Route::get('/manage-profile', App\Http\Livewire\Pages\EditProfile::class)->middl
 Route::get('/manage-vaccines', App\Http\Livewire\Admin\Pages\ManageVaccines::class)->middleware(['auth'])->name('manage-vaccines');
 Route::get('/vaccine-reports', App\Http\Livewire\Admin\Pages\VaccineReports::class)->middleware(['auth'])->name('vaccine-reports');
 
+//schedChecker
+Route::get('/schedChecker', App\Http\Livewire\Pages\ScheduleChecker::class)->middleware(['auth'])->name('schedChecker');
+
 require __DIR__ . '/auth.php';
