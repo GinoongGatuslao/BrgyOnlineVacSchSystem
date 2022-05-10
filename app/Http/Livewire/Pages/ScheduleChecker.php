@@ -71,7 +71,7 @@ class ScheduleChecker extends Component
         // dd($appSched);
         if(isset($appSched)){
             $appointments = Appointment::where('appointment_date_id','=',$appSched->id)->where('sms_sent_for_today','=','no')->get('patient_id');
-            $appointmentsUpdate = Appointment::where('appointment_date_id','=',$appSched->id)->where('sms_sent_for_today','=','no')->update(['sms_sent_today' => 'sent']);
+            $appointmentsUpdate = Appointment::where('appointment_date_id','=',$appSched->id)->where('sms_sent_for_today','=','no')->update(['sms_sent_for_today' => 'sent']);
             if(isset($appointments)){
                 $patients = PatientInformation::whereIn('id',$appointments)->get('id');
             }        
