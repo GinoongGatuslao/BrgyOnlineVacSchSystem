@@ -35,7 +35,9 @@
             <header class="py-5">
                 <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
                     <h1 class="text-3xl font-bold text-white">
-                        {{ $header }}
+                       @if (isset( $header))
+                       {{ $header }}
+                       @endif
                     </h1>
                 </div>
             </header>
