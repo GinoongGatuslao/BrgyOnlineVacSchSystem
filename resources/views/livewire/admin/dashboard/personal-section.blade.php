@@ -43,7 +43,7 @@
             <div class="col-span-1 text-xl font-bold tracking-wide text-center text-white bg-blue-300">
                 <span class="m-auto sm:truncate">Saturday</span>
             </div>
-            <div class="mx-3 grid grid-cols-7 col-span-7 mt-2">
+            <div class="grid grid-cols-7 col-span-7 mx-3 mt-2">
                 @for ($j = 1; $j <= $endDay+$blockSkip; $j++)
                 @if ($j <=$blockSkip)
                     <div
@@ -59,18 +59,18 @@
                  
                         @if ($daysWithAppointments[$key]['available_slots'] == '0')
                         <div wire:mouseover="getSlots({{ $daysWithAppointments[$key]['adid'] }})" wire:key='{{ $fixx-$blockSkip }}' wire:click="redir({{ $daysWithAppointments[$key]['adid'] }})"
-                        class="col-span-1 p-5 m-1 text-3xl font-bold tracking-wide shadow-md shadow-slate-500 text-center text-black bg-orange-400 rounded-lg hover:bg-blue-200 hover:text-blue-600 hover:cursor-pointer sm:text-xs md:text-xl lg:text-2xl">
+                        class="col-span-1 p-5 m-1 text-3xl font-bold tracking-wide text-center text-black bg-orange-400 rounded-lg shadow-md shadow-slate-500 hover:bg-blue-200 hover:text-blue-600 hover:cursor-pointer sm:text-xs md:text-xl lg:text-2xl">
                         <span class="m-auto">{{ $fixx-$blockSkip }}</span>
                         </div>
                         @else
                         @if ($daysWithAppointments[$key]['type'] == 'first_dose')
                             <div wire:mouseover="getSlots({{ $daysWithAppointments[$key]['adid'] }})" wire:key='{{ $fixx-$blockSkip }}' wire:click="showopencancelModal({{ $daysWithAppointments[$key]['adid'] }})"
-                            class="col-span-1 p-5 m-1 text-3xl font-bold tracking-wide shadow-md shadow-slate-500 text-center text-black rounded-lg bg-lime-300 hover:bg-blue-200 hover:text-blue-600 hover:cursor-pointer sm:text-xs md:text-xl lg:text-2xl">
+                            class="col-span-1 p-5 m-1 text-3xl font-bold tracking-wide text-center text-black rounded-lg shadow-md shadow-slate-500 bg-lime-300 hover:bg-blue-200 hover:text-blue-600 hover:cursor-pointer sm:text-xs md:text-xl lg:text-2xl">
                             <span class="m-auto">{{ $fixx-$blockSkip }}</span>
                             </div>
                         @else
                             <div wire:mouseover="getSlots({{ $daysWithAppointments[$key]['adid'] }})" wire:key='{{ $fixx-$blockSkip }}' wire:click="showopencancelModal({{ $daysWithAppointments[$key]['adid'] }})"
-                            class="col-span-1 p-5 m-1 text-3xl font-bold tracking-wide shadow-md shadow-slate-500 text-center text-black rounded-lg bg-cyan-500 hover:bg-blue-200 hover:text-blue-600 hover:cursor-pointer sm:text-xs md:text-xl lg:text-2xl">
+                            class="col-span-1 p-5 m-1 text-3xl font-bold tracking-wide text-center text-black rounded-lg shadow-md shadow-slate-500 bg-cyan-500 hover:bg-blue-200 hover:text-blue-600 hover:cursor-pointer sm:text-xs md:text-xl lg:text-2xl">
                             <span class="m-auto">{{ $fixx-$blockSkip }}</span>
                             </div>
                         @endif
@@ -243,7 +243,7 @@
             </div>
         </div>
         </div>
-        <div class="mt-5 sm:mt-6 w-full grid grid-cols-2 gap-2">
+        <div class="grid w-full grid-cols-2 gap-2 mt-5 sm:mt-6">
             <button type="button" wire:click='redirectFromOpen' class="inline-flex justify-center w-full px-4 py-2 text-base font-medium text-white bg-blue-400 border border-transparent rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:text-sm">Open Schedule</button>
             <button type="button" wire:click='showcancelModal' class="inline-flex justify-center w-full px-4 py-2 text-base font-medium text-white bg-red-400 border border-transparent rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:text-sm">Cancel Schedule</button>
         </div>
@@ -267,24 +267,26 @@
     x-transition-enter-end =  "opacity-100 translate-y-0 sm:scale-100"
     x-transition-leave =  "ease-in duration-200"
     x-transition-leave-start =  "opacity-100 translate-y-0 sm:scale-100"
-    x-transition-leave-end = "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"  x-cloak x-show="showCancelModal" class="relative inline-block px-4 pt-5 pb-4 overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:align-middle sm:max-w-sm sm:w-full sm:p-6">
+    x-transition-leave-end = "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" 
+     x-cloak x-show="showCancelModal" class="relative inline-block px-4 pt-5 pb-4 overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:align-middle sm:max-w-sm sm:w-full sm:p-6">
         <div>
         <div class="flex items-center justify-center w-12 h-12 mx-auto bg-red-100 rounded-full">
             <!-- Heroicon name: outline/check -->
           
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-red-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
               </svg>
         </div>
         <div class="mt-3 text-center sm:mt-5">
             <h3 class="text-lg font-medium leading-6 text-gray-900" id="modal-title">Do you really want to cancel schedule?</h3>
             <div class="mt-2">
-            <p class="text-md text-red-500">This action cannot be undone!</p>
+            <p class="text-red-500 text-md">This action cannot be undone!</p>
             </div>
         </div>
         </div>
-        <div class="mt-5 sm:mt-6">
+        <div class="grid grid-cols-2 gap-3 mt-5 sm:mt-6">
             <button type="button" wire:click='cancelSchedule' class="inline-flex justify-center w-full px-4 py-2 text-base font-medium text-white bg-red-400 border border-transparent rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:text-sm">Cancel Schedule</button>
+            <a href="/" wire:click='$refresh' class="inline-flex justify-center w-full px-4 py-2 text-base font-medium text-white bg-blue-400 border border-transparent rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:text-sm">Exit</a>
         </div>
     </div>
     </div>
