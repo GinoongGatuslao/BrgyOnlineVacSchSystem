@@ -18,13 +18,31 @@ class ScheduleChecker extends Component
         $patients = $this->getPatientIDS();
         if(!empty($patients)){
             foreach($patients as $patient){
-                Notification::send($patient, new SendSMSReminder("advance"));
+                $patient_info =PatientInformation::where('id','=',$patient->id)->first();
+                $contactNumber = substr($patient_info->contact_number, -10);
+                $appointment = Appointment::where('status','=','today')->where('patient_id','=',$patient->id)->first();
+                $nexmo = app('Nexmo\Client');    
+                $nexmo->message()->send([
+                    'to'   => '+63'.$contactNumber,
+                    'from' => 'BOVVS',
+                    'text' => 'Good Day, '.$patient_info->first_name.'! Your vaccination is scheduled for tomorrow, '.date('F d, Y', strtotime('+1 day')).', at '.$appointment->appointmentTime->time_slot.'. Please be on time. Thank you!'
+                ]);
             }
         }
         $patientsToday = $this->getPatientIDSToday();
         if(!empty($patientsToday)){
             foreach($patientsToday as $patient){
-                Notification::send($patient, new SendSMSReminder('today'));
+
+                $patient_info =PatientInformation::where('id','=',$patient->id)->first();
+                $contactNumber = substr($patient_info->contact_number, -10);
+                $appointment = Appointment::where('status','=','today')->where('patient_id','=',$patient_info->id)->first();
+
+                $nexmo = app('Nexmo\Client');    
+                $nexmo->message()->send([
+                    'to'   => '+63'.$contactNumber,
+                    'from' => 'BOVVS',
+                    'text' => 'Good Day, '.$patient_info->first_name.'! Your vaccination is scheduled for TODAY, '.date('F d, Y').', at '.$appointment->appointmentTime->time_slot.'. Please be on time. Thank you!'
+                ]);
             }
         }
         return view('livewire.pages.schedule-checker');

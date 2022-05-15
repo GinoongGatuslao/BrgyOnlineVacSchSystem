@@ -190,7 +190,17 @@ class VaccineReports extends Component
            
             $this->vaccine_counts [] = [$vaccine_id->vaccine_name, $temp2];
         }
-
+        
+        $inventoryToCount =[];
+        if(isset($this->vaccine_ids) && count($this->vaccine_ids)>0){
+            $inventoryToCount = DB::table('appointment_dates')
+            ->join('vaccines','appointment_dates.vaccine_id','vaccines.id')
+            ->whereIn('vaccine_id',$this->vaccine_ids)->select('vaccines.vaccine_name', DB::raw('SUM(available_slots) as available_slots'), DB::raw('SUM(max_slots) as maximum_slots'))->groupBy('vaccines.vaccine_name')->get();
+        }else{
+            $inventoryToCount = DB::table('appointment_dates')
+            ->join('vaccines','appointment_dates.vaccine_id','vaccines.id')
+            ->select('vaccines.vaccine_name', DB::raw('SUM(available_slots) as available_slots'), DB::raw('SUM(max_slots) as maximum_slots'))->groupBy('vaccines.vaccine_name')->get();
+        }
 
 
         // dd($patient_list);
@@ -198,7 +208,7 @@ class VaccineReports extends Component
         //         $q->whereRaw("CONCAT(`first_name`,' ',`middle_name`,' ',`last_name`) LIKE ('".$this->search_name."%')");
         // }])->get();   
 
-        return view('livewire.admin.pages.vaccine-reports',compact('vaccines','appointment_lists','puroks','count'));
+        return view('livewire.admin.pages.vaccine-reports',compact('vaccines','appointment_lists','puroks','count','inventoryToCount'));
 
         // return view('livewire.admin.pages.vaccine-reports',compact('vaccines'));
     }

@@ -317,13 +317,50 @@
                 {{-- end table--}}
                 
                 <div class="block h-full p-4 mt-2 bg-gray-100 rounded drop-shadow-lg">
-                    <div class="flex justify-start text-gray-800 border-collapse text-md">
-                        <div class="flex p-2 text-left ">
-                            <h3 class="font-bold">Total Vaccinees : {{ $count }}</h3>
-                        </div>
-                        @foreach ($vaccine_counts as $key => $vaccine_count)
-                            <div class="flex p-2 text-left border-l-2 border-gray-500">
-                                <h3 class="font-bold">{{ $vaccine_count[0] }} : {{ $vaccine_count[1] }}</h3>
+                    <div class="grid justify-start grid-cols-3 gap-2 text-gray-800 border-collapse text-md">
+                       
+                        @foreach ($inventoryToCount as $key => $inventoryCount)
+                            <div class="col-span-1 p-2 border border-gray-700 border-dashed rounded-md bg-gray-200/80">
+                                    <table class="w-full">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-left">
+                                                    <h1 class="text-sm">{{ $inventoryCount->vaccine_name }}</h1>
+                                                </th>
+                                                <th class="text-right">
+                                                    <h1 class="text-sm"></h1>
+                                                </th>
+                                                <th class="text-right">
+                                                    <h1 class="text-sm"></h1>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="py-2">
+                                                <td class="px-3 text-left" colspan="2">
+                                                    <h1 class="text-sm">Reserved and/or Used</h1>
+                                                </td>
+                                                <td class="px-3 text-right">
+                                                    <h1 class="text-sm">{{ $inventoryCount->maximum_slots - $inventoryCount->available_slots }}</h1>
+                                                </td>
+                                            </tr>
+                                            <tr class="py-2">
+                                                <td class="px-3 text-left whitespace-nowrap" colspan="2">
+                                                    <h1 class="text-sm">Vaccines in Stock <span class="text-xs italic">unreserved</span></h1>
+                                                </td>
+                                                <td class="px-3 text-right">
+                                                    <h1 class="text-sm">{{ $inventoryCount->available_slots }}</h1>
+                                                </td>
+                                            </tr>
+                                            <tr class="py-2 border-t-2 border-black border-solid">
+                                                <td class="px-3 text-left" colspan="2">
+                                                    <h1 class="text-sm">Total Vaccines</h1>
+                                                </td>
+                                                <td class="px-3 text-right">
+                                                    <h1 class="text-sm">{{ $inventoryCount->maximum_slots}}</h1>
+                                                </td>
+                                            </tr>
+                                    </table>
                             </div>
                         @endforeach
                     </div>                    
