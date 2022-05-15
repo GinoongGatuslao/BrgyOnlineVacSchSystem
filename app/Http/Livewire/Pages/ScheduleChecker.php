@@ -114,7 +114,7 @@ class ScheduleChecker extends Component
 
     public function setstatustoday(){
         //get date for tomorrow
-        $tomorrow = date('Y-m-d', strtotime('+1 day'));
+        $tomorrow = date('Y-m-d');
         $appSched = AppointmentDate::where('date','=',$tomorrow)->first();
         
         // dd($appSched);
