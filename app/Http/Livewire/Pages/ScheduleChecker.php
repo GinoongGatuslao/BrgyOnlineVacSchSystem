@@ -8,6 +8,7 @@ use App\Models\AppointmentDate;
 use App\Models\PatientInformation;
 use App\Notifications\SendSMSReminder;
 use Illuminate\Support\Facades\Notification;
+use League\Flysystem\MountManager;
 use Livewire\Component;
 
 class ScheduleChecker extends Component
@@ -51,8 +52,8 @@ class ScheduleChecker extends Component
         $patients= [];
          //get date for tomorrow
         $tomorrow = date('Y-m-d', strtotime('+1 day'));
-        $appSched = AppointmentDate::where('date','<=',$tomorrow)->first();
-        //dd($appSched);
+        
+        $appSched = AppointmentDate::where('date','=',$tomorrow)->first();
         if(isset($appSched)){
             $appointments = Appointment::where('appointment_date_id','=',$appSched->id)->where('sms_sent','=','no')->get('patient_id');
             $appointmentsUpdate = Appointment::where('appointment_date_id','=',$appSched->id)->where('sms_sent','=','no')->update(['sms_sent' => 'sent']);

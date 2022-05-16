@@ -48,10 +48,9 @@ class Dashboard extends Component
         }
         if(auth()->user()->user_type_id == 2){
             return view('livewire.dashboard',["appointment" => $appointment])->layout('layouts.app');
-          }
-          else{
+        }else{
             return view('livewire.dashboard')->layout('layouts.app');
-          }
+        }
       
     }
 
