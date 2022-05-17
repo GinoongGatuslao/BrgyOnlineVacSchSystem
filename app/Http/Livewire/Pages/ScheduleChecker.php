@@ -21,7 +21,7 @@ class ScheduleChecker extends Component
             foreach($patients as $patient){
                 $patient_info =PatientInformation::where('id','=',$patient->id)->first();
                 $contactNumber = substr($patient_info->contact_number, -10);
-                $appointment = Appointment::where('status','=','today')->where('patient_id','=',$patient->id)->first();
+                $appointment = Appointment::where('status','=','unpassed')->where('patient_id','=',$patient->id)->first();
                 $nexmo = app('Nexmo\Client');    
                 $nexmo->message()->send([
                     'to'   => '+63'.$contactNumber,
